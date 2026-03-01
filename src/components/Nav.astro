@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const t = useTranslations(lang);
+---
+
+<nav
+  aria-label="მთავარი ნავიგაცია"
+  class="main-nav lg:block absolute hidden lg:static top-full left-0 w-full bg-blue-500 lg:bg-transparent text-white lg:text-black"
+>
+  <ul
+    class="flex flex-col gap-2 lg:flex-row lg:gap-8 py-4 lg:py-0 px-4 lg:px-0"
+  >
+    <li>
+      <a href="#">{t.nav.home}</a>
+    </li>
+    <li>
+      <a href="#">{t.nav.programs}</a>
+    </li>
+    <li>
+      <button class="flex gap-1 items-center mb-2" aria-expanded="true">
+        {t.nav.about} <Icon name="heroicons:chevron-down" /></button
+      >
+      <ul class="pl-4 flex flex-col gap-2">
+        <li>
+          <a href="#">{t.nav.about}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.ourDoctors}</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
+        >{t.nav.departments} <Icon name="heroicons:chevron-down" /></button
+      >
+      <ul class="pl-4 flex flex-col gap-2">
+        <li>
+          <a href="#">{t.nav.ambulatory}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.stationary}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.instrumentalDiagnostics}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.scientificResearch}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.laboratory}</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
+        >{t.nav.hivAids} <Icon name="heroicons:chevron-down" /></button
+      >
+    </li>
+    <li>
+      <a href="#">{t.nav.contact}</a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  // Toggle mobile menu
+  const menuToggle = document.querySelector(".menu-toggle");
+  const mainNav = document.querySelector(".main-nav");
+
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener("click", () => {
+      mainNav.classList.toggle("hidden");
+    });
+  }
+</script>

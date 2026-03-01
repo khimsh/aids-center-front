@@ -1,0 +1,62 @@
+---
+const { currentLocale } = Astro;
+const currentPath = Astro.url.pathname;
+
+import { Icon } from "astro-icon/components";
+
+const languages = [
+  { code: "ka", label: "KA" },
+  { code: "en", label: "ENG" },
+];
+
+function getLocalizedPath(locale: string) {
+  // Strip any existing locale prefix
+  const pathWithoutLocale = currentPath.replace(/^\/(ka|en)/, "") || "/";
+
+  if (locale === "ka") return pathWithoutLocale;
+  return `/en${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
+}
+---
+
+<div class="language-selector relative">
+  <button id="lang-toggle" class="flex items-center gap-1">
+    <Icon name="heroicons:globe-alt" />
+    <span>{currentLocale?.toUpperCase() ?? "ENG"}</span>
+  </button>
+
+  <ul
+    id="lang-menu"
+    class="absolute top-full right-0 bg-white shadow-md rounded-md p-2 hidden group-hover:flex flex-col gap-1"
+  >
+    {
+      languages.map((lang) => (
+        <li>
+          <a
+            href={getLocalizedPath(lang.code)}
+            class={`px-3 py-1 rounded hover:bg-gray-100 ${currentLocale === lang.code ? "font-bold text-blue-600" : ""}`}
+          >
+            {lang.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<script>
+  const toggle = document.getElementById("lang-toggle");
+  const menu = document.getElementById("lang-menu");
+
+  toggle?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+    menu?.classList.toggle("flex");
+  });
+
+  // Close when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!toggle?.contains(e.target as Node)) {
+      menu?.classList.add("hidden");
+      menu?.classList.remove("flex");
+    }
+  });
+</script>
