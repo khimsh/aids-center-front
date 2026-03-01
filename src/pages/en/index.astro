@@ -1,7 +1,9 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { Icon } from "astro-icon/components";
-import HeroImage from "../../assets/hero.png";
+import Hero from "../../components/Hero.astro";
+import Panels from "../../components/Panels.astro";
+import Services from "../../components/Services.astro";
+import About from "../../components/About.astro";
 
 import { useTranslations } from "../../i18n/utils";
 
@@ -10,47 +12,13 @@ const t = useTranslations(lang);
 ---
 
 <Layout>
-  <section class="hero">
-    <div>
-      <h2>
-        In Georgia, the <strong>Hepatitis B</strong> management state program has
-        started!
-      </h2>
-
-      <p>
-        Within the framework of the program, diagnostic tests and antiviral <strong
-          >treatment are completely free!</strong
-        >
-      </p>
-
-      <p>To schedule a visit and/or get information:</p>
-
-      <ul>
-        <li>
-          <a href="tel:+995551826666"
-            ><Icon name="heroicons:phone" /> (+995) 551 826 666</a
-          > - HIV/AIDS hotline
-        </li>
-        <li>
-          <address>
-            <Icon name="heroicons:map-pin" /> 70 Lubliana Street, Tbilisi, Georgia
-          </address>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <img
-        src={HeroImage.src}
-        alt="Hepatitis B Awareness"
-        class="w-full h-auto object-cover"
-      />
-    </div>
-  </section>
+  <!-- Hero section -->
+  <Hero />
+  <!-- Panels section -->
+  <Panels />
+  <!-- Services section -->
+  <Services />
+  <!-- About section -->
+  <About />
+  <!-- Contact section -->
 </Layout>
-
-<style>
-  h2 {
-    font-family: "BPG Nino Mtavruli", sans-serif;
-  }
-</style>

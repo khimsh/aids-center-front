@@ -1,0 +1,11 @@
+---
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const t = useTranslations(lang);
+---
+
+<section>
+  <h2>{t.aboutUs.title}</h2>
+  <p>{t.aboutUs.description}</p>
+</section>

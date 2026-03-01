@@ -5,26 +5,59 @@ import { useTranslations } from "../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
+const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 ---
 
 <nav
-  aria-label="მთავარი ნავიგაცია"
-  class="main-nav lg:block absolute hidden lg:static top-full left-0 w-full bg-blue-500 lg:bg-transparent text-white lg:text-black"
+  aria-label={t.nav.navAriaLabel}
+  class="main-nav xl:block xl:ml-auto absolute xl:static top-full left-0 w-[90%] bg-blue-500 xl:bg-transparent text-white xl:text-black z-50 xl:z-auto hidden"
 >
   <ul
-    class="flex flex-col gap-2 lg:flex-row lg:gap-8 py-4 lg:py-0 px-4 lg:px-0"
+    class="flex flex-col xl:justify-end gap-3 xl:flex-row xl:gap-8 py-4 xl:py-0 px-4 xl:px-0"
   >
     <li>
-      <a href="#">{t.nav.home}</a>
+      <a href={homeUrl}>{t.nav.home}</a>
     </li>
+
     <li>
-      <a href="#">{t.nav.programs}</a>
+      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
+        >{t.nav.hivAids} <Icon name="heroicons:chevron-down" /></button
+      >
+      <ul class="pl-4 flex flex-col gap-2 text-sm">
+        <li>
+          <a href="#">{t.nav.aboutHivAids}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.epidemiology}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.statistics}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.waysOfTransmission}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.legislation}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.qa}</a>
+        </li>
+      </ul>
     </li>
+
+    <li>
+      <a href="#">{t.nav.hepatitis}</a>
+    </li>
+
+    <li>
+      <a href="#">{t.nav.infectiousDiseases}</a>
+    </li>
+
     <li>
       <button class="flex gap-1 items-center mb-2" aria-expanded="true">
         {t.nav.about} <Icon name="heroicons:chevron-down" /></button
       >
-      <ul class="pl-4 flex flex-col gap-2">
+      <ul class="pl-4 flex flex-col gap-2 text-sm">
         <li>
           <a href="#">{t.nav.about}</a>
         </li>
@@ -33,11 +66,12 @@ const t = useTranslations(lang);
         </li>
       </ul>
     </li>
+
     <li>
       <button class="flex gap-1 items-center mb-2" aria-expanded="true"
-        >{t.nav.departments} <Icon name="heroicons:chevron-down" /></button
+        >{t.nav.services} <Icon name="heroicons:chevron-down" /></button
       >
-      <ul class="pl-4 flex flex-col gap-2">
+      <ul class="pl-4 flex flex-col gap-2 text-sm">
         <li>
           <a href="#">{t.nav.ambulatory}</a>
         </li>
@@ -55,11 +89,7 @@ const t = useTranslations(lang);
         </li>
       </ul>
     </li>
-    <li>
-      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
-        >{t.nav.hivAids} <Icon name="heroicons:chevron-down" /></button
-      >
-    </li>
+
     <li>
       <a href="#">{t.nav.contact}</a>
     </li>

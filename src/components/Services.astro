@@ -1,0 +1,30 @@
+---
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const t = useTranslations(lang);
+---
+
+<section>
+  <h2>{t.services.title}</h2>
+  <div>
+    <h3>{t.services.ambulatory.title}</h3>
+    <p>{t.services.ambulatory.description}</p>
+  </div>
+  <div>
+    <h3>{t.services.stationary.title}</h3>
+    <p>{t.services.stationary.description}</p>
+  </div>
+  <div>
+    <h3>{t.services.instrumentalDiagnostics.title}</h3>
+    <p>{t.services.instrumentalDiagnostics.description}</p>
+  </div>
+  <div>
+    <h3>{t.services.scientificResearch.title}</h3>
+    <p>{t.services.scientificResearch.description}</p>
+  </div>
+  <div>
+    <h3>{t.services.laboratory.title}</h3>
+    <p>{t.services.laboratory.description}</p>
+  </div>
+</section>

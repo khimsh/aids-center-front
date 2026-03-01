@@ -35,3 +35,7 @@
     font-style: italic;
     font-display: swap;
 }
+
+p, span, a, li, button {
+    font-family: 'BPG Mrgvlovani', sans-serif;
+}
