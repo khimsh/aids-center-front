@@ -8,16 +8,10 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 ---
 
 <!-- site header -->
-<header
-  class="header px-4 xl:px-0 flex items-center xl:items-start py-3 gap-4 relative"
->
+<header class="header">
   <!-- Logo -->
   <div class="logo">
-    <a
-      href={homeUrl}
-      aria-label="AIDS Center Logo"
-      class="grid place-content-center"
-    >
+    <a href={homeUrl} aria-label="AIDS Center Logo" class="logo-link">
       <svg
         width="31"
         height="40"
@@ -42,10 +36,8 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
   </div>
 
   <!-- Menu Toggle Button for small screens -->
-  <button
-    class="menu-toggle ml-auto xl:ml-0 p-1 bg-blue-600 border-none rounded-s-xs text-white cursor-pointer xl:hidden shadow-blue-400/50 shadow-sm"
-  >
-    <Icon class="text-2xl" name="heroicons:bars-3" />
+  <button class="menu-toggle">
+    <Icon name="heroicons:bars-3" />
   </button>
 
   <!-- Main Navigation -->

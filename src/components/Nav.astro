@@ -8,22 +8,17 @@ const t = useTranslations(lang);
 const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 ---
 
-<nav
-  aria-label={t.nav.navAriaLabel}
-  class="main-nav xl:block xl:ml-auto absolute xl:static top-full left-0 w-[90%] bg-blue-500 xl:bg-transparent text-white xl:text-black z-50 xl:z-auto hidden"
->
-  <ul
-    class="flex flex-col xl:justify-end gap-3 xl:flex-row xl:gap-8 py-4 xl:py-0 px-4 xl:px-0"
-  >
+<nav aria-label={t.nav.navAriaLabel} class="main-nav">
+  <ul class="nav-list">
     <li>
       <a href={homeUrl}>{t.nav.home}</a>
     </li>
 
     <li>
-      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
+      <button class="nav-dropdown-btn" aria-expanded="true"
         >{t.nav.hivAids} <Icon name="heroicons:chevron-down" /></button
       >
-      <ul class="pl-4 flex flex-col gap-2 text-sm">
+      <ul class="nav-dropdown">
         <li>
           <a href="#">{t.nav.aboutHivAids}</a>
         </li>
@@ -54,10 +49,10 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
-      <button class="flex gap-1 items-center mb-2" aria-expanded="true">
+      <button class="nav-dropdown-btn" aria-expanded="true">
         {t.nav.about} <Icon name="heroicons:chevron-down" /></button
       >
-      <ul class="pl-4 flex flex-col gap-2 text-sm">
+      <ul class="nav-dropdown">
         <li>
           <a href="#">{t.nav.about}</a>
         </li>
@@ -68,10 +63,10 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
-      <button class="flex gap-1 items-center mb-2" aria-expanded="true"
+      <button class="nav-dropdown-btn" aria-expanded="true"
         >{t.nav.services} <Icon name="heroicons:chevron-down" /></button
       >
-      <ul class="pl-4 flex flex-col gap-2 text-sm">
+      <ul class="nav-dropdown">
         <li>
           <a href="#">{t.nav.ambulatory}</a>
         </li>
@@ -103,7 +98,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 
   if (menuToggle && mainNav) {
     menuToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("hidden");
+      mainNav.classList.toggle("is-open");
     });
   }
 </script>

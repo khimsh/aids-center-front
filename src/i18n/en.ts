@@ -26,6 +26,8 @@ export const en = {
 
   topbar: {
     hivAidsHotline: 'HIV/AIDS Hotline',
+    hepatitisB: 'Hepatitis B',
+    ambulatory: 'Ambulatory',
     emergency: 'Emergency',
   },
 
@@ -54,36 +56,43 @@ export const en = {
     }
   },
 
-    services: {
+  services: {
     title: 'Our Services',
-    ambulatory: {
-      title: 'Ambulatory',
-      description: 'Our ambulatory services include consultations, diagnostics, and treatment for various infectious diseases, including HIV/AIDS and Hepatitis management.',  
+    diagnostics: {
+      title: 'Diagnostic Services',
+      CT: 'Computed Tomography (CT)',
+      XRAY: 'X-ray Diagnostics',
+      ultrasound: 'Ultrasonography (Echo)',
+      fibroelastography: 'Fibroelastography',
+      pletismography: 'Pletismography',
     },
 
-    stationary: {
-      title: 'Stationary',
-      description: 'Our stationary services include hospitalization and intensive care for patients with severe infectious diseases who require continuous medical supervision.',  
-    },
-
-    instrumentalDiagnostics: {
-      title: 'Instrumental Diagnostics',
-      description: 'Our instrumental diagnostics services include various laboratory and imaging tests necessary for diagnosing infectious diseases and monitoring treatment effectiveness.',  
-    },
-
-    scientificResearch: {
-      title: 'Scientific Research',
-      description: 'Our scientific research department is dedicated to studying infectious diseases, including HIV/AIDS and Hepatitis, to develop new treatment methods and prevention strategies.',  
+    extraCorporalMethods: {
+      title: 'Extracorporeal Treatment Methods',
+      plasmapheresis: 'Plasmapheresis',
+      thrombocytapheresis: 'Thrombocytapheresis',
+      ctemCellMobilization: 'Stem Cell Mobilization',
+      kidneyReplacementTherapy: 'Kidney Replacement Therapy',
     },
 
     laboratory: {
       title: 'Laboratory',
-      description: 'Our laboratory services include a wide range of tests and analyses necessary for diagnosing infectious diseases, planning treatment, and monitoring patients.',  
+      clinicalBiochemistry: 'Clinical Biochemistry Laboratory',
+      hivAids: 'HIV/AIDS Laboratory',
+      bacterial: 'Bacteriological Laboratory',
+      immunology: 'Immunological Laboratory',
+      other: 'Molecular, Virological, and Serological Laboratories',
     },
   },
 
   aboutUs: {
-    title: 'About Us',
-    description: 'The T. Tsertsvadze Scientific-Practical Center for Infectious Diseases, AIDS, and Clinical Immunology is a leading medical institution in Georgia, specializing in the management of infectious diseases, including HIV/AIDS and Hepatitis. Our mission is to provide high-quality medical care, support scientific research, and raise public awareness about the prevention and management of infectious diseases.',  
+    title: 'About the Center',
+    heading: 'Georgia\'s national center for infectious diseases',
+    description: 'The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia\'s primary institution for the diagnosis, treatment, and research of infectious diseases. We deliver nine state healthcare programs and serve patients from across the country and region.',  
+    highlight: 'The only center in the Caucasus region equipped with the Mindray Resona R9 — an AI-powered expert-class diagnostic ultrasound system.',
+    statePrograms: 'Active state healthcare programs',
+    laboratories: 'Specialist laboratories',
+    numOne: 'National infectious disease reference center',
+    services: 'Emergency & ambulatory services',
   }
 }

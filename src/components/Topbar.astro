@@ -5,12 +5,74 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<div class="topbar bg-blue-600 text-white text-sm">
-  <div
-    class="container mx-auto flex flex-col gap-1 md:flex-row md:justify-between py-2 px-2 lg:px-0"
-  >
-    <a href="tel:+995551826666">{t.topbar.hivAidsHotline}: (+995) 551 826 666</a
-    >
-    <a href="tel:+995595395566">{t.topbar.emergency}: (+995) 595 395 566</a>
+<div class="topbar" role="banner">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-item">
+        <div class="dot"></div>
+        <span class="label">{t.topbar.hivAidsHotline}</span>
+        <a href="tel:+995551826666" class="number">551 826 666</a>
+      </div>
+      <div class="topbar-item">
+        <div class="dot"></div>
+        <span class="label">{t.topbar.hepatitisB}</span>
+        <a href="tel:+995551816666" class="number">551 816 666</a>
+      </div>
+      <div class="topbar-item">
+        <div class="dot"></div>
+        <span class="label">{t.topbar.ambulatory}</span>
+        <a href="tel:+995557252784" class="number">557 252 784</a>
+      </div>
+      <div class="topbar-item topbar-emergency">
+        <div class="dot"></div>
+        <span class="label">{t.topbar.emergency}</span>
+        <a href="tel:+995595395566" class="number">595 395 566</a>
+      </div>
+    </div>
   </div>
 </div>
+
+<style>
+  .topbar {
+    background: var(--navy);
+    padding: 10px 0;
+  }
+
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .topbar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .topbar-item .label {
+    font-weight: 400;
+  }
+
+  .topbar-item .number {
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.3px;
+  }
+
+  .topbar-item .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  .topbar-emergency .number {
+    color: #fca5a5;
+  }
+</style>

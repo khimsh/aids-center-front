@@ -18,22 +18,19 @@ function getLocalizedPath(locale: string) {
 }
 ---
 
-<div class="language-selector relative z-60">
-  <button id="lang-toggle" class="flex items-center gap-1">
+<div class="lang-switcher">
+  <button id="lang-toggle" class="lang-toggle">
     <Icon name="heroicons:globe-alt" />
-    <span>{currentLocale?.toUpperCase() ?? "ENG"}</span>
+    <span>{currentLocale?.toUpperCase() ?? "KA"}</span>
   </button>
 
-  <ul
-    id="lang-menu"
-    class="absolute top-full right-0 bg-white shadow-md rounded-md p-2 hidden group-hover:flex flex-col gap-1"
-  >
+  <ul id="lang-menu" class="lang-menu">
     {
       languages.map((lang) => (
         <li>
           <a
             href={getLocalizedPath(lang.code)}
-            class={`px-3 py-1 rounded hover:bg-gray-100 ${currentLocale === lang.code ? "font-bold text-blue-600" : ""}`}
+            class={`lang-option${currentLocale === lang.code ? " lang-option--active" : ""}`}
           >
             {lang.label}
           </a>
@@ -47,16 +44,14 @@ function getLocalizedPath(locale: string) {
   const toggle = document.getElementById("lang-toggle");
   const menu = document.getElementById("lang-menu");
 
-  toggle?.addEventListener("click", () => {
-    menu?.classList.toggle("hidden");
-    menu?.classList.toggle("flex");
+  toggle?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    menu?.classList.toggle("is-open");
   });
 
-  // Close when clicking outside
   document.addEventListener("click", (e) => {
     if (!toggle?.contains(e.target as Node)) {
-      menu?.classList.add("hidden");
-      menu?.classList.remove("flex");
+      menu?.classList.remove("is-open");
     }
   });
 </script>

@@ -5,17 +5,21 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<section>
-  <div>
-    <h2>{t.panels.hivAids.title}</h2>
-    <p>{t.panels.hivAids.description}</p>
-  </div>
-  <div>
-    <h2>{t.panels.hepatitis.title}</h2>
-    <p>{t.panels.hepatitis.description}</p>
-  </div>
-  <div>
-    <h2>{t.panels.infectiousDiseases.title}</h2>
-    <p>{t.panels.infectiousDiseases.description}</p>
+<section class="panels">
+  <div class="container panels-grid">
+    <div class="panel-card">
+      <h2 class="geo-font-bold panel-title">{t.panels.hivAids.title}</h2>
+      <p>{t.panels.hivAids.description}</p>
+    </div>
+    <div class="panel-card">
+      <h2 class="geo-font-bold panel-title">{t.panels.hepatitis.title}</h2>
+      <p>{t.panels.hepatitis.description}</p>
+    </div>
+    <div class="panel-card">
+      <h2 class="geo-font-bold panel-title">
+        {t.panels.infectiousDiseases.title}
+      </h2>
+      <p>{t.panels.infectiousDiseases.description}</p>
+    </div>
   </div>
 </section>

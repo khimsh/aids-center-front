@@ -3,54 +3,103 @@ import { useTranslations } from "../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
+
+import ClinicPhoto from "../assets/images/clinic.webp";
 ---
 
-<section class="hero overlay min-h-[70vh] flex items-center">
-  <div class="max-w-4xl mx-auto text-center text-white grid gap-8">
-    <div class="grid gap-4">
-      <h2 set:html={t.hero.title} class="text-2xl font-bold" />
+<section class="hero content-grid">
+  <div class="hero-content breakout">
+    <div>
+      <div class="hero-text">
+        <h2 set:html={t.hero.title} class="hero-title geo-font-bold" />
+        <p set:html={t.hero.description} class="hero-desc geo-font-bold" />
+      </div>
 
-      <p set:html={t.hero.description} class="text-md" />
+      <!-- CTAs -->
+      <ul class="hero-ctas">
+        <li>
+          <a href="tel:+995551826666" class="btn-primary">
+            {t.topbar.hivAidsHotline}
+          </a>
+        </li>
+        <li>
+          <a href="#" class="btn-secondary"> {t.hero.contactUs}</a>
+        </li>
+      </ul>
     </div>
 
-    <!-- CTAs -->
-    <ul class="flex gap-2 justify-center">
-      <li>
-        <a
-          href="tel:+995551826666"
-          class="font-bold bg-white flex items-center rounded-sm px-3 py-2 text-sm text-black border-2 border-transparent"
-        >
-          {t.topbar.hivAidsHotline}
-        </a>
-      </li>
-      <li>
-        <a
-          href="#"
-          class="font-bold bg-transparent flex items-center border-2 border-white rounded-sm px-3 py-2 text-sm text-white"
-          >{t.hero.contactUs}</a
-        >
-      </li>
-    </ul>
+    <div>
+      <img src={ClinicPhoto.src} alt="New Clinic" class="hero-image" />
+    </div>
   </div>
+  <!-- .hero-content -->
 </section>
 
 <style>
-  .font-bold {
-    font-family: "BPG Nino Mtavruli Bold", sans-serif;
-  }
-
   .hero {
-    background-image: url("../assets/images/clinic.webp");
-    background-size: cover;
-    background-position: bottom center;
-    background-repeat: no-repeat;
+    min-height: 70vh;
   }
 
-  .overlay {
-    border-image-source: linear-gradient(
-      rgba(21, 93, 252, 0.4),
-      rgba(21, 93, 252, 0.6)
-    );
-    border-image-slice: fill 1;
+  .hero-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-size: 1.65rem;
+    margin-bottom: 1rem;
+    color: #034485;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    font-family: "BPG Mrgvlovani", sans-serif;
+  }
+
+  .hero-image {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    background-position: bottom;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.16);
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn-primary {
+    background-color: #034485;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10em;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    border: 2px solid #034485;
+    white-space: nowrap;
+    &:hover {
+      background-color: #022f6c;
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: #034485;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10em;
+    font-size: 1rem;
+    border: 2px solid #034485;
+    white-space: nowrap;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+    &:hover {
+      background-color: #034485;
+      color: #fff;
+    }
   }
 </style>

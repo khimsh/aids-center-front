@@ -5,26 +5,45 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<section>
-  <h2>{t.services.title}</h2>
-  <div>
-    <h3>{t.services.ambulatory.title}</h3>
-    <p>{t.services.ambulatory.description}</p>
-  </div>
-  <div>
-    <h3>{t.services.stationary.title}</h3>
-    <p>{t.services.stationary.description}</p>
-  </div>
-  <div>
-    <h3>{t.services.instrumentalDiagnostics.title}</h3>
-    <p>{t.services.instrumentalDiagnostics.description}</p>
-  </div>
-  <div>
-    <h3>{t.services.scientificResearch.title}</h3>
-    <p>{t.services.scientificResearch.description}</p>
-  </div>
-  <div>
-    <h3>{t.services.laboratory.title}</h3>
-    <p>{t.services.laboratory.description}</p>
+<section class="services">
+  <div class="container">
+    <h2 class="services-title geo-font-bold">{t.services.title}</h2>
+    <div class="services-grid">
+      <div>
+        <h3 class="geo-font-bold services-subtitle">
+          {t.services.diagnostics.title}
+        </h3>
+        <ul>
+          <li>{t.services.diagnostics.CT}</li>
+          <li>{t.services.diagnostics.XRAY}</li>
+          <li>{t.services.diagnostics.ultrasound}</li>
+          <li>{t.services.diagnostics.fibroelastography}</li>
+          <li>{t.services.diagnostics.pletismography}</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="geo-font-bold services-subtitle">
+          {t.services.extraCorporalMethods.title}
+        </h3>
+        <ul>
+          <li>{t.services.extraCorporalMethods.plasmapheresis}</li>
+          <li>{t.services.extraCorporalMethods.thrombocytapheresis}</li>
+          <li>{t.services.extraCorporalMethods.ctemCellMobilization}</li>
+          <li>{t.services.extraCorporalMethods.kidneyReplacementTherapy}</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="geo-font-bold services-subtitle">
+          {t.services.laboratory.title}
+        </h3>
+        <ul>
+          <li>{t.services.laboratory.clinicalBiochemistry}</li>
+          <li>{t.services.laboratory.hivAids}</li>
+          <li>{t.services.laboratory.bacterial}</li>
+          <li>{t.services.laboratory.immunology}</li>
+          <li>{t.services.laboratory.other}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>

@@ -5,7 +5,127 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<section>
-  <h2>{t.aboutUs.title}</h2>
-  <p>{t.aboutUs.description}</p>
+<section class="about" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <p class="section-label">{t.aboutUs.title}</p>
+        <h2 class="section-title" id="about-title">
+          {t.aboutUs.heading}
+        </h2>
+        <p class="section-body">
+          {t.aboutUs.description}
+        </p>
+        <div class="about-highlight">
+          {t.aboutUs.highlight}
+        </div>
+      </div>
+      <div class="stats-grid" aria-label="Center statistics">
+        <div class="stat-card">
+          <div class="stat-num">9</div>
+          <div class="stat-label">{t.aboutUs.statePrograms}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5</div>
+          <div class="stat-label">{t.aboutUs.laboratories}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">#1</div>
+          <div class="stat-label">
+            {t.aboutUs.numOne}
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">{t.aboutUs.services}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+  .about {
+    padding: 72px 0;
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 50% 70% at 100% 0%,
+      rgba(192, 21, 42, 0.12) 0%,
+      transparent 55%
+    );
+    pointer-events: none;
+  }
+
+  .about-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .about .section-label {
+    color: #fca5a5;
+  }
+  .about .section-title {
+    color: var(--white);
+  }
+  .about .section-body {
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 100%;
+  }
+
+  .about-highlight {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 3px solid var(--red);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 14px 18px;
+    margin-top: 24px;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 22px 20px;
+    transition: background 0.2s;
+  }
+
+  .stat-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.45);
+    line-height: 1.4;
+  }
+</style>
