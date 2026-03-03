@@ -1,35 +1,39 @@
 @font-face {
-    font-family: 'BPG Mrgvlovani Caps';
-    src: url('../assets/fonts/BPGMrgvlovaniCaps2010.woff2') format('woff2'),
-        url('../assets/fonts/BPGMrgvlovaniCaps2010.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "BPG Mrgvlovani Caps";
+  src:
+    url("../assets/fonts/BPGMrgvlovaniCaps2010.woff2") format("woff2"),
+    url("../assets/fonts/BPGMrgvlovaniCaps2010.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'BPG Mrgvlovani';
-    src: url('../assets/fonts/BPGMrgvlovani2010.woff2') format('woff2'),
-        url('../assets/fonts/BPGMrgvlovani2010.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: "BPG Mrgvlovani";
+  src:
+    url("../assets/fonts/BPGMrgvlovani2010.woff2") format("woff2"),
+    url("../assets/fonts/BPGMrgvlovani2010.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'BPG Nino Mtavruli';
-    src: url('../assets/fonts/BPGNinoMtavruli.woff2') format('woff2'),
-        url('../assets/fonts/BPGNinoMtavruli.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
+  font-family: "BPG Nino Mtavruli";
+  src:
+    url("../assets/fonts/BPGNinoMtavruli.woff2") format("woff2"),
+    url("../assets/fonts/BPGNinoMtavruli.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'BPG Nino Mtavruli Bold';
-    src: url('../assets/fonts/BPGNinoMtavruli-Bold.woff2') format('woff2'),
-        url('../assets/fonts/BPGNinoMtavruli-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
+  font-family: "BPG Nino Mtavruli Bold";
+  src:
+    url("../assets/fonts/BPGNinoMtavruli-Bold.woff2") format("woff2"),
+    url("../assets/fonts/BPGNinoMtavruli-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
 }

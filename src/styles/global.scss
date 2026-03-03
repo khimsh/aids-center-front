@@ -2,13 +2,13 @@
 @use "./contentGrid.scss";
 
 * {
-    /* box-sizing: border-box; */
-    margin: 0;
-    padding: 0;
+  /* box-sizing: border-box; */
+  margin: 0;
+  padding: 0;
 }
 
 :root {
-    --primary: #034485;
+  --primary: #034485;
 }
 
 html {
@@ -16,15 +16,20 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-p, span, a, li, button {
-   font-family: 'BPG Mrgvlovani', sans-serif;
+p,
+span,
+a,
+li,
+button {
+  font-family: "BPG Mrgvlovani", sans-serif;
 }
 
 a {
   text-decoration: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -35,6 +40,3 @@ ul, ol {
 html[lang="en"] .geo-font-bold {
   font-family: "Playfair Display", serif;
 }
-
-
-
