@@ -1,0 +1,26 @@
+---
+interface Props {
+  badge: string;
+  title: string;
+  description: string;
+  ctaText: string;
+  href?: string;
+  variant?: "hiv" | "hep" | "prep";
+}
+
+const {
+  badge,
+  title,
+  description,
+  ctaText,
+  href = "#",
+  variant = "hiv",
+} = Astro.props as Props;
+---
+
+<div class={`program-card`} data-variant={variant}>
+  <div class="program-badge">{badge}</div>
+  <h3 class="program-title">{title}</h3>
+  <p class="program-desc">{description}</p>
+  <a href={href} class="program-link">{ctaText}</a>
+</div>

@@ -8,41 +8,61 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 ---
 
 <!-- site header -->
-<header class="header">
-  <!-- Logo -->
-  <div class="logo">
-    <a href={homeUrl} aria-label="AIDS Center Logo" class="logo-link">
-      <svg
-        width="31"
-        height="40"
-        viewBox="0 0 31 40"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M15.5 7.59091L9.66667 13.3182L15.5 19.0455L21.6111 13.3182L15.5 7.59091Z"
-          fill="#FF0000"></path>
-        <path
-          d="M16.0556 20.4091L22.7222 14.1364L26.0556 17.4091L21.6111 21.7727V28.3182H16.0556V20.4091Z"
-          fill="#FF0000"></path>
-        <path
-          d="M9.38889 28.3182H14.9444V20.4091L8.27778 14.1364L4.94444 17.4091L9.38889 21.7727V28.3182Z"
-          fill="#FF0000"></path>
-        <path
-          d="M0.5 0.5V33.5C1.14833 34.48 1.59679 34.8562 2.72222 34.8636H12.7222C12.8246 35.4547 15.6295 37.793 14.9444 37.0455C14.2594 36.2979 15.2222 38.1364 15.2222 38.1364L15.5 37.0455C16.6612 36.1004 17.0344 35.6587 17.7222 34.8636H28.8333C29.8883 34.3789 30.2416 33.891 30.5 32.6818V0.5H0.5Z"
-          stroke="#FF0000"></path>
-      </svg>
-    </a>
+<header class="header content-grid">
+  <div class="header-wrap">
+    <!-- Logo -->
+    <div class="logo">
+      <a href={homeUrl} aria-label="AIDS Center Logo" class="logo-link">
+        <svg
+          width="31"
+          height="40"
+          viewBox="0 0 31 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15.5 7.59091L9.66667 13.3182L15.5 19.0455L21.6111 13.3182L15.5 7.59091Z"
+            fill="#FF0000"></path>
+          <path
+            d="M16.0556 20.4091L22.7222 14.1364L26.0556 17.4091L21.6111 21.7727V28.3182H16.0556V20.4091Z"
+            fill="#FF0000"></path>
+          <path
+            d="M9.38889 28.3182H14.9444V20.4091L8.27778 14.1364L4.94444 17.4091L9.38889 21.7727V28.3182Z"
+            fill="#FF0000"></path>
+          <path
+            d="M0.5 0.5V33.5C1.14833 34.48 1.59679 34.8562 2.72222 34.8636H12.7222C12.8246 35.4547 15.6295 37.793 14.9444 37.0455C14.2594 36.2979 15.2222 38.1364 15.2222 38.1364L15.5 37.0455C16.6612 36.1004 17.0344 35.6587 17.7222 34.8636H28.8333C29.8883 34.3789 30.2416 33.891 30.5 32.6818V0.5H0.5Z"
+            stroke="#FF0000"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Menu Toggle Button for small screens -->
+    <button class="menu-toggle">
+      <Icon name="heroicons:bars-3" />
+    </button>
+
+    <!-- Main Navigation -->
+    <Nav />
+
+    <!-- Language Selector -->
+    <LanguageSwitcher />
   </div>
-
-  <!-- Menu Toggle Button for small screens -->
-  <button class="menu-toggle">
-    <Icon name="heroicons:bars-3" />
-  </button>
-
-  <!-- Main Navigation -->
-  <Nav />
-
-  <!-- Language Selector -->
-  <LanguageSwitcher />
 </header>
+
+<style>
+  .header {
+    padding-block: 1rem;
+  }
+  .header-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .menu-toggle {
+    display: none;
+
+    @media (max-width: 750px) {
+      display: block;
+    }
+  }
+</style>

@@ -1,0 +1,40 @@
+@use "./fontFace.scss";
+@use "./contentGrid.scss";
+
+* {
+    /* box-sizing: border-box; */
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #034485;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p, span, a, li, button {
+   font-family: 'BPG Mrgvlovani', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+.geo-font-bold {
+  font-family: "BPG Nino Mtavruli Bold", sans-serif;
+}
+
+html[lang="en"] .geo-font-bold {
+  font-family: "Playfair Display", serif;
+}
+
+
+

@@ -94,5 +94,23 @@ export const en = {
     laboratories: 'Specialist laboratories',
     numOne: 'National infectious disease reference center',
     services: 'Emergency & ambulatory services',
+  },
+
+  programs: {
+    label: 'Free State Programs',
+    title: 'Healthcare available to you,<br />at no cost',
+    linkText: 'All Programs',
+    hivAids: 'HIV / AIDS',
+    hivAidsTitle: 'Free Anonymous HIV Testing & Consultation',
+    hivAidsDescription: 'Confidential testing for HIV infection with same-day results. Available to anyone regardless of risk level. No referral needed.',
+    hivAidsCta: 'Learn more & book',
+    hepatitisB: 'Hepatitis B',
+    hepatitisBTitle: 'Free Hepatitis B Diagnosis & Treatment Program',
+    hepatitisBDescription: 'State-funded diagnosis and treatment for Hepatitis B, available to all Georgian citizens. Includes full diagnostic workup.',
+    hepatitisBCta: 'Check eligibility',
+    prevention: 'Prevention',
+    preventionTitle: 'PrEP Prophylaxis — HIV Prevention Program',
+    preventionDescription: 'Pre-exposure prophylaxis for individuals at high risk of HIV infection. Provided free of charge through the state healthcare program.',
+    preventionCta: 'Find out more',
   }
 }

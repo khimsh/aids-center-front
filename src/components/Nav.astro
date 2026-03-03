@@ -91,6 +91,37 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
   </ul>
 </nav>
 
+<style>
+  .main-nav {
+    margin-left: auto;
+    font-family: "BPG Mrgvlovani Caps", sans-serif;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 12px;
+  }
+
+  .nav-dropdown {
+    display: none;
+  }
+
+  .nav-dropdown-btn {
+    background-color: transparent;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  li,
+  button {
+    font-size: 14px;
+  }
+</style>
+
 <script>
   // Toggle mobile menu
   const menuToggle = document.querySelector(".menu-toggle");
