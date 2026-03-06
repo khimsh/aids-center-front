@@ -3,6 +3,6 @@
   "editor.defaultFormatter": "astro-build.astro-vscode",
   "editor.formatOnSave": true,
   "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode" // Or your preferred formatter
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

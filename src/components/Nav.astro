@@ -15,7 +15,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
-      <button class="nav-dropdown-btn" aria-expanded="true"
+      <button class="nav-dropdown-btn" aria-expanded="false"
         >{t.nav.hivAids} <Icon name="heroicons:chevron-down" /></button
       >
       <ul class="nav-dropdown">
@@ -49,7 +49,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
-      <button class="nav-dropdown-btn" aria-expanded="true">
+      <button class="nav-dropdown-btn" aria-expanded="false">
         {t.nav.about} <Icon name="heroicons:chevron-down" /></button
       >
       <ul class="nav-dropdown">
@@ -63,7 +63,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
-      <button class="nav-dropdown-btn" aria-expanded="true"
+      <button class="nav-dropdown-btn" aria-expanded="false"
         >{t.nav.services} <Icon name="heroicons:chevron-down" /></button
       >
       <ul class="nav-dropdown">
@@ -92,33 +92,84 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 </nav>
 
 <style>
-  .main-nav {
-    margin-left: auto;
-    font-family: "BPG Mrgvlovani Caps", sans-serif;
-  }
-
   .nav-list {
     display: flex;
-    gap: 12px;
+    gap: 1rem;
   }
 
   .nav-dropdown {
-    display: none;
+    position: absolute;
+    display: grid;
+    gap: 0.5rem;
+    padding: 1rem;
+    color: #fff;
+    background-color: var(--primary);
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+
+    &.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(10px);
+    }
+
+    a {
+      color: #fff;
+      font-size: 0.85rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .nav-dropdown-btn {
+    position: relative;
     background-color: transparent;
     border: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 0.5rem;
     font-family: inherit;
     cursor: pointer;
+
+    [data-icon] {
+      transition: transform 0.2s ease;
+    }
+
+    &[aria-expanded="true"] [data-icon] {
+      transform: rotate(180deg);
+    }
   }
 
   li,
+  a,
   button {
-    font-size: 14px;
+    font-size: 0.9rem;
+    font-family: "Noto Sans Georgian", sans-serif;
+    font-weight: 500;
+    color: oklch(from var(--primary) 20% c h);
+  }
+
+  .nav-list > li > a,
+  .nav-list > li > button {
+    transition:
+      color 0.2s ease,
+      opacity 0.2s ease;
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+
+  .nav-list > li > button[aria-expanded="true"] {
+    color: var(--primary);
   }
 </style>
 
@@ -132,4 +183,39 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
       mainNav.classList.toggle("is-open");
     });
   }
+
+  // Dropdown toggle
+  const dropdownBtns =
+    document.querySelectorAll<HTMLButtonElement>(".nav-dropdown-btn");
+
+  dropdownBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const dropdown = btn.nextElementSibling as HTMLElement | null;
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+
+      // Close all other open dropdowns
+      dropdownBtns.forEach((other) => {
+        if (other !== btn) {
+          other.setAttribute("aria-expanded", "false");
+          (other.nextElementSibling as HTMLElement | null)?.classList.remove(
+            "is-open",
+          );
+        }
+      });
+
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      dropdown?.classList.toggle("is-open", !isOpen);
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener("click", () => {
+    dropdownBtns.forEach((btn) => {
+      btn.setAttribute("aria-expanded", "false");
+      (btn.nextElementSibling as HTMLElement | null)?.classList.remove(
+        "is-open",
+      );
+    });
+  });
 </script>

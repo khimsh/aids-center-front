@@ -1,29 +1,46 @@
 ---
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const t = useTranslations(lang);
+
 interface Props {
-  badge: string;
+  featured?: boolean;
+  image: string;
   title: string;
-  description: string;
-  ctaText: string;
-  href?: string;
-  variant?: "hiv" | "hep" | "prep";
+  articleTag: string;
+  content: string;
+  link: string;
+  date?: string;
 }
 
 const {
-  badge,
+  featured = false,
+  image,
   title,
-  description,
-  ctaText,
-  href = "#",
-  variant = "hiv",
+  articleTag,
+  content,
+  link,
+  date = "",
 } = Astro.props as Props;
 ---
 
-<div class={`program-card`} data-variant={variant}>
-  <div class="program-badge">{badge}</div>
-  <h3 class="program-title">{title}</h3>
-  <p class="program-desc">{description}</p>
-  <a href={href} class="program-link">
-    {ctaText}
+<article class="article-card" data-featured={featured}>
+  <figure>
+    <img src={image} alt={title} class="article-image" />
+    <figcaption class="mt-4">
+      <h3 class="article-title">{title}</h3>
+      <div class="article-tag">{articleTag}</div>
+      <time datetime="" class="article-time">{date}</time>
+    </figcaption>
+  </figure>
+
+  <p>
+    {content}
+  </p>
+
+  <a href={link} class="article-link"
+    >{t.article.linkText}
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -36,45 +53,22 @@ const {
         clip-rule="evenodd"></path>
     </svg>
   </a>
-</div>
+</article>
 
 <style>
-  .program-card {
+  .article-card {
     display: grid;
     gap: 12px;
     background-color: #fff;
     padding: 16px;
     border-radius: 10px;
+
+    &[data-featured="true"] {
+      grid-column: span 2;
+    }
   }
 
-  .program-badge {
-    justify-self: start;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 8px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: "Noto Sans Georgian", sans-serif;
-    color: oklch(from var(--primary) 90% c h);
-    background-color: oklch(from var(--primary) 20% c h);
-    border-radius: 10px;
-  }
-
-  .program-title {
-    font-size: 20px;
-    font-weight: 700;
-    font-family: "BPG Nino Mtavruli Bold", serif;
-    color: #313131;
-  }
-
-  .program-desc {
-    font-size: 14px;
-    font-family: "Noto Sans Georgian", sans-serif;
-    color: #454545;
-  }
-
-  .program-link {
+  .article-link {
     justify-self: start;
     position: relative;
     display: inline-flex;

@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 const { currentLocale } = Astro;
 const currentPath = Astro.url.pathname;
 
@@ -8,23 +10,31 @@ const languages = [
 ];
 
 function getLocalizedPath(locale: string) {
-  // Strip any existing locale prefix
   const pathWithoutLocale = currentPath.replace(/^\/(ka|en)/, "") || "/";
-
   if (locale === "ka") return pathWithoutLocale;
   return `/en${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
 }
+
+const activeLabel =
+  languages.find((l) => l.code === currentLocale)?.label ?? "KA";
 ---
 
 <div class="lang-switcher">
-  <button id="lang-toggle" class="lang-toggle">
-    <span>{currentLocale?.toUpperCase() ?? "KA"}</span>
+  <button
+    id="lang-toggle"
+    class="lang-toggle"
+    aria-expanded="false"
+    aria-label="Switch language"
+  >
+    <Icon name="heroicons:globe-alt" class="lang-globe" />
+    <span class="lang-current">{activeLabel}</span>
+    <Icon name="heroicons:chevron-down" class="lang-chevron" />
   </button>
 
-  <ul id="lang-menu" class="lang-menu">
+  <ul id="lang-menu" class="lang-menu" role="listbox">
     {
       languages.map((lang) => (
-        <li>
+        <li role="option">
           <a
             href={getLocalizedPath(lang.code)}
             class={`lang-option${currentLocale === lang.code ? " lang-option--active" : ""}`}
@@ -38,22 +48,103 @@ function getLocalizedPath(locale: string) {
 </div>
 
 <style>
+  .lang-switcher {
+    position: relative;
+    margin-left: auto;
+  }
+
   .lang-toggle {
     background-color: transparent;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
+    gap: 0.3rem;
     cursor: pointer;
-    border: none;
-    font-size: 14px;
+    border: 1.5px solid oklch(from var(--primary) 70% c h / 0.4);
+    border-radius: 99px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.8rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: oklch(from var(--primary) 20% c h);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      border-color: var(--primary);
+      background-color: oklch(from var(--primary) 97% c h / 0.5);
+    }
+
+    .lang-globe {
+      width: 1rem;
+      height: 1rem;
+      color: var(--primary);
+    }
+
+    .lang-chevron {
+      width: 0.8rem;
+      height: 0.8rem;
+      transition: transform 0.2s ease;
+    }
+
+    &[aria-expanded="true"] {
+      border-color: var(--primary);
+      background-color: oklch(from var(--primary) 97% c h / 0.5);
+
+      .lang-chevron {
+        transform: rotate(180deg);
+      }
+    }
   }
+
   .lang-menu {
-    display: none;
     position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.4rem;
+    background-color: #fff;
+    border: 1.5px solid oklch(from var(--primary) 70% c h / 0.25);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
 
     &.is-open {
-      display: flex;
-      flex-direction: column;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
+
+  .lang-option {
+    display: block;
+    padding: 0.3rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: oklch(from var(--primary) 30% c h);
+    text-align: center;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover {
+      background-color: oklch(from var(--primary) 94% c h);
+      color: var(--primary);
+    }
+
+    &.lang-option--active {
+      background-color: var(--primary);
+      color: #fff;
     }
   }
 </style>
@@ -64,12 +155,13 @@ function getLocalizedPath(locale: string) {
 
   toggle?.addEventListener("click", (e) => {
     e.stopPropagation();
-    menu?.classList.toggle("is-open");
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!isOpen));
+    menu?.classList.toggle("is-open", !isOpen);
   });
 
-  document.addEventListener("click", (e) => {
-    if (!toggle?.contains(e.target as Node)) {
-      menu?.classList.remove("is-open");
-    }
+  document.addEventListener("click", () => {
+    toggle?.setAttribute("aria-expanded", "false");
+    menu?.classList.remove("is-open");
   });
 </script>

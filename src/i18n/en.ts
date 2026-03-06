@@ -38,26 +38,10 @@ export const en = {
     contactUs: 'Contact Us',
   },
 
-  panels: {
-    hivAids: {
-      title: 'HIV/AIDS',
-      description: 'Get free anonymous/confidential HIV/AIDS counseling and testing',
-    },
-
-    hepatitis: {
-      title: 'Hepatitis',
-      description: 'The state program for managing Hepatitis B has started in Georgia! Within the framework of the program, diagnostic tests and antiviral treatment are completely free!',
-      cat: 'To book a visit and/or get information:',
-    },
-
-    infectiousDiseases: {
-      title: 'Infectious Diseases',
-      description: 'Infectious diseases are caused by microorganisms such as bacteria, viruses, fungi, and parasites. They can be transmitted from person to person, from animals to humans, or from the environment to humans.',  
-    }
-  },
-
   services: {
     title: 'Our Services',
+    heading: 'Diagnostic and Laboratory Services',
+
     diagnostics: {
       title: 'Diagnostic Services',
       CT: 'Computed Tomography (CT)',
@@ -90,6 +74,9 @@ export const en = {
     heading: 'Georgia\'s national center for infectious diseases',
     description: 'The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia\'s primary institution for the diagnosis, treatment, and research of infectious diseases. We deliver nine state healthcare programs and serve patients from across the country and region.',  
     highlight: 'The only center in the Caucasus region equipped with the Mindray Resona R9 — an AI-powered expert-class diagnostic ultrasound system.',
+  },
+
+  stats: {
     statePrograms: 'Active state healthcare programs',
     laboratories: 'Specialist laboratories',
     numOne: 'National infectious disease reference center',
@@ -98,7 +85,7 @@ export const en = {
 
   programs: {
     label: 'Free State Programs',
-    title: 'Healthcare available to you,<br />at no cost',
+    title: 'Healthcare available to you, at no cost',
     linkText: 'All Programs',
     hivAids: 'HIV / AIDS',
     hivAidsTitle: 'Free Anonymous HIV Testing & Consultation',
@@ -112,5 +99,26 @@ export const en = {
     preventionTitle: 'PrEP Prophylaxis — HIV Prevention Program',
     preventionDescription: 'Pre-exposure prophylaxis for individuals at high risk of HIV infection. Provided free of charge through the state healthcare program.',
     preventionCta: 'Find out more',
-  }
+  },
+
+  news: {
+    label: 'Articles and News',
+    title: 'Latest News and Research',
+    linkText: 'All Articles',
+  },
+
+  article: {
+    linkText: 'Read More',
+  },
+
+  contact: {
+    title: 'Contact Us',
+    heading: 'Contact information and address',
+    address: 'Address: 70 Lubliana Street, Tbilisi, Georgia',
+    phoneAmbulatory: 'Ambulatory (Infectious):  (+995) 557 252 784',
+    phoneHIV: 'HIV/AIDS Consultation:  (+995) 551 826 666',
+    phoneHEP: 'Hepatitis B: (+995) 551 816 666',
+    emergency: 'Emergency: (+995) 595 395 566',
+    email: 'Email: aids@aidscenter.ge',
+  },
 }

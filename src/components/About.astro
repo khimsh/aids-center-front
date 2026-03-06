@@ -1,131 +1,108 @@
 ---
+import About1 from "../assets/images/about1.jpg";
+import About2 from "../assets/images/about2.jpg";
+import About3 from "../assets/images/about3.jpg";
 import { useTranslations } from "../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<section class="about" aria-labelledby="about-title">
-  <div class="container">
-    <div class="about-inner">
-      <div>
-        <p class="section-label">{t.aboutUs.title}</p>
-        <h2 class="section-title" id="about-title">
-          {t.aboutUs.heading}
-        </h2>
-        <p class="section-body">
-          {t.aboutUs.description}
-        </p>
-        <div class="about-highlight">
-          {t.aboutUs.highlight}
-        </div>
+<section class="about content-grid" aria-labelledby="about-title">
+  <div class="about-inner">
+    <div>
+      <p class="section-label">{t.aboutUs.title}</p>
+      <h2 class="section-title" id="about-title">
+        {t.aboutUs.heading}
+      </h2>
+      <p class="section-body">
+        {t.aboutUs.description}
+      </p>
+      <div class="about-highlight">
+        {t.aboutUs.highlight}
       </div>
-      <div class="stats-grid" aria-label="Center statistics">
-        <div class="stat-card">
-          <div class="stat-num">9</div>
-          <div class="stat-label">{t.aboutUs.statePrograms}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">5</div>
-          <div class="stat-label">{t.aboutUs.laboratories}</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">#1</div>
-          <div class="stat-label">
-            {t.aboutUs.numOne}
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">24/7</div>
-          <div class="stat-label">{t.aboutUs.services}</div>
-        </div>
-      </div>
+
+      <a href="#" class="section-view-all">
+        {t.programs.linkText}
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </a>
+    </div>
+    <div class="about-images-grid">
+      <figure>
+        <img src={About1.src} alt="" />
+      </figure>
+      <figure>
+        <img src={About2.src} alt="" />
+      </figure>
+      <figure>
+        <img src={About3.src} alt="" />
+      </figure>
     </div>
   </div>
 </section>
 
 <style>
   .about {
-    padding: 72px 0;
-    background: var(--navy);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse 50% 70% at 100% 0%,
-      rgba(192, 21, 42, 0.12) 0%,
-      transparent 55%
-    );
-    pointer-events: none;
+    padding-block: 4rem;
   }
 
   .about-inner {
-    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: center;
-  }
-
-  .about .section-label {
-    color: #fca5a5;
-  }
-  .about .section-title {
-    color: var(--white);
-  }
-  .about .section-body {
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 100%;
+    gap: 2rem;
   }
 
   .about-highlight {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 3px solid var(--red);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    padding: 14px 18px;
-    margin-top: 24px;
-    font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.75);
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: oklch(from var(--primary) 94% c h);
+    border-left: 4px solid var(--primary);
     font-style: italic;
-    line-height: 1.6;
+    color: var(--primary);
   }
 
-  .stats-grid {
+  .about-images-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    height: 100%;
+    max-height: 400px;
+
+    & figure:first-child {
+      grid-row: span 2;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
-  .stat-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-md);
-    padding: 22px 20px;
-    transition: background 0.2s;
+  figure {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+    }
   }
 
-  .stat-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 700;
-    color: white;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
-
-  .stat-label {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.45);
-    line-height: 1.4;
+  .section-view-all {
+    margin-block-start: 1.5rem;
+    color: var(--primary);
   }
 </style>

@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Panels from "../components/Panels.astro";
 import Services from "../components/Services.astro";
 import About from "../components/About.astro";
+import Stats from "../components/Stats.astro";
 import Programs from "../components/Programs.astro";
+import News from "../components/News.astro";
+import Contact from "../components/Contact.astro";
 import { useTranslations } from "../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
@@ -12,15 +14,17 @@ const t = useTranslations(lang);
 ---
 
 <Layout>
-  <!-- Hero section -->
   <Hero />
-  <!-- Programs section -->
+
   <Programs />
-  <!-- Panels section -->
-  <!-- <Panels /> -->
-  <!-- Services section -->
-  <!-- <Services /> -->
-  <!-- About section -->
-  <!-- <About /> -->
-  <!-- Contact section -->
+
+  <Services />
+
+  <About />
+
+  <Stats />
+
+  <News />
+
+  <Contact />
 </Layout>

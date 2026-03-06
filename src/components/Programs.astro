@@ -13,15 +13,12 @@ const t = useTranslations(lang);
 >
   <div class="container">
     <div class="programs-header">
-      <div>
-        <p class="section-label">{t.programs.label}</p>
-        <h2
-          class="section-title"
-          id="programs-title"
-          set:html={t.programs.title}
-        />
-      </div>
-      <a href="#" class="view-all">{t.programs.linkText} →</a>
+      <p class="section-label">{t.programs.label}</p>
+      <h2
+        class="section-title"
+        id="programs-title"
+        set:html={t.programs.title}
+      />
     </div>
     <div class="programs-grid">
       <ProgramCard
@@ -51,34 +48,38 @@ const t = useTranslations(lang);
         variant="prep"
       />
     </div>
+
+    <a href="#" class="section-view-all">
+      {t.programs.linkText}
+
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </a>
   </div>
 </section>
 
 <style>
   .programs {
-    margin-block: 4rem;
+    padding-block: 4rem;
+    background-color: var(--primary);
   }
+
   .programs-grid {
+    margin-bottom: 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
   }
 
-  .section-label {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    margin-bottom: 0.5rem;
-    color: #fff;
-    background-color: oklch(from var(--primary) l c h);
-    font-size: 1rem;
-    font-family: "BPG Mrgvlovani Caps", sans-serif;
-    text-box: trim-both cap text;
-
-    html[lang="en"] & {
-      font-family: "Playfair Display", serif;
-    }
+  .section-title {
+    color: #ebebeb;
   }
 </style>

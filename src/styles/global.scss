@@ -21,11 +21,15 @@ span,
 a,
 li,
 button {
-  font-family: "BPG Mrgvlovani", sans-serif;
+  font-family: "Noto Sans Georgian", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
 }
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 ul,
@@ -33,10 +37,68 @@ ol {
   list-style: none;
 }
 
-.geo-font-bold {
-  font-family: "BPG Nino Mtavruli Bold", sans-serif;
+// Section styles
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+  color: oklch(from var(--primary) 90% c h);
+  background-color: oklch(from var(--primary) 20% c h);
+  font-size: 0.85rem;
+  font-family: "Noto Sans Georgian", sans-serif;
+
+  html[lang="en"] & {
+    font-family: "Playfair Display", serif;
+  }
 }
 
-html[lang="en"] .geo-font-bold {
-  font-family: "Playfair Display", serif;
+body {
+  background: #eef4ff;
+}
+
+.section-title {
+  margin-bottom: 32px;
+  font-family: "BPG Nino Mtavruli Bold";
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.section-view-all {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: "Noto Sans Georgian", sans-serif;
+  color: #fff;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
 }

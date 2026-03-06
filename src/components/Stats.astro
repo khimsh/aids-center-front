@@ -1,0 +1,65 @@
+---
+import { useTranslations } from "../i18n/utils";
+
+const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const t = useTranslations(lang);
+---
+
+<div class="stats content-grid" id="stats" aria-labelledby="stats-title">
+  <div class="stats-grid" aria-label="Center statistics">
+    <div class="stat-card">
+      <div class="stat-num">9</div>
+      <div class="stat-label">{t.stats.statePrograms}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">{t.stats.laboratories}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">#1</div>
+      <div class="stat-label">
+        {t.stats.numOne}
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">24/7</div>
+      <div class="stat-label">{t.stats.services}</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stats {
+    padding-block: 2rem;
+    background-color: oklch(from var(--primary) 94% c h);
+  }
+
+  .stats-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    font-family: "Noto Sans Georgian", sans-serif;
+    text-align: center;
+
+    html[lang="en"] & {
+      font-family: "Playfair Display", serif;
+    }
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: #555;
+    font-family: "Noto Sans Georgian", sans-serif;
+    text-align: center;
+
+    html[lang="en"] & {
+      font-family: "Playfair Display", serif;
+    }
+  }
+</style>

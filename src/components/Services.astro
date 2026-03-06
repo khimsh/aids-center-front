@@ -5,45 +5,171 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<section class="services">
-  <div class="container">
-    <h2 class="services-title geo-font-bold">{t.services.title}</h2>
-    <div class="services-grid">
-      <div>
-        <h3 class="geo-font-bold services-subtitle">
-          {t.services.diagnostics.title}
-        </h3>
-        <ul>
-          <li>{t.services.diagnostics.CT}</li>
-          <li>{t.services.diagnostics.XRAY}</li>
-          <li>{t.services.diagnostics.ultrasound}</li>
-          <li>{t.services.diagnostics.fibroelastography}</li>
-          <li>{t.services.diagnostics.pletismography}</li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="geo-font-bold services-subtitle">
-          {t.services.extraCorporalMethods.title}
-        </h3>
-        <ul>
-          <li>{t.services.extraCorporalMethods.plasmapheresis}</li>
-          <li>{t.services.extraCorporalMethods.thrombocytapheresis}</li>
-          <li>{t.services.extraCorporalMethods.ctemCellMobilization}</li>
-          <li>{t.services.extraCorporalMethods.kidneyReplacementTherapy}</li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="geo-font-bold services-subtitle">
-          {t.services.laboratory.title}
-        </h3>
-        <ul>
-          <li>{t.services.laboratory.clinicalBiochemistry}</li>
-          <li>{t.services.laboratory.hivAids}</li>
-          <li>{t.services.laboratory.bacterial}</li>
-          <li>{t.services.laboratory.immunology}</li>
-          <li>{t.services.laboratory.other}</li>
-        </ul>
-      </div>
+<section class="services content-grid" aria-labelledby="services-title">
+  <div>
+    <p class="section-label">{t.services.title}</p>
+    <h2 id="services-title" class="section-title">
+      {t.services.heading}
+    </h2>
+  </div>
+
+  <div class="services-grid">
+    <div class="services-card">
+      <svg
+        width="64"
+        height="64"
+        viewBox="0 0 64 64"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.99612 15.9999H47.939V17.4607C48.8674 17.5979 49.7596 17.8431 50.6019 18.1827V13.3333H5.33325V45.3333H26.6362V47.9999H21.3105C20.5751 47.9999 19.979 48.5969 19.979 49.3332C19.979 50.0696 20.5751 50.6666 21.3105 50.6666H34.6247C35.3601 50.6666 35.9562 50.0696 35.9562 49.3332C35.9562 48.5969 35.3601 47.9999 34.6247 47.9999H29.299V45.3333H50.6019V39.1439C49.7594 39.4837 48.8671 39.729 47.939 39.8663V42.6666H7.99612V28.4998H16.4266L19.1431 24.0824L23.7553 33.4158L28.2131 26.1665H35.4471C35.6091 25.2301 35.893 24.3355 36.2819 23.4998H26.7257L24.0091 27.9173L19.3971 18.5839L14.9393 25.8331H7.99612V15.9999Z"
+          fill="#00378E"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M46.4082 37.3333C48.488 37.3333 50.3964 36.5987 51.8888 35.3743L56.7838 40.2761L58.6667 38.3904L53.6686 33.3852C54.5503 32.0275 55.0624 30.4069 55.0624 28.6667C55.0624 23.8801 51.1878 20 46.4082 20C41.6284 20 37.7539 23.8801 37.7539 28.6667C37.7539 33.4532 41.6284 37.3333 46.4082 37.3333ZM46.4082 34.6667C49.7171 34.6667 52.3996 31.9804 52.3996 28.6667C52.3996 25.3529 49.7171 22.6667 46.4082 22.6667C43.0991 22.6667 40.4167 25.3529 40.4167 28.6667C40.4167 31.9804 43.0991 34.6667 46.4082 34.6667Z"
+          fill="#00378E"></path>
+        <path d="M10.6589 34.6667H18.6475V32H10.6589V34.6667Z" fill="#00378E"
+        ></path>
+        <path
+          d="M10.6589 39.9999V37.3333H26.6361V39.9999H10.6589Z"
+          fill="#00378E"></path>
+      </svg>
+
+      <h3 class="services-subtitle">
+        {t.services.diagnostics.title}
+      </h3>
+      <ul class="services-list">
+        <li>{t.services.diagnostics.CT}</li>
+        <li>{t.services.diagnostics.XRAY}</li>
+        <li>{t.services.diagnostics.ultrasound}</li>
+        <li>{t.services.diagnostics.fibroelastography}</li>
+        <li>{t.services.diagnostics.pletismography}</li>
+      </ul>
+    </div>
+    <div class="services-card">
+      <svg
+        width="64"
+        height="64"
+        viewBox="0 0 64 64"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M9.09079 17.8188C8.48829 18.4213 8.48829 19.3981 9.09079 20.0006C9.69328 20.6031 10.6701 20.6031 11.2726 20.0006L12.3642 18.909L17.8181 24.3629L13.4545 28.7266C12.8519 29.3292 12.8519 30.3059 13.4545 30.9085C14.0569 31.511 15.0337 31.511 15.6362 30.9085L17.8175 28.727L36.3635 47.2734C38.6001 49.5101 41.8686 50.0862 44.6366 49.0015L46.1814 50.5463C46.9893 51.3542 48.1335 51.6205 49.1631 51.3451L52.7273 54.9094C53.3297 55.5119 54.3065 55.5119 54.909 54.9094C55.5115 54.3069 55.5115 53.3301 54.909 52.7276L51.3443 49.1628C51.6189 48.1335 51.3525 46.9901 50.5451 46.1826L49.0005 44.638C50.0853 41.8697 49.5093 38.6009 47.2726 36.3641L28.7266 17.8177L30.9089 15.6354C31.5114 15.0329 31.5114 14.0561 30.9089 13.4536C30.3065 12.8511 29.3295 12.8511 28.7271 13.4536L24.3634 17.8173L18.9097 12.3634L19.9998 11.2732C20.6023 10.6706 20.6023 9.69379 19.9998 9.09128C19.3974 8.48878 18.4206 8.48878 17.8181 9.09128L9.09079 17.8188ZM22.4778 19.703L17.0241 14.249L14.2498 17.0233L19.7037 22.4773L22.4778 19.703ZM26.841 19.7034L19.7031 26.8414L25.5778 32.7162L32.7157 25.5781L26.841 19.7034ZM27.7595 34.8981L31.0323 38.1709L33.5106 35.6926C34.1131 35.0901 35.0899 35.0901 35.6925 35.6926C36.295 36.2951 36.295 37.2719 35.6925 37.8745L33.2142 40.3527L35.3954 42.5341L37.8739 40.0555C38.4765 39.453 39.4533 39.453 40.0558 40.0555C40.6582 40.6581 40.6582 41.6349 40.0558 42.2374L37.5773 44.7159L38.2491 45.3878C39.7133 46.8519 41.8531 47.2285 43.6649 46.5174L46.5166 43.6657C47.2277 41.8538 46.8511 39.7139 45.387 38.2498L34.8974 27.76L27.7595 34.8981ZM48.6965 48.1106C48.6853 48.0958 48.6729 48.0817 48.6595 48.0683L47.5607 46.9694C47.4679 47.0728 47.3719 47.1741 47.2726 47.2734C47.1731 47.3729 47.0717 47.469 46.9682 47.5619L48.067 48.6607C48.0806 48.6742 48.0949 48.6866 48.1096 48.6979C48.177 48.5783 48.2617 48.4657 48.3635 48.3638C48.4651 48.2623 48.5773 48.1778 48.6965 48.1106Z"
+          fill="#00378E"></path>
+      </svg>
+
+      <h3 class="services-subtitle">
+        {t.services.extraCorporalMethods.title}
+      </h3>
+      <ul class="services-list">
+        <li>{t.services.extraCorporalMethods.plasmapheresis}</li>
+        <li>{t.services.extraCorporalMethods.thrombocytapheresis}</li>
+        <li>{t.services.extraCorporalMethods.ctemCellMobilization}</li>
+        <li>{t.services.extraCorporalMethods.kidneyReplacementTherapy}</li>
+      </ul>
+    </div>
+
+    <div class="services-card">
+      <svg
+        width="64"
+        height="64"
+        viewBox="0 0 64 64"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M24.1894 5.33325L5.33325 24.1895L15.7042 34.5603L34.5603 15.7041L24.1894 5.33325ZM22.4181 11.1339L20.5325 13.0195L27.1321 19.6192L29.0177 17.7336L22.4181 11.1339ZM17.7041 15.8481L15.8185 17.7337L22.4181 24.3333L24.3037 22.4477L17.7041 15.8481ZM12.9893 20.562L11.1037 22.4476L17.7034 29.0472L19.589 27.1616L12.9893 20.562Z"
+          fill="#00378E"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M15.8186 30.9328L30.9035 15.8479L54.4738 39.4182C58.6394 43.5838 58.6394 50.3375 54.4738 54.5031C50.3082 58.6687 43.5545 58.6687 39.3889 54.5031L15.8186 30.9328ZM19.5898 30.9328L41.2745 52.6175C44.3986 55.7416 49.4639 55.7416 52.5882 52.6175C55.7123 49.4932 55.7123 44.428 52.5882 41.3038L30.9035 19.6192L19.5898 30.9328Z"
+          fill="#00378E"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M26.1899 31.8757L36.5609 21.5049L52.5886 37.5326L42.2177 47.9034L26.1899 31.8757ZM29.9611 31.8757L42.2177 44.1322L48.8173 37.5326L36.5609 25.2761L29.9611 31.8757Z"
+          fill="#00378E"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M36.0878 39.8897C36.0875 39.8898 36.0882 39.8897 36.0878 39.8897C34.2023 40.8326 31.8452 43.1896 31.3738 44.6037L40.3304 53.5606C43.9754 57.2054 49.8848 57.2054 53.5298 53.5605C57.1746 49.9157 57.1747 44.0061 53.5298 40.3613L50.7019 37.5334L42.2172 46.018L36.0878 39.8897Z"
+          fill="#00378E"></path>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M33.0065 44.3513L41.2744 52.6177C44.3985 55.7418 49.4639 55.7418 52.5881 52.6177C55.7123 49.4934 55.7123 44.4282 52.5881 41.3039L50.7019 39.4191L42.2176 47.9034L35.8769 41.5635C35.3017 41.955 34.6936 42.4626 34.1433 43.0129C33.6489 43.5073 33.2665 43.9709 33.0065 44.3513ZM32.2577 41.1273C33.2069 40.1779 34.3819 39.2521 35.4915 38.6973L35.6511 38.6175L36.5267 38.4419L42.2176 44.1322L50.7019 35.6479L54.4737 39.4183C58.6393 43.5839 58.6393 50.3377 54.4737 54.5033C50.3081 58.6689 43.5544 58.6689 39.3888 54.5033L29.9595 45.0754L30.0708 44.2962L30.1088 44.1822C30.4469 43.1681 31.3417 42.0433 32.2577 41.1273Z"
+          fill="#00378E"></path>
+      </svg>
+
+      <h3 class="services-subtitle">
+        {t.services.laboratory.title}
+      </h3>
+      <ul class="services-list">
+        <li>{t.services.laboratory.clinicalBiochemistry}</li>
+        <li>{t.services.laboratory.hivAids}</li>
+        <li>{t.services.laboratory.bacterial}</li>
+        <li>{t.services.laboratory.immunology}</li>
+        <li>{t.services.laboratory.other}</li>
+      </ul>
     </div>
   </div>
 </section>
+
+<style>
+  .services {
+    padding-block: 4rem;
+  }
+
+  .services-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .services-card {
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    svg {
+      display: block;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+      margin-inline: auto;
+    }
+  }
+
+  .services-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary);
+    text-align: center;
+    font-family: "BPG Nino Mtavruli Bold", sans-serif;
+    text-wrap: balance;
+
+    html[lang="en"] & {
+      font-family: "Playfair Display", serif;
+    }
+  }
+
+  .services-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: #555;
+    font-family: "Noto Sans Georgian", sans-serif;
+
+    html[lang="en"] & {
+      font-family: "Playfair Display", serif;
+    }
+  }
+</style>

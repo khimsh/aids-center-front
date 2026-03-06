@@ -5,36 +5,34 @@ const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 ---
 
-<div class="topbar" role="banner">
-  <div class="container">
-    <div class="topbar-inner">
-      <div class="topbar-item">
-        <div class="dot"></div>
-        <span class="label">{t.topbar.hivAidsHotline}</span>
-        <a href="tel:+995551826666" class="number">551 826 666</a>
-      </div>
-      <div class="topbar-item">
-        <div class="dot"></div>
-        <span class="label">{t.topbar.hepatitisB}</span>
-        <a href="tel:+995551816666" class="number">551 816 666</a>
-      </div>
-      <div class="topbar-item">
-        <div class="dot"></div>
-        <span class="label">{t.topbar.ambulatory}</span>
-        <a href="tel:+995557252784" class="number">557 252 784</a>
-      </div>
-      <div class="topbar-item topbar-emergency">
-        <div class="dot"></div>
-        <span class="label">{t.topbar.emergency}</span>
-        <a href="tel:+995595395566" class="number">595 395 566</a>
-      </div>
+<div class="topbar content-grid" role="banner">
+  <div class="topbar-inner">
+    <div class="topbar-item">
+      <div class="dot"></div>
+      <span class="label">{t.topbar.hivAidsHotline}</span>
+      <a href="tel:+995551826666" class="number">551 826 666</a>
+    </div>
+    <div class="topbar-item">
+      <div class="dot"></div>
+      <span class="label">{t.topbar.hepatitisB}</span>
+      <a href="tel:+995551816666" class="number">551 816 666</a>
+    </div>
+    <div class="topbar-item">
+      <div class="dot"></div>
+      <span class="label">{t.topbar.ambulatory}</span>
+      <a href="tel:+995557252784" class="number">557 252 784</a>
+    </div>
+    <div class="topbar-item topbar-emergency">
+      <div class="dot"></div>
+      <span class="label">{t.topbar.emergency}</span>
+      <a href="tel:+995595395566" class="number">595 395 566</a>
     </div>
   </div>
 </div>
 
 <style>
   .topbar {
-    background: var(--navy);
+    background-color: oklch(from var(--primary) 94% c h);
     padding: 10px 0;
   }
 
@@ -42,7 +40,7 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 1rem;
     flex-wrap: wrap;
   }
 
@@ -51,7 +49,7 @@ const t = useTranslations(lang);
     align-items: center;
     gap: 8px;
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--primary);
   }
 
   .topbar-item .label {
@@ -60,7 +58,7 @@ const t = useTranslations(lang);
 
   .topbar-item .number {
     font-weight: 700;
-    color: white;
+    color: var(--primary);
     letter-spacing: 0.3px;
   }
 
@@ -68,11 +66,11 @@ const t = useTranslations(lang);
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--red);
+    background-color: oklch(from var(--primary) l 40 h);
     flex-shrink: 0;
   }
 
   .topbar-emergency .number {
-    color: #fca5a5;
+    color: oklch(from var(--primary) l 0.3 h);
   }
 </style>
