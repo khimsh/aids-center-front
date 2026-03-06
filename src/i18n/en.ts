@@ -74,6 +74,7 @@ export const en = {
     heading: 'Georgia\'s national center for infectious diseases',
     description: 'The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia\'s primary institution for the diagnosis, treatment, and research of infectious diseases. We deliver nine state healthcare programs and serve patients from across the country and region.',  
     highlight: 'The only center in the Caucasus region equipped with the Mindray Resona R9 — an AI-powered expert-class diagnostic ultrasound system.',
+    linkText: 'Learn more about our center',
   },
 
   stats: {
