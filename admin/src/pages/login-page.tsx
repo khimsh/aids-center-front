@@ -36,11 +36,11 @@ export function LoginPage() {
   return (
     <div className="auth-page">
       <form className="auth-card" action={formAction}>
-        <h1>Admin Login</h1>
-        <p className="hint">Sign in to manage site content.</p>
+        <h1>ადმინისტრატორის შესვლა</h1>
+        <p className="hint">შესვლა საიტის მართვისთვის.</p>
 
         <label>
-          Username or Email
+          მომხმარებლის სახელი ან ელ.ფოსტა
           <input
             type="text"
             name="username"
@@ -50,7 +50,7 @@ export function LoginPage() {
         </label>
 
         <label>
-          Password
+          პაროლი
           <input
             type="password"
             name="password"
@@ -62,7 +62,7 @@ export function LoginPage() {
         {state.error ? <p className="error">{state.error}</p> : null}
 
         <button type="submit" disabled={isPending}>
-          {isPending ? 'Signing in...' : 'Sign in'}
+          {isPending ? 'შესვლა...' : 'შესვლა'}
         </button>
       </form>
     </div>

@@ -1,0 +1,83 @@
+.jobs-page {
+  display: grid;
+  gap: 1rem;
+}
+
+.jobs-editor {
+  display: grid;
+  gap: 0.9rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.field-single {
+  max-width: 360px;
+}
+
+.jobs-editor textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+  margin-top: 0.4rem;
+  resize: vertical;
+  font: inherit;
+}
+
+.jobs-actions,
+.job-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.jobs-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.job-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: #fff;
+}
+
+.job-card h3 {
+  margin: 0.35rem 0;
+}
+
+.job-card p {
+  margin: 0.25rem 0;
+}
+
+.job-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+@media (max-width: 860px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .field-single {
+    max-width: unset;
+  }
+
+  .job-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

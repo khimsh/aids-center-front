@@ -18,8 +18,22 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { index: true, element: <DashboardPage /> },
-          { path: 'articles', element: <PlaceholderPage title="Articles" /> },
-          { path: 'programs', element: <PlaceholderPage title="Programs" /> },
+          {
+            path: 'posts',
+            lazy: async () => {
+              const { PostsPage } = await import('./pages/posts-page');
+              return { Component: PostsPage };
+            },
+          },
+          {
+            path: 'job-postings',
+            lazy: async () => {
+              const { JobPostingsPage } = await import('./pages/job-postings-page');
+              return { Component: JobPostingsPage };
+            },
+          },
+          { path: 'articles', element: <Navigate to="/posts" replace /> },
+          { path: 'programs', element: <Navigate to="/job-postings" replace /> },
           { path: 'settings', element: <PlaceholderPage title="Settings" /> },
         ],
       },

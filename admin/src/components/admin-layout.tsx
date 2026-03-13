@@ -13,22 +13,22 @@ export function AdminLayout() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <Link to="/" className="brand">AIDS Center Admin</Link>
+        <Link to="/" className="brand">გამარჯობა, {user?.full_name ?? 'ადმინისტრატორო'}</Link>
         <nav className="menu">
-          <NavLink to="/" end>Dashboard</NavLink>
-          <NavLink to="/articles">Articles</NavLink>
-          <NavLink to="/programs">Programs</NavLink>
-          <NavLink to="/settings">Settings</NavLink>
+          <NavLink to="/" end>დაშბორდი</NavLink>
+          <NavLink to="/posts">სიახლეები</NavLink>
+          <NavLink to="/job-postings">ვაკანსიები</NavLink>
+          <NavLink to="/settings">პარამეტრები</NavLink>
         </nav>
       </aside>
 
       <main className="content">
         <header className="topbar">
           <div>
-            <p className="caption">Signed in as</p>
-            <strong>{user?.email ?? user?.full_name ?? 'Admin user'}</strong>
+            <p className="caption">თქვენ შესული ხართ როგორც</p>
+            <strong>{user?.email ?? user?.full_name}</strong>
           </div>
-          <button type="button" onClick={onLogout}>Log out</button>
+          <button type="button" onClick={onLogout}>გამოსვლა</button>
         </header>
 
         <section className="panel">
