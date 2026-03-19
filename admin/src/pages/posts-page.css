@@ -12,6 +12,18 @@
   padding: 1rem;
 }
 
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.editor-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .editor-shell {
   border: 1px solid #d1d5db;
   border-radius: 10px;
@@ -33,6 +45,18 @@
   display: flex;
   gap: 0.7rem;
   flex-wrap: wrap;
+}
+
+.featured-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.featured-note {
+  margin-top: -0.25rem;
 }
 
 .button-secondary {
@@ -74,6 +98,13 @@
   color: #6b7280;
 }
 
+.post-badges {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -94,6 +125,11 @@
   color: #047857;
 }
 
+.status-pill.featured {
+  background: #fef3c7;
+  color: #92400e;
+}
+
 .post-preview {
   margin-top: 0.5rem;
   border-top: 1px dashed #e5e7eb;
@@ -101,6 +137,10 @@
 }
 
 @media (max-width: 860px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
   .post-meta {
     flex-direction: column;
     align-items: flex-start;
