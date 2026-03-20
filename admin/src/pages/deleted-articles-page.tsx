@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/auth-context';
+import { useAuth } from '../auth/use-auth';
 import { ConfirmModal } from '../components/confirm-modal';
 import {
   canViewDeletedEntry,
@@ -27,7 +27,7 @@ export function DeletedArticlesPage() {
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
 
-  const loadDeleted = async () => {
+  const loadDeleted = useCallback(async () => {
     try {
       const all = await listDeletedArticles();
       const visible = all.filter((item) => canViewDeletedEntry(item, adminView, user?.id));
@@ -37,12 +37,12 @@ export function DeletedArticlesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [adminView, user?.id]);
 
   useEffect(() => {
     setLoading(true);
     void loadDeleted();
-  }, [adminView, user?.id]);
+  }, [loadDeleted]);
 
   const permanentlyDelete = async (articleId: number) => {
     setBusyArticleId(articleId);

@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
 import { ConfirmModal } from '../components/confirm-modal';
 import { isAdminRole } from '../lib/articles';
 import {
   changeEditorPassword,
-  createEditorUser,
   deleteEditorUser,
   fetchUsers,
   getUserId,
@@ -13,8 +13,6 @@ import {
   type UserRecord
 } from '../lib/users';
 import './posts-page.css';
-
-type CreateUserRole = 'editor' | 'admin';
 
 type ApiValidationIssue = {
   loc?: Array<string | number>;
@@ -27,7 +25,7 @@ type ApiErrorBody = {
 };
 
 function extractApiErrorMessage(error: unknown): string {
-  const fallback = 'Could not create user. Check API endpoint/validation rules.';
+  const fallback = 'Could not load users. Check API endpoint/validation rules.';
 
   const apiError = error as {
     response?: {
@@ -62,25 +60,19 @@ function extractApiErrorMessage(error: unknown): string {
   return fallback;
 }
 
-export function UsersPage() {
+export function UsersListPage() {
   const { user } = useAuth();
   const adminView = isAdminRole(user?.role);
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState<CreateUserRole>('editor');
 
-  const [creating, setCreating] = useState(false);
   const [loadingEditors, setLoadingEditors] = useState(true);
   const [busyEditorId, setBusyEditorId] = useState<string | null>(null);
-  const [newPasswords, setNewPasswords] = useState<Record<string, string>>({});
   const [users, setUsers] = useState<UserRecord[]>([]);
   const [editorToDelete, setEditorToDelete] = useState<UserRecord | null>(null);
+  const [editorToChangePassword, setEditorToChangePassword] = useState<UserRecord | null>(null);
+  const [passwordInput, setPasswordInput] = useState('');
+  const [updatingPassword, setUpdatingPassword] = useState(false);
 
-  const editors = useMemo(
-    () => users.filter((entry) => isEditorRole(entry.role)),
-    [users]
-  );
+  const editors = useMemo(() => users.filter((entry) => isEditorRole(entry.role)), [users]);
 
   const loadEditors = async () => {
     try {
@@ -102,42 +94,23 @@ export function UsersPage() {
     void loadEditors();
   }, [adminView]);
 
-  const onCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!adminView) {
-      const message = 'Only admins can create users.';
-      toast.error(message);
+  useEffect(() => {
+    if (!editorToChangePassword) {
       return;
     }
 
-    if (!email.trim() || !fullName.trim() || !password) {
-      toast.error('All fields are required.');
-      return;
-    }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !updatingPassword) {
+        setEditorToChangePassword(null);
+        setPasswordInput('');
+      }
+    };
 
-    setCreating(true);
-
-    try {
-      await createEditorUser({
-        email: email.trim(),
-        full_name: fullName.trim(),
-        password,
-        role
-      });
-
-      setEmail('');
-      setFullName('');
-      setPassword('');
-      setRole('editor');
-      toast.success('User created successfully.');
-      await loadEditors();
-    } catch (error) {
-      toast.error(extractApiErrorMessage(error));
-    } finally {
-      setCreating(false);
-    }
-  };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [editorToChangePassword, updatingPassword]);
 
   const onDeleteEditor = async (editor: UserRecord) => {
     const editorId = getUserId(editor);
@@ -158,27 +131,35 @@ export function UsersPage() {
     }
   };
 
-  const onChangePassword = async (editor: UserRecord) => {
-    const editorId = getUserId(editor);
+  const onChangePassword = async () => {
+    if (!editorToChangePassword) {
+      return;
+    }
+
+    const editorId = getUserId(editorToChangePassword);
     if (!editorId) {
       toast.error('Editor id is missing.');
       return;
     }
 
-    const nextPassword = newPasswords[editorId] ?? '';
+    const nextPassword = passwordInput.trim();
     if (!nextPassword) {
       toast.error('Enter a new password first.');
       return;
     }
 
+    setUpdatingPassword(true);
     setBusyEditorId(editorId);
+
     try {
       await changeEditorPassword(editorId, nextPassword);
-      setNewPasswords((current) => ({ ...current, [editorId]: '' }));
       toast.success('Editor password updated successfully.');
+      setEditorToChangePassword(null);
+      setPasswordInput('');
     } catch (error) {
       toast.error(extractApiErrorMessage(error));
     } finally {
+      setUpdatingPassword(false);
       setBusyEditorId(null);
     }
   };
@@ -196,70 +177,11 @@ export function UsersPage() {
     <div className="posts-page">
       <div className="posts-header">
         <div>
-          <h1>User Management</h1>
-          <p className="hint">Create new users and manage registered editors.</p>
+          <h1>Users List</h1>
+          <p className="hint">Manage registered editors and their credentials.</p>
         </div>
+        <Link to="/users/new" className="button-secondary">Register User</Link>
       </div>
-
-      <form className="posts-editor" onSubmit={onCreateUser}>
-        <div className="field-row">
-          <label>
-            Email
-            <input
-              type="email"
-              name="email"
-              required
-              autoComplete="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </label>
-
-          <label>
-            Full Name
-            <input
-              type="text"
-              name="full_name"
-              required
-              autoComplete="name"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
-            />
-          </label>
-        </div>
-
-        <div className="field-row">
-          <label>
-            Role
-            <select
-              name="role"
-              value={role}
-              onChange={(event) => setRole(event.target.value as CreateUserRole)}
-            >
-              <option value="editor">editor</option>
-              <option value="admin">admin</option>
-            </select>
-          </label>
-        </div>
-
-        <label>
-          Password
-          <input
-            type="password"
-            name="password"
-            required
-            autoComplete="new-password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-
-        <div className="posts-actions">
-          <button type="submit" disabled={creating}>
-            {creating ? 'Creating...' : 'Create User'}
-          </button>
-        </div>
-      </form>
 
       <div className="posts-list">
         <h2>Registered Editors</h2>
@@ -284,27 +206,13 @@ export function UsersPage() {
 
                 <h3>{editor.full_name || 'Unnamed editor'}</h3>
 
-                <div className="field-row">
-                  <label>
-                    New Password
-                    <input
-                      type="password"
-                      value={newPasswords[editorId] ?? ''}
-                      onChange={(event) =>
-                        setNewPasswords((current) => ({
-                          ...current,
-                          [editorId]: event.target.value
-                        }))
-                      }
-                      placeholder="Enter new password"
-                    />
-                  </label>
-                </div>
-
                 <div className="post-actions">
                   <button
                     type="button"
-                    onClick={() => void onChangePassword(editor)}
+                    onClick={() => {
+                      setEditorToChangePassword(editor);
+                      setPasswordInput('');
+                    }}
                     disabled={isBusy}
                   >
                     Change Password
@@ -323,6 +231,57 @@ export function UsersPage() {
           })
         )}
       </div>
+
+      {editorToChangePassword ? (
+        <div
+          className="modal-overlay"
+          role="presentation"
+          onClick={() => {
+            if (!updatingPassword) {
+              setEditorToChangePassword(null);
+              setPasswordInput('');
+            }
+          }}
+        >
+          <div
+            className="modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Change Editor Password"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3>Change Password</h3>
+            <p className="hint">Set a new password for {editorToChangePassword.email ?? 'this editor'}.</p>
+            <label>
+              New Password
+              <input
+                type="password"
+                autoFocus
+                value={passwordInput}
+                onChange={(event) => setPasswordInput(event.target.value)}
+                placeholder="Enter new password"
+                disabled={updatingPassword}
+              />
+            </label>
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={() => {
+                  setEditorToChangePassword(null);
+                  setPasswordInput('');
+                }}
+                disabled={updatingPassword}
+              >
+                Cancel
+              </button>
+              <button type="button" onClick={() => void onChangePassword()} disabled={updatingPassword}>
+                {updatingPassword ? 'Working...' : 'Update Password'}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <ConfirmModal
         open={Boolean(editorToDelete)}

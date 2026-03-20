@@ -1,11 +1,15 @@
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/auth-context';
-import { isAdminRole } from '../lib/articles';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/use-auth';
 
 export function AdminLayout() {
   const { user, logout } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
-  const adminView = isAdminRole(user?.role);
+
+  const navClassName = (path: string, exact = false) => {
+    const isActive = exact ? location.pathname === path : location.pathname.startsWith(path);
+    return isActive ? 'active' : undefined;
+  };
 
   const onLogout = async () => {
     await logout();
@@ -17,15 +21,16 @@ export function AdminLayout() {
       <aside className="sidebar">
         <Link to="/" className="brand">გამარჯობა, {user?.full_name ?? 'ადმინისტრატორო'}</Link>
         <nav className="menu">
-          <NavLink to="/" end>დაშბორდი</NavLink>
-          <NavLink to="/posts">სტატიის დამატება</NavLink>
-          <NavLink to="/articles/mine">სტატიების სია</NavLink>
-          <NavLink to="/articles/drafts">სტატიის დრაფტები</NavLink>
-          <NavLink to="/articles/deleted">წაშლილები</NavLink>
-          <NavLink to="/job-postings/new">ვაკანსიის დამატება</NavLink>
-          <NavLink to="/job-postings/list">ვაკანსიების სია</NavLink>
-          {adminView ? <NavLink to="/users">მომხმარებლები</NavLink> : null}
-          <NavLink to="/settings">პარამეტრები</NavLink>
+          <Link to="/" className={navClassName('/', true)}>დაშბორდი</Link>
+          <Link to="/posts" className={navClassName('/posts')}>სტატიის დამატება</Link>
+          <Link to="/articles/mine" className={navClassName('/articles/mine')}>სტატიების სია</Link>
+          <Link to="/articles/drafts" className={navClassName('/articles/drafts')}>სტატიის დრაფტები</Link>
+          <Link to="/articles/deleted" className={navClassName('/articles/deleted')}>წაშლილები</Link>
+          <Link to="/job-postings/new" className={navClassName('/job-postings/new')}>ვაკანსიის დამატება</Link>
+          <Link to="/job-postings/list" className={navClassName('/job-postings/list')}>ვაკანსიების სია</Link>
+          <Link to="/users/new" className={navClassName('/users/new')}>მომხმარებლის დამატება</Link>
+          <Link to="/users/list" className={navClassName('/users/list')}>მომხმარებლების სია</Link>
+          <Link to="/settings" className={navClassName('/settings')}>პარამეტრები</Link>
         </nav>
       </aside>
 

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/auth-context';
+import { useAuth } from '../auth/use-auth';
 import { ConfirmModal } from '../components/confirm-modal';
 import { articleIsPublished, filterArticlesByUser, fetchArticles, isAdminRole, type ArticleRecord } from '../lib/articles';
 import { getDeletedArticleIdSet, moveArticleToDeleted } from '../lib/deleted-articles';
@@ -18,7 +18,7 @@ export function ArticleDraftsPage() {
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
 
-  const loadDrafts = async () => {
+  const loadDrafts = useCallback(async () => {
     try {
       const result = await fetchArticles({ page: 1, per_page: 200, include_drafts: true });
       const deletedIds = await getDeletedArticleIdSet();
@@ -36,12 +36,12 @@ export function ArticleDraftsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [adminView, user?.id]);
 
   useEffect(() => {
     setLoading(true);
     void loadDrafts();
-  }, [adminView, user?.id]);
+  }, [loadDrafts]);
 
   const publishDraft = async (articleId: number) => {
     setBusyArticleId(articleId);

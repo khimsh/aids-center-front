@@ -9,16 +9,21 @@ import { DashboardPage } from './pages/dashboard-page';
 import { JobPostingCreatePage } from './pages/job-posting-create-page';
 import { LoginPage } from './pages/login-page';
 import { PlaceholderPage } from './pages/placeholder-page';
+import { RouteErrorPage } from './pages/route-error-page';
+import { UsersCreatePage } from './pages/users-create-page';
+import { UsersListPage } from './pages/users-list-page';
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
-  { path: '/login', element: <LoginPage /> },
+  { path: '/login', element: <LoginPage />, errorElement: <RouteErrorPage /> },
   {
     element: <ProtectedRoute />,
+    errorElement: <RouteErrorPage />,
     children: [
       {
         element: <AdminLayout />,
+        errorElement: <RouteErrorPage />,
         children: [
           { index: true, element: <DashboardPage /> },
           {
@@ -56,13 +61,9 @@ const router = createBrowserRouter([
               return { Component: MyArticlesPage };
             },
           },
-          {
-            path: 'users',
-            lazy: async () => {
-              const { UsersPage } = await import('./pages/users-page');
-              return { Component: UsersPage };
-            },
-          },
+          { path: 'users/new', element: <UsersCreatePage /> },
+          { path: 'users/list', element: <UsersListPage /> },
+          { path: 'users', element: <Navigate to="/users/list" replace /> },
           {
             path: 'articles/deleted',
             lazy: async () => {

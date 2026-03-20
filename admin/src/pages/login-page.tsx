@@ -1,6 +1,6 @@
 import { useActionState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/auth-context';
+import { useAuth } from '../auth/use-auth';
 
 type FormState = { error: string | null; success: boolean };
 
@@ -18,8 +18,15 @@ export function LoginPage() {
           password: formData.get('password') as string,
         });
         return { error: null, success: true };
-      } catch {
-        return { error: 'Invalid credentials. Please try again.', success: false };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : '';
+        const isInvalidCredentials = /401|invalid credentials/i.test(message);
+        return {
+          error: isInvalidCredentials
+            ? 'Invalid credentials. Please try again.'
+            : 'Login failed. Please try again.',
+          success: false
+        };
       }
     },
     { error: null, success: false }

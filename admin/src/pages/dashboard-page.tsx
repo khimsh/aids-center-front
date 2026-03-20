@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/auth-context';
+import { useAuth } from '../auth/use-auth';
 import { api } from '../lib/api';
 import { fetchArticles, filterArticlesByUser, isAdminRole } from '../lib/articles';
 import { fetchUsers, isEditorRole } from '../lib/users';
@@ -58,10 +58,17 @@ export function DashboardPage() {
             <p className="card-note">All vacancies list</p>
           </Link>
           {adminView ? (
-            <Link to="/users" className="dashboard-card">
-              <p className="card-kicker">Editors</p>
+            <Link to="/users/list" className="dashboard-card">
+              <p className="card-kicker">Editors List</p>
               <p className="card-value">{loading ? '...' : editorCount}</p>
-              <p className="card-note">All editors list</p>
+              <p className="card-note">Manage all registered editors</p>
+            </Link>
+          ) : null}
+          {adminView ? (
+            <Link to="/users/new" className="dashboard-card">
+              <p className="card-kicker">Register Editor</p>
+              <p className="card-value">New</p>
+              <p className="card-note">Create a new editor/admin account</p>
             </Link>
           ) : null}
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ConfirmModal } from '../components/confirm-modal';
@@ -28,6 +28,16 @@ type JobOut = {
   updated_at: string;
 };
 
+const toCard = (job: JobOut): JobCard => ({
+  id: job.id,
+  title: job.title_ka,
+  department: job.department_ka ?? '',
+  description: job.description_ka ?? '',
+  deadline: job.deadline ? new Date(job.deadline).toLocaleDateString() : 'არ არის მითითებული',
+  status: job.published ? 'published' : 'draft',
+  updatedAt: new Date(job.updated_at).toLocaleString()
+});
+
 export function JobPostingsPage() {
   const [titleKa, setTitleKa] = useState('');
   const [titleEn, setTitleEn] = useState('');
@@ -44,17 +54,7 @@ export function JobPostingsPage() {
   const [editingStatus, setEditingStatus] = useState<JobCard['status']>('draft');
   const [jobToDeleteId, setJobToDeleteId] = useState<number | null>(null);
 
-  const toCard = (job: JobOut): JobCard => ({
-    id: job.id,
-    title: job.title_ka,
-    department: job.department_ka ?? '',
-    description: job.description_ka ?? '',
-    deadline: job.deadline ? new Date(job.deadline).toLocaleDateString() : 'არ არის მითითებული',
-    status: job.published ? 'published' : 'draft',
-    updatedAt: new Date(job.updated_at).toLocaleString()
-  });
-
-  const loadJobs = async () => {
+  const loadJobs = useCallback(async () => {
     try {
       const response = await api.get('/api/job-postings');
       const items = (response.data ?? []) as JobOut[];
@@ -63,11 +63,11 @@ export function JobPostingsPage() {
     } catch {
       setError('ვერ ჩაიტვირთა ვაკანსიები.');
     }
-  };
+  }, []);
 
   useEffect(() => {
     void loadJobs();
-  }, []);
+  }, [loadJobs]);
 
   const clearForm = () => {
     setTitleKa('');

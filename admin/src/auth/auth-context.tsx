@@ -1,48 +1,26 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useState,
   type PropsWithChildren
 } from 'react';
+import { AuthContext, type AuthUser, type LoginPayload } from './auth-store';
 import { ACCESS_TOKEN_KEY, api } from '../lib/api';
-
-type AuthUser = {
-  id?: string | number;
-  email?: string;
-  full_name?: string;
-  role?: string;
-};
-
-type LoginPayload = {
-  username: string;
-  password: string;
-};
-
-type AuthContextType = {
-  user: AuthUser | null;
-  isAuthenticated: boolean;
-  loading: boolean;
-  login: (payload: LoginPayload) => Promise<void>;
-  logout: () => Promise<void>;
-  checkSession: () => Promise<void>;
-};
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const checkSession = useCallback(async () => {
+  const checkSession = useCallback(async (): Promise<boolean> => {
     try {
       const response = await api.get('/auth/me');
       setUser(response.data);
+      return true;
     } catch {
       localStorage.removeItem(ACCESS_TOKEN_KEY);
       setUser(null);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -63,7 +41,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
         localStorage.setItem(ACCESS_TOKEN_KEY, token);
       }
 
-      await checkSession();
+      const verified = await checkSession();
+      if (!verified) {
+        throw new Error('Could not verify your session after login. Please try again.');
+      }
+    } catch (error) {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      setUser(null);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -93,14 +78,4 @@ export function AuthProvider({ children }: PropsWithChildren) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
-  }
-
-  return context;
 }

@@ -148,6 +148,7 @@ label {
   padding: 0.55rem 0.7rem;
   border-radius: 8px;
   color: #374151;
+  cursor: pointer;
 }
 
 .menu a.active {
