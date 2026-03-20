@@ -64,13 +64,6 @@ export function DashboardPage() {
               <p className="card-note">Manage all registered editors</p>
             </Link>
           ) : null}
-          {adminView ? (
-            <Link to="/users/new" className="dashboard-card">
-              <p className="card-kicker">Register Editor</p>
-              <p className="card-value">New</p>
-              <p className="card-note">Create a new editor/admin account</p>
-            </Link>
-          ) : null}
         </div>
       </section>
     </div>

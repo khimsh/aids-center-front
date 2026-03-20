@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/use-auth';
+import styles from './admin-layout.module.css';
 
 export function AdminLayout() {
   const { user, logout } = useAuth();
@@ -8,7 +9,7 @@ export function AdminLayout() {
 
   const navClassName = (path: string, exact = false) => {
     const isActive = exact ? location.pathname === path : location.pathname.startsWith(path);
-    return isActive ? 'active' : undefined;
+    return `${styles.menuLink} ${isActive ? styles.menuLinkActive : ''}`.trim();
   };
 
   const onLogout = async () => {
@@ -20,14 +21,17 @@ export function AdminLayout() {
     <div className="shell">
       <aside className="sidebar">
         <Link to="/" className="brand">გამარჯობა, {user?.full_name ?? 'ადმინისტრატორო'}</Link>
-        <nav className="menu">
+        <nav className={styles.menu}>
           <Link to="/" className={navClassName('/', true)}>დაშბორდი</Link>
+          <h2 className={styles.sectionTitle}>სტატიები</h2>
           <Link to="/posts" className={navClassName('/posts')}>სტატიის დამატება</Link>
           <Link to="/articles/mine" className={navClassName('/articles/mine')}>სტატიების სია</Link>
           <Link to="/articles/drafts" className={navClassName('/articles/drafts')}>სტატიის დრაფტები</Link>
           <Link to="/articles/deleted" className={navClassName('/articles/deleted')}>წაშლილები</Link>
+          <h2 className={styles.sectionTitle}>ვაკანსიები</h2>
           <Link to="/job-postings/new" className={navClassName('/job-postings/new')}>ვაკანსიის დამატება</Link>
           <Link to="/job-postings/list" className={navClassName('/job-postings/list')}>ვაკანსიების სია</Link>
+          <h2 className={styles.sectionTitle}>მომხმარებლები</h2>
           <Link to="/users/new" className={navClassName('/users/new')}>მომხმარებლის დამატება</Link>
           <Link to="/users/list" className={navClassName('/users/list')}>მომხმარებლების სია</Link>
           <Link to="/settings" className={navClassName('/settings')}>პარამეტრები</Link>
