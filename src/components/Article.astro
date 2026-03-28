@@ -23,20 +23,55 @@ const {
   link,
   date = "",
 } = Astro.props as Props;
+
+const formattedDate = date
+  ? new Intl.DateTimeFormat(lang === "en" ? "en-US" : "ka-GE", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }).format(new Date(date))
+  : "";
+
+const toExcerpt = (value: string, wordLimit = 24) => {
+  const plain = value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!plain) {
+    return "";
+  }
+
+  const words = plain.split(" ");
+  const excerpt = words
+    .slice(0, Math.max(20, Math.min(wordLimit, 25)))
+    .join(" ");
+  return `${excerpt.replace(/[.]+$/, "")}...`;
+};
+
+const summary = toExcerpt(content);
 ---
 
 <article class="article-card" data-featured={featured}>
-  <figure>
+  <figure class="article-figure">
     <img src={image} alt={title} class="article-image" />
-    <figcaption class="mt-4">
+    <figcaption class="article-content">
       <h3 class="article-title">{title}</h3>
-      <div class="article-tag">{articleTag}</div>
-      <time datetime="" class="article-time">{date}</time>
+      <div class="article-meta">
+        <span class="article-tag">{articleTag}</span>
+        {
+          formattedDate ? (
+            <time datetime={date} class="article-time">
+              {formattedDate}
+            </time>
+          ) : null
+        }
+      </div>
     </figcaption>
   </figure>
 
-  <p>
-    {content}
+  <p class="article-summary">
+    {summary}
   </p>
 
   <a href={link} class="article-link"
@@ -57,15 +92,69 @@ const {
 
 <style>
   .article-card {
-    display: grid;
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
     background-color: #fff;
-    padding: 16px;
+    padding: 1rem;
     border-radius: 10px;
+    box-shadow: 0 16px 40px rgba(2, 49, 95, 0.14);
 
     &[data-featured="true"] {
       grid-column: span 2;
     }
+  }
+
+  .article-figure {
+    display: grid;
+    gap: 0.875rem;
+  }
+
+  .article-content {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .article-title {
+    margin: 0;
+    color: #10233b;
+    font-family: "Playfair Display", serif;
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .article-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #034485;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .article-time {
+    color: #64748b;
+    font-size: 0.95rem;
+  }
+
+  .article-summary {
+    margin: 0;
+    color: #334155;
+    line-height: 1.7;
+    flex: 1;
   }
 
   .article-link {
@@ -107,8 +196,18 @@ const {
 
   .article-image {
     width: 100%;
-    height: auto;
+    aspect-ratio: 16 / 10;
     border-radius: 10px;
     object-fit: cover;
+  }
+
+  @media (max-width: 760px) {
+    .article-card[data-featured="true"] {
+      grid-column: auto;
+    }
+
+    .article-title {
+      font-size: 1.15rem;
+    }
   }
 </style>

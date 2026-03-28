@@ -1,10 +1,16 @@
 ---
 import Article from "./Article.astro";
 import { useTranslations } from "../i18n/utils";
+import {
+  fetchArticleBySlug,
+  getArticlesApiBase,
+  toAbsoluteImageUrl,
+} from "../lib/articles-api";
 import fallbackNewsImage from "../assets/images/clinic.webp";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
+const archiveHref = lang === "en" ? "/en/news" : "/news";
 
 type ArticleApiRecord = {
   id: number;
@@ -29,39 +35,17 @@ type ArticlesResponse =
       total?: number;
     };
 
-const API_BASE = import.meta.env.PUBLIC_API_URL?.trim() || Astro.url.origin;
+const API_BASE = getArticlesApiBase();
 const ARTICLES_URL = `${API_BASE}/api/articles`;
 
-const toAbsoluteImageUrl = (value?: string | null) => {
-  const raw = value?.trim();
-  if (!raw) {
-    return fallbackNewsImage.src;
-  }
-
-  if (/^https?:\/\//i.test(raw)) {
-    return raw;
-  }
-
-  if (raw.startsWith("/")) {
-    return `${API_BASE}${raw}`;
-  }
-
-  return `${API_BASE}/${raw}`;
-};
+const resolveArticleImageUrl = (value?: string | null) =>
+  toAbsoluteImageUrl(API_BASE, value) || fallbackNewsImage.src;
 
 const stripHtml = (value: string) =>
   value
     .replace(/<[^>]*>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
-
-const truncate = (value: string, maxLength = 160) => {
-  if (value.length <= maxLength) {
-    return value;
-  }
-
-  return `${value.slice(0, maxLength).trim()}...`;
-};
 
 const isPublished = (entry: ArticleApiRecord) => {
   if (typeof entry.published === "boolean") {
@@ -93,7 +77,30 @@ try {
   records = [];
 }
 
-const newsItems = records
+const recordsWithBody = await Promise.all(
+  records.map(async (entry) => {
+    const hasBody = Boolean(
+      (entry.body_ka ?? "").trim() || (entry.body_en ?? "").trim(),
+    );
+
+    if (hasBody || !entry.slug?.trim()) {
+      return entry;
+    }
+
+    const detail = await fetchArticleBySlug(API_BASE, entry.slug.trim());
+    if (!detail) {
+      return entry;
+    }
+
+    return {
+      ...entry,
+      body_ka: detail.body_ka ?? entry.body_ka,
+      body_en: detail.body_en ?? entry.body_en,
+    };
+  }),
+);
+
+const newsItems = recordsWithBody
   .filter((entry) => isPublished(entry))
   .sort((a, b) => {
     const dateA = new Date(
@@ -122,11 +129,10 @@ const newsItems = records
         localizedTitle?.trim() ||
         (lang === "en" ? "Untitled Article" : "სტატიის სათაურის გარეშე"),
       articleTag: entry.category ?? "news",
-      content: truncate(
+      content:
         plainBody ||
-          (lang === "en" ? "No summary available." : "აღწერა არ არის."),
-      ),
-      image: toAbsoluteImageUrl(entry.image_url),
+        (lang === "en" ? "No summary available." : "აღწერა არ არის."),
+      image: resolveArticleImageUrl(entry.image_url),
       featured: Boolean(entry.featured),
       date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? "",
       link: entry.slug?.trim()
@@ -136,6 +142,8 @@ const newsItems = records
         : "#",
     };
   });
+
+const featuredIndex = newsItems.findIndex((item) => item.featured);
 ---
 
 <section class="news content-grid" id="news" aria-labelledby="news-title">
@@ -152,7 +160,9 @@ const newsItems = records
         newsItems.length > 0 ? (
           newsItems.map((item, index) => (
             <Article
-              featured={item.featured || index === 0}
+              featured={
+                featuredIndex === -1 ? index === 0 : index === featuredIndex
+              }
               image={item.image}
               title={item.title}
               articleTag={item.articleTag}
@@ -171,7 +181,7 @@ const newsItems = records
       }
     </div>
 
-    <a href="#" class="section-view-all">
+    <a href={archiveHref} class="section-view-all">
       {t.news.linkText}
 
       <svg

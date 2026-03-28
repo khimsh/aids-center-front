@@ -106,6 +106,11 @@ export const ka = {
     label: 'სტატიები და სიახლეები',
     title: 'ბოლო სიახლეები და კვლევები',
     linkText: 'ყველა სტატია',
+    archiveTitle: 'ყველა სტატია',
+    emptyText: 'გამოქვეყნებული სტატიები ჯერ არ არის.',
+    previousPage: 'წინა',
+    nextPage: 'შემდეგი',
+    pageSummary: 'გვერდი',
   },
 
   article: {

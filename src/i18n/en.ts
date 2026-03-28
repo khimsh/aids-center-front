@@ -106,6 +106,11 @@ export const en = {
     label: 'Articles and News',
     title: 'Latest News and Research',
     linkText: 'All Articles',
+    archiveTitle: 'All Articles',
+    emptyText: 'No published articles yet.',
+    previousPage: 'Previous',
+    nextPage: 'Next',
+    pageSummary: 'Page',
   },
 
   article: {
