@@ -1,9 +1,141 @@
 ---
 import Article from "./Article.astro";
 import { useTranslations } from "../i18n/utils";
+import fallbackNewsImage from "../assets/images/clinic.webp";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
+
+type ArticleApiRecord = {
+  id: number;
+  slug?: string | null;
+  title_ka?: string | null;
+  title_en?: string | null;
+  body_ka?: string | null;
+  body_en?: string | null;
+  image_url?: string | null;
+  category?: string | null;
+  featured?: boolean;
+  published?: boolean;
+  published_at?: string | null;
+  updated_at?: string | null;
+  created_at?: string | null;
+};
+
+type ArticlesResponse =
+  | ArticleApiRecord[]
+  | {
+      items?: ArticleApiRecord[];
+      total?: number;
+    };
+
+const API_BASE = import.meta.env.PUBLIC_API_URL?.trim() || Astro.url.origin;
+const ARTICLES_URL = `${API_BASE}/api/articles`;
+
+const toAbsoluteImageUrl = (value?: string | null) => {
+  const raw = value?.trim();
+  if (!raw) {
+    return fallbackNewsImage.src;
+  }
+
+  if (/^https?:\/\//i.test(raw)) {
+    return raw;
+  }
+
+  if (raw.startsWith("/")) {
+    return `${API_BASE}${raw}`;
+  }
+
+  return `${API_BASE}/${raw}`;
+};
+
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const truncate = (value: string, maxLength = 160) => {
+  if (value.length <= maxLength) {
+    return value;
+  }
+
+  return `${value.slice(0, maxLength).trim()}...`;
+};
+
+const isPublished = (entry: ArticleApiRecord) => {
+  if (typeof entry.published === "boolean") {
+    return entry.published;
+  }
+
+  if (entry.published == null && entry.published_at == null) {
+    // Some backends expose only already-published records on this endpoint.
+    return true;
+  }
+
+  return Boolean(entry.published_at);
+};
+
+let records: ArticleApiRecord[] = [];
+
+try {
+  let response = await fetch(`${ARTICLES_URL}?page=1&per_page=20`);
+
+  if (!response.ok && response.status === 422) {
+    response = await fetch(`${ARTICLES_URL}`);
+  }
+
+  if (response.ok) {
+    const data = (await response.json()) as ArticlesResponse;
+    records = Array.isArray(data) ? data : (data.items ?? []);
+  }
+} catch {
+  records = [];
+}
+
+const newsItems = records
+  .filter((entry) => isPublished(entry))
+  .sort((a, b) => {
+    const dateA = new Date(
+      a.published_at ?? a.updated_at ?? a.created_at ?? 0,
+    ).getTime();
+    const dateB = new Date(
+      b.published_at ?? b.updated_at ?? b.created_at ?? 0,
+    ).getTime();
+    return dateB - dateA;
+  })
+  .slice(0, 3)
+  .map((entry) => {
+    const localizedTitle =
+      lang === "en"
+        ? (entry.title_en ?? entry.title_ka)
+        : (entry.title_ka ?? entry.title_en);
+    const localizedBody =
+      lang === "en"
+        ? (entry.body_en ?? entry.body_ka)
+        : (entry.body_ka ?? entry.body_en);
+    const plainBody = stripHtml(localizedBody ?? "");
+
+    return {
+      id: entry.id,
+      title:
+        localizedTitle?.trim() ||
+        (lang === "en" ? "Untitled Article" : "სტატიის სათაურის გარეშე"),
+      articleTag: entry.category ?? "news",
+      content: truncate(
+        plainBody ||
+          (lang === "en" ? "No summary available." : "აღწერა არ არის."),
+      ),
+      image: toAbsoluteImageUrl(entry.image_url),
+      featured: Boolean(entry.featured),
+      date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? "",
+      link: entry.slug?.trim()
+        ? lang === "en"
+          ? `/en/news/${encodeURIComponent(entry.slug.trim())}`
+          : `/news/${encodeURIComponent(entry.slug.trim())}`
+        : "#",
+    };
+  });
 ---
 
 <section class="news content-grid" id="news" aria-labelledby="news-title">
@@ -16,9 +148,27 @@ const t = useTranslations(lang);
     </div>
 
     <div class="news-grid">
-      <Article featured={true} />
-      <Article />
-      <Article />
+      {
+        newsItems.length > 0 ? (
+          newsItems.map((item, index) => (
+            <Article
+              featured={item.featured || index === 0}
+              image={item.image}
+              title={item.title}
+              articleTag={item.articleTag}
+              content={item.content}
+              link={item.link}
+              date={item.date}
+            />
+          ))
+        ) : (
+          <p class="news-empty">
+            {lang === "en"
+              ? "No published articles yet."
+              : "გამოქვეყნებული სტატიები ჯერ არ არის."}
+          </p>
+        )
+      }
     </div>
 
     <a href="#" class="section-view-all">
@@ -49,6 +199,15 @@ const t = useTranslations(lang);
     display: grid;
     gap: 1.5rem;
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .news-empty {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #475569;
   }
 
   .section-title {

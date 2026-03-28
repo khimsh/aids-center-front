@@ -2,11 +2,63 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
+import { ArticleListCard } from '../components/article-list-card';
 import { ConfirmModal } from '../components/confirm-modal';
-import { articleIsPublished, filterArticlesByUser, fetchArticles, isAdminRole, type ArticleRecord } from '../lib/articles';
-import { getDeletedArticleIdSet, moveArticleToDeleted } from '../lib/deleted-articles';
-import { api } from '../lib/api';
+import {
+  articleIsPublished,
+  deleteArticleById,
+  DEFAULT_ARTICLES_QUERY,
+  fetchArticles,
+  getVisibleArticles,
+  isAdminRole,
+  publishArticleDraft,
+  type ArticleRecord
+} from '../lib/articles';
 import './posts-page.css';
+
+const configuredPublicSiteUrl = (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined)?.trim();
+const configuredSiteUrlFallback = (import.meta.env.VITE_SITE_URL as string | undefined)?.trim();
+
+function getPublicSiteBase(): string {
+  if (configuredPublicSiteUrl) {
+    return configuredPublicSiteUrl.replace(/\/$/, '');
+  }
+
+  if (configuredSiteUrlFallback) {
+    return configuredSiteUrlFallback.replace(/\/$/, '');
+  }
+
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
+  const { protocol, hostname, origin } = window.location;
+  const isLocalHost = hostname === 'localhost' || hostname === '127.0.0.1';
+
+  if (isLocalHost) {
+    return `${protocol}//${hostname}:4321`;
+  }
+
+  return origin;
+}
+
+function getPublicArticleUrl(article: ArticleRecord): string | undefined {
+  const slug = article.slug?.trim();
+  if (!slug || !articleIsPublished(article)) {
+    return undefined;
+  }
+
+  const base = getPublicSiteBase();
+  if (!base) {
+    return undefined;
+  }
+
+  return `${base}/news/${encodeURIComponent(slug)}`;
+}
+
+async function attachPublishedSlugs(items: ArticleRecord[]): Promise<ArticleRecord[]> {
+  return items;
+}
 
 export function MyArticlesPage() {
   const navigate = useNavigate();
@@ -20,15 +72,10 @@ export function MyArticlesPage() {
 
   const loadArticles = useCallback(async () => {
     try {
-      const result = await fetchArticles({ page: 1, per_page: 200, include_drafts: true });
-      const deletedIds = await getDeletedArticleIdSet();
-      let nextArticles = result.items.filter((article) => !deletedIds.has(article.id));
-
-      if (!adminView) {
-        nextArticles = filterArticlesByUser(nextArticles, user?.id);
-      }
-
-      setArticles(nextArticles);
+      const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
+      const visible = getVisibleArticles(result.items, adminView, user?.id);
+      const withSlugs = await attachPublishedSlugs(visible);
+      setArticles(withSlugs);
     } catch {
       toast.error('Could not load articles.');
     } finally {
@@ -45,14 +92,8 @@ export function MyArticlesPage() {
     setBusyArticleId(articleId);
 
     try {
-      const response = await api.put(`/api/articles/${articleId}`, {
-        published: true,
-        published_at: new Date().toISOString()
-      });
-
-      const published = response.data as ArticleRecord;
-
-      if (!articleIsPublished(published)) {
+      const published = await publishArticleDraft(articleId);
+      if (!published) {
         toast.error('Draft publish was not persisted by the server.');
       }
 
@@ -69,17 +110,11 @@ export function MyArticlesPage() {
     setBusyArticleId(articleId);
 
     try {
-      const item = articles.find((article) => article.id === articleId);
-      if (!item) {
-        toast.error('Article not found.');
-        return;
-      }
-
-      moveArticleToDeleted(item);
+      await deleteArticleById(articleId);
       setArticles((current) => current.filter((article) => article.id !== articleId));
-      toast.success('Article moved to Deleted. It will be kept for 30 days.');
+      toast.success('Article deleted successfully.');
     } catch {
-      toast.error('Could not move article to Deleted.');
+      toast.error('Could not delete article.');
     } finally {
       setBusyArticleId(null);
     }
@@ -106,69 +141,39 @@ export function MyArticlesPage() {
             const isPublished = articleIsPublished(article);
 
             return (
-              <article className="post-card" key={article.id}>
-                <div className="post-meta">
-                  <div className="post-badges">
-                    <span className={`status-pill ${isPublished ? 'published' : 'draft'}`}>
-                      {isPublished ? 'published' : 'draft'}
-                    </span>
-                    {article.featured ? <span className="status-pill featured">featured</span> : null}
-                  </div>
-                  <span>{new Date(article.updated_at ?? article.created_at ?? Date.now()).toLocaleString()}</span>
-                </div>
-                <h3>{article.title_ka}</h3>
-                {article.title_en ? <p className="hint">EN: {article.title_en}</p> : null}
-                <p className="hint">Category: {article.category ?? 'uncategorized'}</p>
-                <div className="post-actions">
-                  <button
-                    type="button"
-                    className="button-secondary"
-                    onClick={() => navigate(`/articles/${article.id}/edit`, { state: { article, returnTo: '/articles/mine' } })}
-                    disabled={busyArticleId === article.id}
-                  >
-                    {isPublished ? 'Edit Article' : 'Edit Draft'}
-                  </button>
-                  {!isPublished ? (
-                    <button
-                      type="button"
-                      onClick={() => void publishDraft(article.id)}
-                      disabled={busyArticleId === article.id}
-                    >
-                      Publish Draft
-                    </button>
-                  ) : null}
-                  <button
-                    type="button"
-                    className="button-secondary"
-                    onClick={() => setArticleToDeleteId(article.id)}
-                    disabled={busyArticleId === article.id}
-                  >
-                    Move to Deleted
-                  </button>
-                </div>
-              </article>
+              <ArticleListCard
+                key={article.id}
+                article={article}
+                busy={busyArticleId === article.id}
+                editLabel={isPublished ? 'Edit Article' : 'Edit Draft'}
+                viewPublishedUrl={getPublicArticleUrl(article)}
+                showEnglishTitle
+                onEdit={() => navigate(`/articles/${article.id}/edit`, { state: { article, returnTo: '/articles/mine' } })}
+                onPublishDraft={() => void publishDraft(article.id)}
+                onDelete={() => setArticleToDeleteId(article.id)}
+              />
             );
           })
         )}
       </div>
 
-        <ConfirmModal
-          open={articleToDeleteId !== null}
-          title="Move Article to Deleted"
-          message="This article will be hidden from active lists and kept for 30 days in Deleted."
-          confirmLabel="Move"
-          destructive
-          busy={articleToDeleteId !== null && busyArticleId === articleToDeleteId}
-          onCancel={() => setArticleToDeleteId(null)}
-          onConfirm={() => {
-            if (articleToDeleteId == null) {
-              return;
-            }
+      <ConfirmModal
+        open={articleToDeleteId !== null}
+        title="Delete Article"
+        message="This will permanently delete the article from backend and frontend lists."
+        confirmLabel="Delete"
+        destructive
+        busy={articleToDeleteId !== null && busyArticleId === articleToDeleteId}
+        onCancel={() => setArticleToDeleteId(null)}
+        onConfirm={() => {
+          if (articleToDeleteId == null) {
+            return;
+          }
 
-            void removeArticle(articleToDeleteId);
-            setArticleToDeleteId(null);
-          }}
-        />
+          void removeArticle(articleToDeleteId);
+          setArticleToDeleteId(null);
+        }}
+      />
     </div>
   );
 }

@@ -2,10 +2,18 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
+import { ArticleListCard } from '../components/article-list-card';
 import { ConfirmModal } from '../components/confirm-modal';
-import { articleIsPublished, filterArticlesByUser, fetchArticles, isAdminRole, type ArticleRecord } from '../lib/articles';
-import { getDeletedArticleIdSet, moveArticleToDeleted } from '../lib/deleted-articles';
-import { api } from '../lib/api';
+import {
+  articleIsPublished,
+  deleteArticleById,
+  DEFAULT_ARTICLES_QUERY,
+  fetchArticles,
+  getVisibleArticles,
+  isAdminRole,
+  publishArticleDraft,
+  type ArticleRecord
+} from '../lib/articles';
 import './posts-page.css';
 
 export function ArticleDraftsPage() {
@@ -20,15 +28,9 @@ export function ArticleDraftsPage() {
 
   const loadDrafts = useCallback(async () => {
     try {
-      const result = await fetchArticles({ page: 1, per_page: 200, include_drafts: true });
-      const deletedIds = await getDeletedArticleIdSet();
-      let nextDrafts = result.items
-        .filter((article) => !deletedIds.has(article.id))
-        .filter((article) => !articleIsPublished(article));
-
-      if (!adminView) {
-        nextDrafts = filterArticlesByUser(nextDrafts, user?.id);
-      }
+      const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
+      const visibleArticles = getVisibleArticles(result.items, adminView, user?.id);
+      const nextDrafts = visibleArticles.filter((article) => !articleIsPublished(article));
 
       setDrafts(nextDrafts);
     } catch {
@@ -47,13 +49,8 @@ export function ArticleDraftsPage() {
     setBusyArticleId(articleId);
 
     try {
-      const response = await api.put(`/api/articles/${articleId}`, {
-        published: true,
-        published_at: new Date().toISOString()
-      });
-
-      const published = response.data as ArticleRecord;
-      if (!articleIsPublished(published)) {
+      const published = await publishArticleDraft(articleId);
+      if (!published) {
         toast.error('Draft publish was not persisted by the server.');
       }
 
@@ -70,17 +67,11 @@ export function ArticleDraftsPage() {
     setBusyArticleId(articleId);
 
     try {
-      const item = drafts.find((draft) => draft.id === articleId);
-      if (!item) {
-        toast.error('Draft not found.');
-        return;
-      }
-
-      moveArticleToDeleted(item);
+      await deleteArticleById(articleId);
       setDrafts((current) => current.filter((draft) => draft.id !== articleId));
-      toast.success('Draft moved to Deleted. It will be kept for 30 days.');
+      toast.success('Draft deleted successfully.');
     } catch {
-      toast.error('Could not move draft to Deleted.');
+      toast.error('Could not delete draft.');
     } finally {
       setBusyArticleId(null);
     }
@@ -104,51 +95,26 @@ export function ArticleDraftsPage() {
           <p className="hint">No drafts found.</p>
         ) : (
           drafts.map((draft) => (
-            <article className="post-card" key={draft.id}>
-              <div className="post-meta">
-                <div className="post-badges">
-                  <span className="status-pill draft">draft</span>
-                  {draft.featured ? <span className="status-pill featured">featured</span> : null}
-                </div>
-                <span>{new Date(draft.updated_at ?? draft.created_at ?? Date.now()).toLocaleString()}</span>
-              </div>
-              <h3>{draft.title_ka}</h3>
-              <p className="hint">{draft.category ?? 'uncategorized'}</p>
-              <div className="post-actions">
-                <button
-                  type="button"
-                  className="button-secondary"
-                  onClick={() => navigate(`/articles/${draft.id}/edit`, { state: { article: draft, returnTo: '/articles/drafts' } })}
-                  disabled={busyArticleId === draft.id}
-                >
-                  Edit Draft
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void publishDraft(draft.id)}
-                  disabled={busyArticleId === draft.id}
-                >
-                  Publish Draft
-                </button>
-                <button
-                  type="button"
-                  className="button-secondary"
-                  onClick={() => setDraftToDeleteId(draft.id)}
-                  disabled={busyArticleId === draft.id}
-                >
-                  Move to Deleted
-                </button>
-              </div>
-            </article>
+            <ArticleListCard
+              key={draft.id}
+              article={draft}
+              busy={busyArticleId === draft.id}
+              editLabel="Edit Draft"
+              showCategoryPrefix={false}
+              forceDraftStatus
+              onEdit={() => navigate(`/articles/${draft.id}/edit`, { state: { article: draft, returnTo: '/articles/drafts' } })}
+              onPublishDraft={() => void publishDraft(draft.id)}
+              onDelete={() => setDraftToDeleteId(draft.id)}
+            />
           ))
         )}
       </div>
 
       <ConfirmModal
         open={draftToDeleteId !== null}
-        title="Move Draft to Deleted"
-        message="This draft will be removed from active drafts and kept for 30 days in Deleted."
-        confirmLabel="Move"
+        title="Delete Draft"
+        message="This will permanently delete the draft from backend and frontend lists."
+        confirmLabel="Delete"
         destructive
         busy={draftToDeleteId !== null && busyArticleId === draftToDeleteId}
         onCancel={() => setDraftToDeleteId(null)}

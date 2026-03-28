@@ -1,0 +1,122 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {
+    fetchArticleBySlug,
+    fetchArticleSlugs,
+    getArticlesApiBase,
+    toAbsoluteImageUrl,
+    type ArticleDetails,
+} from "../../lib/articles-api";
+
+const API_BASE = getArticlesApiBase();
+
+export async function getStaticPaths() {
+    const apiBase = getArticlesApiBase();
+
+    try {
+        const slugs = await fetchArticleSlugs(apiBase);
+        return slugs.map((slug) => ({ params: { slug } }));
+    } catch (error) {
+        console.error("[news/[slug]] getStaticPaths error", error);
+        return [];
+    }
+}
+
+const slug = Astro.params.slug?.trim() ?? "";
+
+const article: ArticleDetails | null = slug
+    ? await fetchArticleBySlug(API_BASE, slug)
+    : null;
+
+if (!article) {
+    throw new Error(`Article not found for slug: ${slug}`);
+}
+
+const pageTitle = article.title_ka?.trim() || "სტატია";
+const bodyHtml = article.body_ka ?? article.body_en ?? "";
+const publishDate =
+    article.published_at ?? article.updated_at ?? article.created_at;
+---
+
+<Layout>
+    <section class="article-page content-grid">
+        <div class="container article-container">
+            <a href="/#news" class="back-link">← უკან სიახლეებში</a>
+
+            <article class="article-detail">
+                <header class="article-header">
+                    <p class="article-meta">
+                        {article.category ?? "news"}
+                        {
+                            publishDate
+                                ? ` • ${new Date(publishDate).toLocaleDateString("ka-GE")}`
+                                : ""
+                        }
+                    </p>
+                    <h1>{pageTitle}</h1>
+                </header>
+
+                {
+                    article.image_url ? (
+                        <img
+                            src={toAbsoluteImageUrl(
+                                API_BASE,
+                                article.image_url,
+                            )}
+                            alt={pageTitle}
+                            class="article-image"
+                        />
+                    ) : null
+                }
+
+                <div class="article-body" set:html={bodyHtml} />
+            </article>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .article-page {
+        padding-block: 2.5rem 4rem;
+    }
+
+    .article-container {
+        max-width: 900px;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .article-detail {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .article-header h1 {
+        margin: 0;
+        font-family: "Playfair Display", serif;
+    }
+
+    .article-meta {
+        margin: 0 0 0.5rem;
+        color: #64748b;
+        text-transform: lowercase;
+    }
+
+    .article-image {
+        width: 100%;
+        border-radius: 10px;
+        margin-block: 1rem;
+    }
+
+    .article-body {
+        color: #1f2937;
+        line-height: 1.75;
+    }
+</style>

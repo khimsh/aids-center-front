@@ -2,6 +2,7 @@ import { api } from './api';
 
 export type ArticleRecord = {
   id: number;
+  slug?: string | null;
   title_ka: string;
   title_en?: string | null;
   body_ka?: string | null;
@@ -33,6 +34,12 @@ export type ArticleListResult = {
   total: number;
 };
 
+export const DEFAULT_ARTICLES_QUERY = {
+  page: 1,
+  per_page: 200,
+  include_drafts: true
+} as const;
+
 export function isAdminRole(role?: string) {
   const normalized = (role ?? '').toLowerCase();
   return normalized === 'admin' || normalized === 'superadmin';
@@ -50,6 +57,28 @@ export function filterArticlesByUser(items: ArticleRecord[], userId?: string | n
 
   const ownerId = String(userId);
   return items.filter((item) => getArticleOwnerId(item) === ownerId);
+}
+
+export function getVisibleArticles(items: ArticleRecord[], adminView: boolean, userId?: string | number) {
+  if (adminView) {
+    return items;
+  }
+
+  return filterArticlesByUser(items, userId);
+}
+
+export async function publishArticleDraft(articleId: number): Promise<boolean> {
+  const response = await api.put(`/api/articles/${articleId}`, {
+    published: true,
+    published_at: new Date().toISOString()
+  });
+
+  const published = response.data as ArticleRecord;
+  return articleIsPublished(published);
+}
+
+export async function deleteArticleById(articleId: number) {
+  await api.delete(`/api/articles/${articleId}`);
 }
 
 export function articleIsPublished(article: ArticleRecord): boolean {
