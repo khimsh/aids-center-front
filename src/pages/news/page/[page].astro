@@ -6,39 +6,38 @@ import {
     getArticlesApiBase,
 } from "../../../lib/articles-api";
 
-export async function getStaticPaths() {
-    const apiBase = getArticlesApiBase();
-    const perPage = 9;
-    const result = await fetchPublishedArticlesPage(apiBase, 1, perPage);
-    const totalPages = Math.max(1, Math.ceil(result.total / perPage));
-
-    return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => ({
-        params: { page: String(index + 2) },
-    }));
-}
-
 const apiBase = getArticlesApiBase();
 const perPage = 9;
 
 const currentPage = Number(Astro.params.page);
 if (!Number.isInteger(currentPage) || currentPage < 2) {
-    throw new Error(`Invalid news page: ${Astro.params.page}`);
+    Astro.response.status = 404;
 }
 
 const result = await fetchPublishedArticlesPage(apiBase, currentPage, perPage);
 const totalPages = Math.max(1, Math.ceil(result.total / perPage));
 
 if (currentPage > totalPages) {
-    throw new Error(`News page out of range: ${currentPage}`);
+    Astro.response.status = 404;
 }
 ---
 
 <Layout>
-    <ArticlesArchive
-        lang="ka"
-        apiBase={apiBase}
-        articles={result.items}
-        currentPage={currentPage}
-        totalPages={totalPages}
-    />
+    {
+        Astro.response.status === 404 ? (
+            <section class="news-archive content-grid">
+                <div class="archive-shell">
+                    <p class="archive-empty">გვერდი ვერ მოიძებნა.</p>
+                </div>
+            </section>
+        ) : (
+            <ArticlesArchive
+                lang="ka"
+                apiBase={apiBase}
+                articles={result.items}
+                currentPage={currentPage}
+                totalPages={totalPages}
+            />
+        )
+    }
 </Layout>

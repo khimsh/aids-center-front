@@ -2,25 +2,12 @@
 import Layout from "../../layouts/Layout.astro";
 import {
     fetchArticleBySlug,
-    fetchArticleSlugs,
     getArticlesApiBase,
     toAbsoluteImageUrl,
     type ArticleDetails,
 } from "../../lib/articles-api";
 
 const API_BASE = getArticlesApiBase();
-
-export async function getStaticPaths() {
-    const apiBase = getArticlesApiBase();
-
-    try {
-        const slugs = await fetchArticleSlugs(apiBase);
-        return slugs.map((slug) => ({ params: { slug } }));
-    } catch (error) {
-        console.error("[news/[slug]] getStaticPaths error", error);
-        return [];
-    }
-}
 
 const slug = Astro.params.slug?.trim() ?? "";
 
@@ -29,13 +16,13 @@ const article: ArticleDetails | null = slug
     : null;
 
 if (!article) {
-    throw new Error(`Article not found for slug: ${slug}`);
+    Astro.response.status = 404;
 }
 
-const pageTitle = article.title_ka?.trim() || "სტატია";
-const bodyHtml = article.body_ka ?? article.body_en ?? "";
+const pageTitle = article?.title_ka?.trim() || "სტატია";
+const bodyHtml = article?.body_ka ?? article?.body_en ?? "";
 const publishDate =
-    article.published_at ?? article.updated_at ?? article.created_at;
+    article?.published_at ?? article?.updated_at ?? article?.created_at;
 ---
 
 <Layout>
@@ -46,7 +33,7 @@ const publishDate =
             <article class="article-detail">
                 <header class="article-header">
                     <p class="article-meta">
-                        {article.category ?? "news"}
+                        {article?.category ?? "news"}
                         {
                             publishDate
                                 ? ` • ${new Date(publishDate).toLocaleDateString("ka-GE")}`
@@ -57,7 +44,7 @@ const publishDate =
                 </header>
 
                 {
-                    article.image_url ? (
+                    article?.image_url ? (
                         <img
                             src={toAbsoluteImageUrl(
                                 API_BASE,
@@ -69,7 +56,13 @@ const publishDate =
                     ) : null
                 }
 
-                <div class="article-body" set:html={bodyHtml} />
+                {
+                    article ? (
+                        <div class="article-body" set:html={bodyHtml} />
+                    ) : (
+                        <p class="article-not-found">სტატია ვერ მოიძებნა.</p>
+                    )
+                }
             </article>
         </div>
     </section>
@@ -118,5 +111,10 @@ const publishDate =
     .article-body {
         color: #1f2937;
         line-height: 1.75;
+    }
+
+    .article-not-found {
+        margin: 0;
+        color: #64748b;
     }
 </style>
