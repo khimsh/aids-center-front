@@ -16,6 +16,20 @@ import {
 } from '../lib/articles';
 import './posts-page.css';
 
+function isNoDraftsResponse(error: unknown): boolean {
+  const response = (error as { response?: { status?: number; data?: unknown } }).response;
+  const status = response?.status;
+
+  if (status === 404) {
+    return true;
+  }
+
+  const detail = (response?.data as { detail?: unknown } | undefined)?.detail;
+  const message = typeof detail === 'string' ? detail.toLowerCase() : '';
+
+  return message.includes('no draft') || message.includes('not found');
+}
+
 export function ArticleDraftsPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -33,7 +47,12 @@ export function ArticleDraftsPage() {
       const nextDrafts = visibleArticles.filter((article) => !articleIsPublished(article));
 
       setDrafts(nextDrafts);
-    } catch {
+    } catch (error) {
+      if (isNoDraftsResponse(error)) {
+        setDrafts([]);
+        return;
+      }
+
       toast.error('Could not load article drafts.');
     } finally {
       setLoading(false);
