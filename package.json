@@ -2,6 +2,10 @@
   "name": "aids-center-front",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
