@@ -1,44 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ConfirmModal } from '../components/ui/confirm-modal';
-import { api } from '../lib/api';
+import {
+  deleteJobPosting,
+  fetchJobPostingById,
+  fetchJobPostings,
+  publishJobPostingDraft,
+  type JobCard,
+  type JobMutationInput,
+  updateJobPosting
+} from '../lib/job-postings';
+import { queryKeys } from '../lib/query-keys';
 import './job-postings-page.css';
 
-type JobCard = {
-  id: number;
-  title: string;
-  department: string;
-  description: string;
-  deadline: string;
-  status: 'draft' | 'published';
-  updatedAt: string;
-};
-
-type JobOut = {
-  id: number;
-  title_ka: string;
-  title_en: string | null;
-  description_ka: string | null;
-  description_en: string | null;
-  department_ka: string | null;
-  department_en: string | null;
-  deadline: string | null;
-  published: boolean;
-  updated_at: string;
-};
-
-const toCard = (job: JobOut): JobCard => ({
-  id: job.id,
-  title: job.title_ka,
-  department: job.department_ka ?? '',
-  description: job.description_ka ?? '',
-  deadline: job.deadline ? new Date(job.deadline).toLocaleDateString() : 'არ არის მითითებული',
-  status: job.published ? 'published' : 'draft',
-  updatedAt: new Date(job.updated_at).toLocaleString()
-});
-
 export function JobPostingsPage() {
+  const queryClient = useQueryClient();
   const [titleKa, setTitleKa] = useState('');
   const [titleEn, setTitleEn] = useState('');
   const [departmentKa, setDepartmentKa] = useState('');
@@ -47,27 +25,25 @@ export function JobPostingsPage() {
   const [descriptionEn, setDescriptionEn] = useState('');
   const [deadline, setDeadline] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [jobs, setJobs] = useState<JobCard[]>([]);
   const [saving, setSaving] = useState(false);
   const [busyJobId, setBusyJobId] = useState<number | null>(null);
   const [editingJobId, setEditingJobId] = useState<number | null>(null);
   const [editingStatus, setEditingStatus] = useState<JobCard['status']>('draft');
   const [jobToDeleteId, setJobToDeleteId] = useState<number | null>(null);
 
-  const loadJobs = useCallback(async () => {
+  const jobsQuery = useQuery({
+    queryKey: queryKeys.jobPostings,
+    queryFn: fetchJobPostings
+  });
+
+  const loadJobs = async () => {
     try {
-      const response = await api.get('/api/job-postings');
-      const items = (response.data ?? []) as JobOut[];
-      setJobs(items.map((job) => toCard(job)));
+      await jobsQuery.refetch();
       setError(null);
     } catch {
       setError('ვერ ჩაიტვირთა ვაკანსიები.');
     }
-  }, []);
-
-  useEffect(() => {
-    void loadJobs();
-  }, [loadJobs]);
+  };
 
   const clearForm = () => {
     setTitleKa('');
@@ -95,22 +71,20 @@ export function JobPostingsPage() {
 
     setSaving(true);
 
-    try {
-      const payload = {
-        title_ka: titleKa.trim(),
-        title_en: titleEn.trim() || null,
-        description_ka: descriptionKa.trim() || null,
-        description_en: descriptionEn.trim() || null,
-        department_ka: departmentKa.trim() || null,
-        department_en: departmentEn.trim() || null,
-        deadline: deadline ? new Date(deadline).toISOString() : null,
-        published: status === 'published',
-        published_at: status === 'published' ? new Date().toISOString() : null
-      };
+    const input: JobMutationInput = {
+      titleKa,
+      titleEn,
+      departmentKa,
+      departmentEn,
+      descriptionKa,
+      descriptionEn,
+      deadline,
+      status
+    };
 
-      const response = await api.put(`/api/job-postings/${editingJobId}`, payload);
-      const saved = toCard(response.data as JobOut);
-      setJobs((current) => current.map((job) => (job.id === editingJobId ? saved : job)));
+    try {
+      await updateJobPosting(editingJobId, input);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.jobPostings });
       setError(null);
       toast.success('ვაკანსია წარმატებით განახლდა.');
       clearForm();
@@ -127,8 +101,10 @@ export function JobPostingsPage() {
     setBusyJobId(jobId);
 
     try {
-      const response = await api.get(`/api/job-postings/${jobId}`);
-      const job = response.data as JobOut;
+      const job = await queryClient.fetchQuery({
+        queryKey: queryKeys.jobPosting(jobId),
+        queryFn: () => fetchJobPostingById(jobId)
+      });
 
       setEditingJobId(job.id);
       setEditingStatus(job.published ? 'published' : 'draft');
@@ -154,13 +130,8 @@ export function JobPostingsPage() {
     setBusyJobId(jobId);
 
     try {
-      const response = await api.put(`/api/job-postings/${jobId}`, {
-        published: true,
-        published_at: new Date().toISOString()
-      });
-
-      const updated = toCard(response.data as JobOut);
-      setJobs((current) => current.map((job) => (job.id === jobId ? updated : job)));
+      await publishJobPostingDraft(jobId);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.jobPostings });
       setError(null);
       toast.success('დრაფტი გამოქვეყნდა.');
     } catch {
@@ -175,8 +146,8 @@ export function JobPostingsPage() {
     setBusyJobId(jobId);
 
     try {
-      await api.delete(`/api/job-postings/${jobId}`);
-      setJobs((current) => current.filter((job) => job.id !== jobId));
+      await deleteJobPosting(jobId);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.jobPostings });
       setError(null);
       toast.success('ვაკანსია წაიშალა.');
     } catch {
@@ -201,6 +172,8 @@ export function JobPostingsPage() {
           </button>
         </div>
       </div>
+
+      {jobsQuery.isLoading ? <p className="hint">იტვირთება...</p> : null}
 
       {editingJobId ? (
         <div className="jobs-editor">
@@ -274,10 +247,12 @@ export function JobPostingsPage() {
       <div className="jobs-list">
         <h2>ვაკანსიების სია</h2>
 
-        {jobs.length === 0 ? (
+        {jobsQuery.isError ? <p className="error">ვერ ჩაიტვირთა ვაკანსიები.</p> : null}
+
+        {jobsQuery.data?.length === 0 ? (
           <p className="hint">ვაკანსიები ჯერ არ არის.</p>
         ) : (
-          jobs.map((job) => (
+          (jobsQuery.data ?? []).map((job) => (
             <article className="job-card" key={job.id}>
               <div className="job-meta">
                 <span className={`status-pill ${job.status}`}>{job.status}</span>

@@ -1,68 +1,42 @@
 import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
+import { extractApiErrorMessage } from '../lib/api-errors';
 import { isAdminRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
 import { createEditorUser } from '../lib/users';
 import './posts-page.css';
 
 type CreateUserRole = 'editor' | 'admin';
 
-type ApiValidationIssue = {
-  loc?: Array<string | number>;
-  msg?: string;
-};
-
-type ApiErrorBody = {
-  detail?: string | ApiValidationIssue[];
-  message?: string;
-};
-
-function extractApiErrorMessage(error: unknown): string {
-  const fallback = 'Could not create user. Check API endpoint/validation rules.';
-
-  const apiError = error as {
-    response?: {
-      status?: number;
-      data?: ApiErrorBody;
-    };
-    message?: string;
-  };
-
-  const status = apiError.response?.status;
-  const data = apiError.response?.data;
-
-  if (typeof data?.detail === 'string' && data.detail.trim()) {
-    return status ? `${status}: ${data.detail}` : data.detail;
-  }
-
-  if (Array.isArray(data?.detail) && data.detail.length > 0) {
-    const first = data.detail[0];
-    const loc = Array.isArray(first.loc) ? first.loc.join('.') : 'field';
-    const msg = first.msg ?? 'Validation error';
-    return status ? `${status}: ${loc} - ${msg}` : `${loc} - ${msg}`;
-  }
-
-  if (typeof data?.message === 'string' && data.message.trim()) {
-    return status ? `${status}: ${data.message}` : data.message;
-  }
-
-  if (typeof apiError.message === 'string' && apiError.message.trim()) {
-    return apiError.message;
-  }
-
-  return fallback;
-}
-
 export function UsersCreatePage() {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const adminView = isAdminRole(user?.role);
 
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<CreateUserRole>('editor');
-  const [creating, setCreating] = useState(false);
+
+  const createUserMutation = useMutation({
+    mutationFn: createEditorUser,
+    onSuccess: async () => {
+      setEmail('');
+      setFullName('');
+      setPassword('');
+      setRole('editor');
+      toast.success('User created successfully.');
+      await queryClient.invalidateQueries({ queryKey: queryKeys.users });
+    },
+    onError: (error) => {
+      toast.error(extractApiErrorMessage(error, 'Could not create user. Check API endpoint/validation rules.'));
+    }
+  });
+
+  const creating = createUserMutation.isPending;
 
   const onCreateUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -77,26 +51,12 @@ export function UsersCreatePage() {
       return;
     }
 
-    setCreating(true);
-
-    try {
-      await createEditorUser({
-        email: email.trim(),
-        full_name: fullName.trim(),
-        password,
-        role
-      });
-
-      setEmail('');
-      setFullName('');
-      setPassword('');
-      setRole('editor');
-      toast.success('User created successfully.');
-    } catch (error) {
-      toast.error(extractApiErrorMessage(error));
-    } finally {
-      setCreating(false);
-    }
+    createUserMutation.mutate({
+      email: email.trim(),
+      full_name: fullName.trim(),
+      password,
+      role
+    });
   };
 
   if (!adminView) {

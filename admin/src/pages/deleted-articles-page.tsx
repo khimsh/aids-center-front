@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
 import { ConfirmModal } from '../components/ui/confirm-modal';
@@ -12,6 +13,7 @@ import {
 } from '../lib/deleted-articles';
 import { articleIsPublished } from '../lib/articles';
 import { isAdminRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
 import './posts-page.css';
 
 function getDaysLeft(deleteAfterIso: string) {
@@ -20,64 +22,74 @@ function getDaysLeft(deleteAfterIso: string) {
 }
 
 export function DeletedArticlesPage() {
+  const queryClient = useQueryClient();
   const { user } = useAuth();
-  const [items, setItems] = useState<DeletedArticleEntry[]>([]);
-  const [loading, setLoading] = useState(true);
   const [busyArticleId, setBusyArticleId] = useState<number | null>(null);
   const [itemToPermanentlyDeleteId, setItemToPermanentlyDeleteId] = useState<number | null>(null);
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
+  const deletedQueryKey = queryKeys.deletedArticles(adminView, user?.id);
 
-  const loadDeleted = useCallback(async () => {
-    try {
+  const deletedItemsQuery = useQuery<DeletedArticleEntry[]>({
+    queryKey: deletedQueryKey,
+    queryFn: async () => {
       const all = await listDeletedArticles();
-      const visible = all.filter((item) => canViewDeletedEntry(item, adminView, user?.id));
-      setItems(visible);
-    } catch {
-      toast.error('Could not load Deleted items.');
-    } finally {
-      setLoading(false);
+      return all.filter((item) => canViewDeletedEntry(item, adminView, user?.id));
     }
-  }, [adminView, user?.id]);
+  });
 
   useEffect(() => {
-    setLoading(true);
-    void loadDeleted();
-  }, [loadDeleted]);
+    if (deletedItemsQuery.isError) {
+      toast.error('Could not load Deleted items.');
+    }
+  }, [deletedItemsQuery.isError]);
 
-  const permanentlyDelete = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      await permanentlyDeleteArticle(articleId);
-      setItems((current) => current.filter((item) => item.id !== articleId));
+  const permanentlyDeleteMutation = useMutation({
+    mutationFn: permanentlyDeleteArticle,
+    onSuccess: async () => {
       toast.success('Article permanently deleted.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: deletedQueryKey });
+    },
+    onError: () => {
       toast.error('Could not permanently delete article.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
-  };
+  });
 
-  const restoreArticle = (articleId: number) => {
-    restoreDeletedArticle(articleId);
-    setItems((current) => current.filter((item) => item.id !== articleId));
-    toast.success('Article restored.');
-  };
-
-  const moveToDrafts = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      await moveDeletedArticleToDraft(articleId);
-      setItems((current) => current.filter((item) => item.id !== articleId));
+  const moveToDraftsMutation = useMutation({
+    mutationFn: moveDeletedArticleToDraft,
+    onSuccess: async () => {
       toast.success('Article moved to drafts and restored.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: deletedQueryKey });
+    },
+    onError: () => {
       toast.error('Could not move article to drafts.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
+  });
+
+  const permanentlyDelete = (articleId: number) => {
+    setBusyArticleId(articleId);
+    permanentlyDeleteMutation.mutate(articleId);
   };
+
+  const restoreArticle = async (articleId: number) => {
+    restoreDeletedArticle(articleId);
+    toast.success('Article restored.');
+    await queryClient.invalidateQueries({ queryKey: deletedQueryKey });
+  };
+
+  const moveToDrafts = (articleId: number) => {
+    setBusyArticleId(articleId);
+    moveToDraftsMutation.mutate(articleId);
+  };
+
+  const items = deletedItemsQuery.data ?? [];
+  const loading = deletedItemsQuery.isLoading;
 
   return (
     <div className="posts-page">
@@ -115,7 +127,7 @@ export function DeletedArticlesPage() {
               <div className="post-actions">
                 <button
                   type="button"
-                  onClick={() => restoreArticle(item.id)}
+                  onClick={() => void restoreArticle(item.id)}
                   disabled={busyArticleId === item.id}
                 >
                   Restore
@@ -123,7 +135,7 @@ export function DeletedArticlesPage() {
                 <button
                   type="button"
                   className="button-secondary"
-                  onClick={() => void moveToDrafts(item.id)}
+                  onClick={() => moveToDrafts(item.id)}
                   disabled={busyArticleId === item.id}
                 >
                   Move to Drafts
@@ -155,7 +167,7 @@ export function DeletedArticlesPage() {
             return;
           }
 
-          void permanentlyDelete(itemToPermanentlyDeleteId);
+          permanentlyDelete(itemToPermanentlyDeleteId);
           setItemToPermanentlyDeleteId(null);
         }}
       />
