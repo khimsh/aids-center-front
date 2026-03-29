@@ -1,4 +1,4 @@
-import { articleIsPublished, type ArticleRecord } from '../lib/articles';
+import { articleIsPublished, type ArticleRecord } from '../../lib/articles';
 
 type ArticleListCardProps = {
   article: ArticleRecord;

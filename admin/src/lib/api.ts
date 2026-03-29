@@ -4,6 +4,16 @@ const API_URL = import.meta.env.VITE_API_URL || '/';
 
 export const ACCESS_TOKEN_KEY = 'admin_access_token';
 
+type HttpErrorLike = {
+  response?: {
+    status?: number;
+  };
+};
+
+export function getErrorStatus(error: unknown): number | undefined {
+  return (error as HttpErrorLike).response?.status;
+}
+
 export const api = axios.create({
   baseURL: API_URL,
   timeout: 20000,

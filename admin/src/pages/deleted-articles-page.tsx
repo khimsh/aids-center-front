@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
-import { ConfirmModal } from '../components/confirm-modal';
+import { ConfirmModal } from '../components/ui/confirm-modal';
 import {
   canViewDeletedEntry,
   listDeletedArticles,
@@ -10,7 +10,8 @@ import {
   restoreDeletedArticle,
   type DeletedArticleEntry
 } from '../lib/deleted-articles';
-import { articleIsPublished, isAdminRole } from '../lib/articles';
+import { articleIsPublished } from '../lib/articles';
+import { isAdminRole } from '../lib/permissions';
 import './posts-page.css';
 
 function getDaysLeft(deleteAfterIso: string) {

@@ -1,12 +1,12 @@
 ---
 import Article from "./Article.astro";
-import { useTranslations } from "../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
 import {
     fetchArticleBySlug,
     toAbsoluteImageUrl,
     type ArticleDetails,
-} from "../lib/articles-api";
-import fallbackNewsImage from "../assets/images/clinic.webp";
+} from "../../lib/articles-api";
+import fallbackNewsImage from "../../assets/images/clinic.webp";
 
 type Props = {
     lang: "ka" | "en";

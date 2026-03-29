@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api, getErrorStatus } from './api';
 
 export type ArticleRecord = {
   id: number;
@@ -39,11 +39,6 @@ export const DEFAULT_ARTICLES_QUERY = {
   per_page: 200,
   include_drafts: true
 } as const;
-
-export function isAdminRole(role?: string) {
-  const normalized = (role ?? '').toLowerCase();
-  return normalized === 'admin' || normalized === 'superadmin';
-}
 
 export function getArticleOwnerId(article: ArticleRecord): string {
   const candidate = article.author_id ?? article.user_id ?? article.created_by ?? article.author?.id;
@@ -95,7 +90,7 @@ export async function fetchArticles(params?: Record<string, unknown>): Promise<A
   try {
     response = await api.get('/api/articles', { params });
   } catch (error) {
-    const status = (error as { response?: { status?: number } }).response?.status;
+    const status = getErrorStatus(error);
     const hasIncludeDrafts = typeof params !== 'undefined' && Object.prototype.hasOwnProperty.call(params, 'include_drafts');
 
     if (status === 422 && hasIncludeDrafts) {

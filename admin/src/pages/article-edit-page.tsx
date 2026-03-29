@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArticleForm } from '../components/article-form';
+import { ArticleForm } from '../components/forms/article-form';
 import type { ArticleRecord } from '../lib/articles';
 import './posts-page.css';
 

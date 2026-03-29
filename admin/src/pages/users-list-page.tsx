@@ -1,15 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
-import { ConfirmModal } from '../components/confirm-modal';
-import { isAdminRole } from '../lib/articles';
+import { ConfirmModal } from '../components/ui/confirm-modal';
+import { isAdminRole, isEditorRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
 import {
   changeEditorPassword,
   deleteEditorUser,
   fetchUsers,
   getUserId,
-  isEditorRole,
   type UserRecord
 } from '../lib/users';
 import './posts-page.css';
@@ -62,37 +63,29 @@ function extractApiErrorMessage(error: unknown): string {
 
 export function UsersListPage() {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const adminView = isAdminRole(user?.role);
 
-  const [loadingEditors, setLoadingEditors] = useState(true);
   const [busyEditorId, setBusyEditorId] = useState<string | null>(null);
-  const [users, setUsers] = useState<UserRecord[]>([]);
   const [editorToDelete, setEditorToDelete] = useState<UserRecord | null>(null);
   const [editorToChangePassword, setEditorToChangePassword] = useState<UserRecord | null>(null);
   const [passwordInput, setPasswordInput] = useState('');
   const [updatingPassword, setUpdatingPassword] = useState(false);
 
+  const usersQuery = useQuery({
+    queryKey: queryKeys.users,
+    queryFn: fetchUsers,
+    enabled: adminView
+  });
+
+  const users = usersQuery.data ?? [];
   const editors = useMemo(() => users.filter((entry) => isEditorRole(entry.role)), [users]);
 
-  const loadEditors = async () => {
-    try {
-      const allUsers = await fetchUsers();
-      setUsers(allUsers);
-    } catch (error) {
-      toast.error(extractApiErrorMessage(error));
-    } finally {
-      setLoadingEditors(false);
-    }
-  };
-
   useEffect(() => {
-    if (!adminView) {
-      return;
+    if (usersQuery.isError) {
+      toast.error(extractApiErrorMessage(usersQuery.error));
     }
-
-    setLoadingEditors(true);
-    void loadEditors();
-  }, [adminView]);
+  }, [usersQuery.isError, usersQuery.error]);
 
   useEffect(() => {
     if (!editorToChangePassword) {
@@ -112,7 +105,39 @@ export function UsersListPage() {
     };
   }, [editorToChangePassword, updatingPassword]);
 
-  const onDeleteEditor = async (editor: UserRecord) => {
+  const deleteEditorMutation = useMutation({
+    mutationFn: deleteEditorUser,
+    onSuccess: async () => {
+      toast.success('Editor deleted successfully.');
+      await queryClient.invalidateQueries({ queryKey: queryKeys.users });
+    },
+    onError: (error) => {
+      toast.error(extractApiErrorMessage(error));
+    },
+    onSettled: () => {
+      setBusyEditorId(null);
+    }
+  });
+
+  const changePasswordMutation = useMutation({
+    mutationFn: ({ editorId, nextPassword }: { editorId: string; nextPassword: string }) =>
+      changeEditorPassword(editorId, nextPassword),
+    onSuccess: async () => {
+      toast.success('Editor password updated successfully.');
+      setEditorToChangePassword(null);
+      setPasswordInput('');
+      await queryClient.invalidateQueries({ queryKey: queryKeys.users });
+    },
+    onError: (error) => {
+      toast.error(extractApiErrorMessage(error));
+    },
+    onSettled: () => {
+      setUpdatingPassword(false);
+      setBusyEditorId(null);
+    }
+  });
+
+  const onDeleteEditor = (editor: UserRecord) => {
     const editorId = getUserId(editor);
     if (!editorId) {
       toast.error('Editor id is missing.');
@@ -120,18 +145,10 @@ export function UsersListPage() {
     }
 
     setBusyEditorId(editorId);
-    try {
-      await deleteEditorUser(editorId);
-      toast.success('Editor deleted successfully.');
-      await loadEditors();
-    } catch (error) {
-      toast.error(extractApiErrorMessage(error));
-    } finally {
-      setBusyEditorId(null);
-    }
+    deleteEditorMutation.mutate(editorId);
   };
 
-  const onChangePassword = async () => {
+  const onChangePassword = () => {
     if (!editorToChangePassword) {
       return;
     }
@@ -150,18 +167,7 @@ export function UsersListPage() {
 
     setUpdatingPassword(true);
     setBusyEditorId(editorId);
-
-    try {
-      await changeEditorPassword(editorId, nextPassword);
-      toast.success('Editor password updated successfully.');
-      setEditorToChangePassword(null);
-      setPasswordInput('');
-    } catch (error) {
-      toast.error(extractApiErrorMessage(error));
-    } finally {
-      setUpdatingPassword(false);
-      setBusyEditorId(null);
-    }
+    changePasswordMutation.mutate({ editorId, nextPassword });
   };
 
   if (!adminView) {
@@ -186,9 +192,9 @@ export function UsersListPage() {
       <div className="posts-list">
         <h2>Registered Editors</h2>
 
-        {loadingEditors ? <p className="hint">Loading editors...</p> : null}
+        {usersQuery.isLoading ? <p className="hint">Loading editors...</p> : null}
 
-        {!loadingEditors && editors.length === 0 ? (
+        {!usersQuery.isLoading && editors.length === 0 ? (
           <p className="hint">No editor accounts found.</p>
         ) : (
           editors.map((editor) => {
@@ -275,7 +281,7 @@ export function UsersListPage() {
               >
                 Cancel
               </button>
-              <button type="button" onClick={() => void onChangePassword()} disabled={updatingPassword}>
+              <button type="button" onClick={onChangePassword} disabled={updatingPassword}>
                 {updatingPassword ? 'Working...' : 'Update Password'}
               </button>
             </div>

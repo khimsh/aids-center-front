@@ -1,46 +1,48 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
 import { api } from '../lib/api';
-import { fetchArticles, filterArticlesByUser, isAdminRole } from '../lib/articles';
-import { fetchUsers, isEditorRole } from '../lib/users';
+import { fetchArticles, filterArticlesByUser } from '../lib/articles';
+import { isAdminRole, isEditorRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
+import { fetchUsers } from '../lib/users';
 import './dashboard-page.css';
 
 export function DashboardPage() {
   const { user } = useAuth();
-  const [articleCount, setArticleCount] = useState(0);
-  const [editorCount, setEditorCount] = useState(0);
-  const [vacancyCount, setVacancyCount] = useState(0);
-  const [loading, setLoading] = useState(true);
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
 
+  const metricsQuery = useQuery({
+    queryKey: queryKeys.dashboardMetrics(adminView, user?.id),
+    queryFn: async () => {
+      const [articleResult, users, vacanciesResponse] = await Promise.all([
+        fetchArticles({ page: 1, per_page: 200, include_drafts: true }),
+        adminView ? fetchUsers() : Promise.resolve([]),
+        api.get('/api/job-postings')
+      ]);
+
+      const visible = adminView ? articleResult.items : filterArticlesByUser(articleResult.items, user?.id);
+      return {
+        articleCount: visible.length,
+        vacancyCount: Array.isArray(vacanciesResponse.data) ? vacanciesResponse.data.length : 0,
+        editorCount: adminView ? users.filter((entry) => isEditorRole(entry.role)).length : 0
+      };
+    }
+  });
+
   useEffect(() => {
-    const loadCounts = async () => {
-      try {
-        const [articleResult, users, vacanciesResponse] = await Promise.all([
-          fetchArticles({ page: 1, per_page: 200, include_drafts: true }),
-          adminView ? fetchUsers() : Promise.resolve([]),
-          api.get('/api/job-postings')
-        ]);
+    if (metricsQuery.isError) {
+      toast.error('Could not load dashboard metrics.');
+    }
+  }, [metricsQuery.isError]);
 
-        const visible = adminView ? articleResult.items : filterArticlesByUser(articleResult.items, user?.id);
-        setArticleCount(visible.length);
-        setVacancyCount(Array.isArray(vacanciesResponse.data) ? vacanciesResponse.data.length : 0);
-
-        if (adminView) {
-          setEditorCount(users.filter((entry) => isEditorRole(entry.role)).length);
-        }
-      } catch {
-        toast.error('Could not load dashboard metrics.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void loadCounts();
-  }, [adminView, user?.id]);
+  const loading = metricsQuery.isLoading;
+  const articleCount = metricsQuery.data?.articleCount ?? 0;
+  const vacancyCount = metricsQuery.data?.vacancyCount ?? 0;
+  const editorCount = metricsQuery.data?.editorCount ?? 0;
 
   return (
     <div className="dashboard-page">

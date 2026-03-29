@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ConfirmModal } from '../components/confirm-modal';
+import { ConfirmModal } from '../components/ui/confirm-modal';
 import { api } from '../lib/api';
 import './job-postings-page.css';
 

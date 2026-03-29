@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/use-auth';
+import { useAuth } from '../../auth/use-auth';
 import styles from './admin-layout.module.css';
 
 export function AdminLayout() {

@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './auth/auth-context';
 import { ProtectedRoute } from './auth/protected-route';
-import { AdminLayout } from './components/admin-layout';
+import { AdminLayout } from './components/layout/admin-layout';
 import { DashboardPage } from './pages/dashboard-page';
 import { JobPostingCreatePage } from './pages/job-posting-create-page';
 import { LoginPage } from './pages/login-page';

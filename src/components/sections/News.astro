@@ -1,12 +1,12 @@
 ---
-import Article from "./Article.astro";
-import { useTranslations } from "../i18n/utils";
+import Article from "../content/Article.astro";
+import { useTranslations } from "../../i18n/utils";
 import {
   fetchArticleBySlug,
   getArticlesApiBase,
   toAbsoluteImageUrl,
-} from "../lib/articles-api";
-import fallbackNewsImage from "../assets/images/clinic.webp";
+} from "../../lib/articles-api";
+import fallbackNewsImage from "../../assets/images/clinic.webp";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);

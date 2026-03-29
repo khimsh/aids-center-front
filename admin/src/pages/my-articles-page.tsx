@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
-import { ArticleListCard } from '../components/article-list-card';
-import { ConfirmModal } from '../components/confirm-modal';
+import { ArticleListCard } from '../components/cards/article-list-card';
+import { ConfirmModal } from '../components/ui/confirm-modal';
 import {
   articleIsPublished,
   deleteArticleById,
   DEFAULT_ARTICLES_QUERY,
   fetchArticles,
   getVisibleArticles,
-  isAdminRole,
   publishArticleDraft,
   type ArticleRecord
 } from '../lib/articles';
+import { isAdminRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
 import './posts-page.css';
 
 const configuredPublicSiteUrl = (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined)?.trim();
@@ -62,63 +64,73 @@ async function attachPublishedSlugs(items: ArticleRecord[]): Promise<ArticleReco
 
 export function MyArticlesPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { user } = useAuth();
-  const [articles, setArticles] = useState<ArticleRecord[]>([]);
-  const [loading, setLoading] = useState(true);
   const [busyArticleId, setBusyArticleId] = useState<number | null>(null);
   const [articleToDeleteId, setArticleToDeleteId] = useState<number | null>(null);
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
 
-  const loadArticles = useCallback(async () => {
-    try {
+  const articlesQuery = useQuery<ArticleRecord[]>({
+    queryKey: queryKeys.myArticles(adminView, user?.id),
+    queryFn: async () => {
       const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
       const visible = getVisibleArticles(result.items, adminView, user?.id);
-      const withSlugs = await attachPublishedSlugs(visible);
-      setArticles(withSlugs);
-    } catch {
-      toast.error('Could not load articles.');
-    } finally {
-      setLoading(false);
+      return attachPublishedSlugs(visible);
     }
-  }, [adminView, user?.id]);
+  });
 
   useEffect(() => {
-    setLoading(true);
-    void loadArticles();
-  }, [loadArticles]);
+    if (articlesQuery.isError) {
+      toast.error('Could not load articles.');
+    }
+  }, [articlesQuery.isError]);
 
-  const publishDraft = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      const published = await publishArticleDraft(articleId);
+  const publishDraftMutation = useMutation({
+    mutationFn: publishArticleDraft,
+    onSuccess: async (published) => {
       if (!published) {
         toast.error('Draft publish was not persisted by the server.');
+      } else {
+        toast.success('Draft published successfully.');
       }
 
-      await loadArticles();
-      toast.success('Draft published successfully.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.myArticles(adminView, user?.id) });
+    },
+    onError: () => {
       toast.error('Could not publish draft.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
-  };
+  });
 
-  const removeArticle = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      await deleteArticleById(articleId);
-      setArticles((current) => current.filter((article) => article.id !== articleId));
+  const removeArticleMutation = useMutation({
+    mutationFn: deleteArticleById,
+    onSuccess: async () => {
       toast.success('Article deleted successfully.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.myArticles(adminView, user?.id) });
+    },
+    onError: () => {
       toast.error('Could not delete article.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
+  });
+
+  const publishDraft = (articleId: number) => {
+    setBusyArticleId(articleId);
+    publishDraftMutation.mutate(articleId);
   };
+
+  const removeArticle = (articleId: number) => {
+    setBusyArticleId(articleId);
+    removeArticleMutation.mutate(articleId);
+  };
+
+  const articles = articlesQuery.data ?? [];
+  const loading = articlesQuery.isLoading;
 
   return (
     <div className="posts-page">
@@ -149,7 +161,7 @@ export function MyArticlesPage() {
                 viewPublishedUrl={getPublicArticleUrl(article)}
                 showEnglishTitle
                 onEdit={() => navigate(`/articles/${article.id}/edit`, { state: { article, returnTo: '/articles/mine' } })}
-                onPublishDraft={() => void publishDraft(article.id)}
+                onPublishDraft={() => publishDraft(article.id)}
                 onDelete={() => setArticleToDeleteId(article.id)}
               />
             );
@@ -170,7 +182,7 @@ export function MyArticlesPage() {
             return;
           }
 
-          void removeArticle(articleToDeleteId);
+          removeArticle(articleToDeleteId);
           setArticleToDeleteId(null);
         }}
       />

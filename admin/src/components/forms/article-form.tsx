@@ -3,8 +3,8 @@ import Quill from 'quill';
 import { toast } from 'react-toastify';
 import type { AxiosError } from 'axios';
 import 'quill/dist/quill.snow.css';
-import { articleIsPublished, fetchArticles, type ArticleRecord } from '../lib/articles';
-import { api } from '../lib/api';
+import { articleIsPublished, fetchArticles, type ArticleRecord } from '../../lib/articles';
+import { api } from '../../lib/api';
 
 type ArticleCategory = 'news' | 'announcements';
 

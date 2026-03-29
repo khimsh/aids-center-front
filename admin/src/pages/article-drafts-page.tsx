@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../auth/use-auth';
-import { ArticleListCard } from '../components/article-list-card';
-import { ConfirmModal } from '../components/confirm-modal';
+import { ArticleListCard } from '../components/cards/article-list-card';
+import { ConfirmModal } from '../components/ui/confirm-modal';
 import {
   articleIsPublished,
   deleteArticleById,
   DEFAULT_ARTICLES_QUERY,
   fetchArticles,
   getVisibleArticles,
-  isAdminRole,
   publishArticleDraft,
   type ArticleRecord
 } from '../lib/articles';
+import { isAdminRole } from '../lib/permissions';
+import { queryKeys } from '../lib/query-keys';
 import './posts-page.css';
 
 function isNoDraftsResponse(error: unknown): boolean {
@@ -32,69 +34,81 @@ function isNoDraftsResponse(error: unknown): boolean {
 
 export function ArticleDraftsPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { user } = useAuth();
-  const [drafts, setDrafts] = useState<ArticleRecord[]>([]);
-  const [loading, setLoading] = useState(true);
   const [busyArticleId, setBusyArticleId] = useState<number | null>(null);
   const [draftToDeleteId, setDraftToDeleteId] = useState<number | null>(null);
 
   const adminView = useMemo(() => isAdminRole(user?.role), [user?.role]);
 
-  const loadDrafts = useCallback(async () => {
-    try {
-      const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
-      const visibleArticles = getVisibleArticles(result.items, adminView, user?.id);
-      const nextDrafts = visibleArticles.filter((article) => !articleIsPublished(article));
+  const draftsQuery = useQuery<ArticleRecord[]>({
+    queryKey: queryKeys.articleDrafts(adminView, user?.id),
+    queryFn: async () => {
+      try {
+        const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
+        const visibleArticles = getVisibleArticles(result.items, adminView, user?.id);
+        return visibleArticles.filter((article) => !articleIsPublished(article));
+      } catch (error) {
+        if (isNoDraftsResponse(error)) {
+          return [];
+        }
 
-      setDrafts(nextDrafts);
-    } catch (error) {
-      if (isNoDraftsResponse(error)) {
-        setDrafts([]);
-        return;
+        throw error;
       }
-
-      toast.error('Could not load article drafts.');
-    } finally {
-      setLoading(false);
     }
-  }, [adminView, user?.id]);
+  });
 
   useEffect(() => {
-    setLoading(true);
-    void loadDrafts();
-  }, [loadDrafts]);
+    if (draftsQuery.isError) {
+      toast.error('Could not load article drafts.');
+    }
+  }, [draftsQuery.isError]);
 
-  const publishDraft = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      const published = await publishArticleDraft(articleId);
+  const publishDraftMutation = useMutation({
+    mutationFn: publishArticleDraft,
+    onSuccess: async (published) => {
       if (!published) {
         toast.error('Draft publish was not persisted by the server.');
+      } else {
+        toast.success('Draft published successfully.');
       }
 
-      await loadDrafts();
-      toast.success('Draft published successfully.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.articleDrafts(adminView, user?.id) });
+    },
+    onError: () => {
       toast.error('Could not publish draft.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
-  };
+  });
 
-  const removeDraft = async (articleId: number) => {
-    setBusyArticleId(articleId);
-
-    try {
-      await deleteArticleById(articleId);
-      setDrafts((current) => current.filter((draft) => draft.id !== articleId));
+  const deleteDraftMutation = useMutation({
+    mutationFn: deleteArticleById,
+    onSuccess: async () => {
       toast.success('Draft deleted successfully.');
-    } catch {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.articleDrafts(adminView, user?.id) });
+    },
+    onError: () => {
       toast.error('Could not delete draft.');
-    } finally {
+    },
+    onSettled: () => {
       setBusyArticleId(null);
     }
+  });
+
+  const publishDraft = (articleId: number) => {
+    setBusyArticleId(articleId);
+    publishDraftMutation.mutate(articleId);
   };
+
+  const removeDraft = (articleId: number) => {
+    setBusyArticleId(articleId);
+    deleteDraftMutation.mutate(articleId);
+  };
+
+  const drafts = draftsQuery.data ?? [];
+  const loading = draftsQuery.isLoading;
 
   return (
     <div className="posts-page">
@@ -122,7 +136,7 @@ export function ArticleDraftsPage() {
               showCategoryPrefix={false}
               forceDraftStatus
               onEdit={() => navigate(`/articles/${draft.id}/edit`, { state: { article: draft, returnTo: '/articles/drafts' } })}
-              onPublishDraft={() => void publishDraft(draft.id)}
+              onPublishDraft={() => publishDraft(draft.id)}
               onDelete={() => setDraftToDeleteId(draft.id)}
             />
           ))
@@ -142,7 +156,7 @@ export function ArticleDraftsPage() {
             return;
           }
 
-          void removeDraft(draftToDeleteId);
+          removeDraft(draftToDeleteId);
           setDraftToDeleteId(null);
         }}
       />
