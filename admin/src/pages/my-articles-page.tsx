@@ -58,10 +58,6 @@ function getPublicArticleUrl(article: ArticleRecord): string | undefined {
   return `${base}/news/${encodeURIComponent(slug)}`;
 }
 
-async function attachPublishedSlugs(items: ArticleRecord[]): Promise<ArticleRecord[]> {
-  return items;
-}
-
 export function MyArticlesPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -76,7 +72,7 @@ export function MyArticlesPage() {
     queryFn: async () => {
       const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
       const visible = getVisibleArticles(result.items, adminView, user?.id);
-      return attachPublishedSlugs(visible);
+      return visible;
     }
   });
 
