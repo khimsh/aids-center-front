@@ -1,0 +1,474 @@
+---
+type Lang = "ka" | "en";
+
+interface Article {
+    number: string;
+    title: string;
+    clauses: string[];
+}
+
+interface Chapter {
+    number: string;
+    title: string;
+    articles: Article[];
+}
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+const matsneUrl = "https://matsne.gov.ge";
+
+const content = {
+    en: {
+        pageTitle: "Legislation",
+        heroTitle: "HIV / AIDS Legislation",
+        heroSubtitle:
+            "Law of Georgia on HIV infection/AIDS prevention, patient rights, screening, treatment and social protection.",
+        introTitle: "About this Law",
+        introText:
+            "This law defines the legal framework for the prevention of HIV/AIDS in Georgia, the rights and obligations of patients and healthcare institutions, and the responsibilities of the state. It governs the organization of the anti-HIV/AIDS service, voluntary and mandatory testing rules, patient confidentiality, and social protection for persons living with HIV.",
+        chaptersTitle: "Law of Georgia on HIV/AIDS",
+        chapters: [
+            {
+                number: "I",
+                title: "General Provisions",
+                articles: [
+                    {
+                        number: "1",
+                        title: "Acquired Immunodeficiency Syndrome (AIDS). Human Immunodeficiency Virus (HIV). Conception, Spreading, and Importance of the Problem.",
+                        clauses: [
+                            "Acquired Immunodeficiency Syndrome (AIDS) is the infectious disease caused by the Human Immunodeficiency Virus (HIV).",
+                            "Under modern classification, the disease is referred to as Human Immunodeficiency Virus infection (HIV infection). The term AIDS specifically refers to the final stage of HIV infection, when the patient presents with clinical signs of the disease.",
+                            "Due to its rate of spread, progression, and outcomes, HIV/AIDS is classified among the most dangerous diseases. The HIV/AIDS pandemic poses a threat to all humanity and presents the global healthcare system with a formidable challenge. Effective action against HIV/AIDS is possible only through the unified efforts of governments and healthcare professionals worldwide.",
+                            "The Government of Georgia fully recognizes the gravity of the HIV/AIDS problem and assumes state responsibility for implementing measures to combat HIV/AIDS and carry out prevention activities.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "II",
+                title: "Anti-HIV Infection / AIDS Service",
+                articles: [
+                    {
+                        number: "2",
+                        title: "The Governmental Commission on AIDS. National Programme for HIV/AIDS Prevention. Specialized Anti-HIV/AIDS Service.",
+                        clauses: [
+                            "The Governmental Commission leads anti-HIV/AIDS activities in Georgia. The Commission is established by the President of Georgia. It coordinates the activities of ministries, departments, and organizations on HIV/AIDS matters and is responsible for resolving any issue within its competence as defined by the President.",
+                            "In accordance with the recommendations of the WHO global anti-AIDS programme, the President of Georgia issues an anti-AIDS and preventive programme based on Georgia's geopolitical and national circumstances. The Ministry of Labour, Health and Social Affairs of Georgia, along with other interested ministries, departments, firms, associations, charitable organizations, and mass media, participates in the programme. The programme is funded from the state budget as well as from public and private organizations.",
+                            "Medical preventive activities for HIV/AIDS are carried out by the Specialized Anti-HIV/AIDS Service at the Ministry of Labour, Health and Social Affairs of Georgia.",
+                            "The rights of HIV/AIDS patients are defended by the legal branch of the Public Defender of Georgia.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "III",
+                title: "Screening of Citizens on HIV/AIDS",
+                articles: [
+                    {
+                        number: "3",
+                        title: "Screening of Citizens Permanently or Temporarily Residing on the Territory of Georgia",
+                        clauses: [
+                            "Citizens of Georgia as well as any individuals permanently or temporarily residing on the territory of Georgia, including foreign citizens and internally displaced persons, have the right to be screened for HIV/AIDS, including on an anonymous basis.",
+                            "The Specialized Anti-HIV/AIDS Service of the Ministry of Labour, Health and Social Affairs of Georgia screens the citizens of Georgia for HIV/AIDS.",
+                            "Screening of citizens for HIV/AIDS is voluntary.",
+                            "Medical screening for HIV/AIDS is mandatory only for blood, organ, and sperm donors.",
+                            "In urgent critical circumstances, it is permissible to use untested blood, blood products, or organs/tissue from a living donor for a medical procedure. The recipient or their legal representative provides written consent for the medical procedure, after which direct HIV/AIDS testing is performed on the patient.",
+                            "Medical testing requirements for HIV/AIDS screening of citizens may be determined by the Ministry of Labour, Health and Social Affairs of Georgia for any occasion deemed necessary.",
+                            "Compliance with HIV/AIDS testing rules is obligatory for all citizens of Georgia, individuals permanently or temporarily residing in Georgia, including foreign citizens and internally displaced persons, as well as all ministries, departments, organizations, institutions, state and private companies, associations, charitable organizations, foreign and joint-stock companies operating on the territory of Georgia, regardless of their form of ownership or legal status.",
+                            "Violation of HIV/AIDS testing rules results in prosecution in accordance with applicable legislation.",
+                        ],
+                    },
+                    {
+                        number: "4",
+                        title: "Screening of Foreign Citizens on HIV/AIDS",
+                        clauses: [
+                            "Georgian citizens returning from abroad, as well as foreign citizens and internally displaced persons, may undergo HIV/AIDS screening in accordance with applicable legislation.",
+                        ],
+                    },
+                    {
+                        number: "5",
+                        title: "Expenses",
+                        clauses: [
+                            "For foreign citizens visiting from abroad, as well as Georgian citizens departing on or returning from business trips or personal travel, and internally displaced persons, HIV/AIDS screening is charged. The cost may be borne by the individual being screened or by any relevant department, organization, institution, or company.",
+                            "For Georgian citizens and foreign citizens permanently or temporarily residing in Georgia, including foreign citizens and internally displaced persons (other than those departing on or returning from business trips or personal travel), HIV/AIDS screening expenses are covered in accordance with applicable legislation.",
+                            "Any citizen may choose to undergo paid HIV/AIDS testing.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "IV",
+                title: "HIV/AIDS Patient Screening, Treatment and Preventive Surveillance",
+                articles: [
+                    {
+                        number: "6",
+                        title: "Preventive Surveillance of HIV/AIDS Patients and Persons in Contact with Them",
+                        clauses: [
+                            "Persons who have undergone HIV/AIDS testing in accordance with this law and have received a positive result are notified in writing by healthcare bodies and institutions about the measures necessary to prevent the spread of HIV/AIDS. The patient signs to acknowledge the rules. If the patient cannot independently take steps to prevent the spread of HIV/AIDS due to age, mental condition, or any other reason, the written notification is sent to the patient's legal guardian.",
+                            "Citizens of Georgia, as well as foreign citizens permanently or temporarily residing in Georgia, foreign citizens, or internally displaced persons found to carry HIV infection, and persons who have been in contact with them, are required to undergo preventive surveillance.",
+                        ],
+                    },
+                    {
+                        number: "7",
+                        title: "HIV/AIDS Patient Screening, Treatment and In-Patient Control",
+                        clauses: [
+                            "The Specialized Anti-HIV/AIDS Service at the Ministry of Labour, Health and Social Affairs of Georgia oversees clinical and laboratory screening, treatment, and in-patient control of HIV/AIDS patients.",
+                            "The Ministry of Labour, Health and Social Affairs of Georgia establishes the procedures for screening, treating, and surveillance of these patients in accordance with this law.",
+                            "Expenses for the clinical and laboratory screening, treatment, and in-patient control of HIV/AIDS patients are covered in accordance with applicable health protection legislation.",
+                        ],
+                    },
+                ],
+            },
+        ] as Chapter[],
+        noteTitle: "Note",
+        noteText:
+            "This is an informational presentation of the Law of Georgia on HIV/AIDS. For the official legal text, please consult the Legislative Herald of Georgia at",
+        noteLinkLabel: "matsne.gov.ge",
+    },
+    ka: {
+        pageTitle: "კანონმდებლობა",
+        heroTitle: "აივ / შიდსი — კანონმდებლობა",
+        heroSubtitle:
+            "საქართველოს კანონი აივ ინფექციის/შიდსის პრევენციის, პაციენტთა უფლებების, სკრინინგისა და სოციალური დაცვის შესახებ.",
+        introTitle: "კანონის შესახებ",
+        introText:
+            "ეს კანონი განსაზღვრავს საქართველოში აივ/შიდსის პრევენციის სამართლებრივ ჩარჩოს, პაციენტებისა და ჯანდაცვის დაწესებულებების უფლება-მოვალეობებს და სახელმწიფოს პასუხისმგებლობებს. კანონი არეგულირებს ანტი-აივ/შიდს სამსახურის ორგანიზაციას, ნებაყოფლობითი და სავალდებულო ტესტირების წესებს, პაციენტის კონფიდენციალობასა და აივ-ით მცხოვრები პირების სოციალურ დაცვას.",
+        chaptersTitle: "საქართველოს კანონი აივ/შიდსის შესახებ",
+        chapters: [
+            {
+                number: "I",
+                title: "ზოგადი დებულებები",
+                articles: [
+                    {
+                        number: "1",
+                        title: "შეძენილი იმუნოდეფიციტის სინდრომი (შიდსი). ადამიანის იმუნოდეფიციტის ვირუსი (აივ). ცნება, გავრცელება, პრობლემის მნიშვნელობა.",
+                        clauses: [
+                            "შეძენილი იმუნოდეფიციტის სინდრომი (შიდსი) არის ადამიანის იმუნოდეფიციტის ვირუსით (აივ) გამოწვეული ინფექციური დაავადება.",
+                            "თანამედროვე კლასიფიკაციის მიხედვით, დაავადება იწოდება ადამიანის იმუნოდეფიციტის ვირუსული ინფექციით (აივ ინფექცია). შიდსის ტერმინი აღნიშნავს კონკრეტულად აივ ინფექციის განვითარების ბოლო სტადიას, როდესაც პაციენტს დაავადების კლინიკური ნიშნები ემჩნევა.",
+                            "გავრცელების სიჩქარის, განვითარებისა და შედეგების მიხედვით, აივ/შიდსი განეკუთვნება განსაკუთრებით საშიშ დაავადებათა კატეგორიას. აივ/შიდსის პანდემია საფრთხეს უქმნის მთელ კაცობრიობას. ამ პრობლემის წარმატებით მოგვარება შესაძლებელია მხოლოდ მთავრობებისა და ჯანდაცვის სპეციალისტების ერთობლივი ძალისხმევით.",
+                            "საქართველოს მთავრობა სრულად აღიარებს აივ/შიდსის პრობლემის სიმძიმეს და კისრულობს სახელმწიფო პასუხისმგებლობას ამ პრობლემის წინააღმდეგ ბრძოლისა და პრევენციის ღონისძიებათა განხორციელებისთვის.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "II",
+                title: "ანტი-აივ ინფექცია/შიდს სამსახური",
+                articles: [
+                    {
+                        number: "2",
+                        title: "სამთავრობო კომისია შიდსის საკითხებზე. აივ/შიდსის პრევენციის ეროვნული პროგრამა. სპეციალიზებული ანტი-აივ/შიდს სამსახური.",
+                        clauses: [
+                            "სამთავრობო კომისია ხელმძღვანელობს საქართველოში ანტი-აივ/შიდს საქმიანობას. კომისიას ქმნის საქართველოს პრეზიდენტი. კომისია კოორდინაციას უწევს სამინისტროებს, დეპარტამენტებსა და ორგანიზაციებს აივ/შიდსის საკითხებში.",
+                            "ჯანმოს გლობალური ანტი-შიდს პროგრამის რეკომენდაციების შესაბამისად, საქართველოს პრეზიდენტი გამოსცემს ანტი-შიდს და პრევენციულ პროგრამას. პროგრამა ფინანსდება სახელმწიფო ბიუჯეტიდან, ასევე საჯარო და კერძო ორგანიზაციებიდან.",
+                            "აივ/შიდსის პრევენციული სამედიცინო ღონისძიებები ხორციელდება საქართველოს შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროსთან არსებული სპეციალიზებული ანტი-აივ/შიდს სამსახურის მიერ.",
+                            "აივ/შიდსით დაავადებულ პაციენტთა უფლебების დაცვა ხორციელდება საქართველოს სახალხო დამცველის სამართლებრივი სამსახურის მეშვეობით.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "III",
+                title: "მოქალაქეთა სკრინინგი აივ/შიდსზე",
+                articles: [
+                    {
+                        number: "3",
+                        title: "საქართველოს ტერიტორიაზე მუდმივად ან დროებით მცხოვრებ მოქალაქეთა სკრინინგი",
+                        clauses: [
+                            "საქართველოს მოქალაქეებს, ასევე ნებისმიერ პირს, რომელიც მუდმივად ან დროებით ცხოვრობს საქართველოში, უცხო ქვეყნის მოქალაქეებისა და იძულებით გადაადგილებული პირების ჩათვლით, უფლება აქვთ გაიარონ სკრინინგი აივ/შიდსზე, მათ შორის ანონიმურად.",
+                            "საქართველოს შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს სპეციალიზებული ანტი-აივ/შიდს სამსახური ახორციელებს მოქალაქეთა სკრინინგს.",
+                            "მოქალაქეების სკრინინგი აივ/შიდსზე ნებაყოფლობითია.",
+                            "სამედიცინო სკრინინგი სავალდებულოა მხოლოდ სისხლის, ორგანოებისა და სპერმის დონორებისთვის.",
+                            "განსაკუთრებულ გადაუდებელ შემთხვევაში შეიძლება გამოყენებულ იქნეს აივ/შიდსზე შეუმოწმებელი სისხლი ან ორგანო სამედიცინო ჩარევის მიზნით. მიმღები ან მისი კანონიერი წარმომადგენელი წერილობით ადასტურებს თანხმობას, რის შემდეგაც ჩატარდება პირდაპირი ტესტირება.",
+                            "სამედიცინო ტესტირების წესების შესრულება სავალდებულოა ყველა მოქალაქისა და ორგანიზაციისთვის, ორგანიზაციულ-სამართლებრივი ფორმისა და დაქვემდებარების მიუხედავად.",
+                            "აივ/შიდსის ტესტირების წესების დარღვევა იწვევს პასუხისმგებლობას მოქმედი კანონმდებლობის შესაბამისად.",
+                        ],
+                    },
+                    {
+                        number: "4",
+                        title: "უცხო ქვეყნის მოქალაქეთა სკრინინგი",
+                        clauses: [
+                            "უცხოეთიდან მობრუნებული საქართველოს მოქალაქეები, ასევე უცხო ქვეყნის მოქალაქეები და იძულებით გადაადგილებული პირები შეიძლება გაიარონ სკრინინგი მოქმედი კანონმდებლობის შესაბამისად.",
+                        ],
+                    },
+                    {
+                        number: "5",
+                        title: "ხარჯები",
+                        clauses: [
+                            "უცხოეთიდან ჩამოსული უცხო ქვეყნის მოქალაქეებისთვის, ასევე სამსახურებრივი ან პირადი მოგზაურობიდან მომდინარე ქართველი მოქალაქეებისთვის სკრინინგი ანაზღაურებადია.",
+                            "საქართველოში მუდმივად ან დროებით მცხოვრები ქართველი და უცხო ქვეყნის მოქალაქეებისთვის (გარდა სამსახურებრივი მოგზაურობებში მყოფებისა) სკრინინგის ხარჯები ანაზღაურდება მოქმედი კანონმდებლობის შესაბამისად.",
+                            "ნებისმიერ მოქალაქეს შეუძლია ფასიანი სკრინინგის გავლა.",
+                        ],
+                    },
+                ],
+            },
+            {
+                number: "IV",
+                title: "აივ/შიდსით დაავადებულ პაციენტთა სკრინინგი, მკურნალობა და პრევენციული მეთვალყურეობა",
+                articles: [
+                    {
+                        number: "6",
+                        title: "აივ/შიდსით დაავადებულ პაციენტთა და მათთან კონტაქტში მყოფ პირთა პრევენციული მეთვალყურეობა",
+                        clauses: [
+                            "პირები, რომლებმაც ჩაიტარეს ტესტირება და დადებითი შედეგი მიიღეს, წერილობით ეცნობებათ პრევენციის წესები ჯანდაცვის ორგანოების მიერ. პაციენტი ხელს აწერს, რომ გაეცნო წესებს. თუ მცირეწლოვნობის, ფსიქიკური მდგომარეობის ან სხვა მიზეზის გამო პაციენტი ვერ შეასრულებს წესებს, შეტყობინება ეგზავნება კანონიერ წარმომადგენელს.",
+                            "საქართველოს მოქალაქეები, უცხო ქვეყნის მოქალაქეები და იძულებით გადაადგილებული პირები, რომლებშიც გამოვლინდა აივ ინფექცია, ასევე მათთან კონტაქტში ყოფილი პირები ვალდებულნი არიან გაიარონ პრევენციული მეთვალყურეობა.",
+                        ],
+                    },
+                    {
+                        number: "7",
+                        title: "აივ/შიდსით დაავადებულ პაციენტთა სკრინინგი, მკურნალობა და სტაციონარული კონტროლი",
+                        clauses: [
+                            "საქართველოს შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს სპეციალიზებული ანტი-აივ/შიდს სამსახური ახორციელებს პაციენტების კლინიკური და ლაბორატორიული სკრინინგის, მკურნალობისა და სტაციონარული კონტროლის ზედამხედველობას.",
+                            "სამინისტრო ადგენს უსახელო პაციენტების სკრინინგის, მკურნალობისა და მეთვალყურეობის პროცედურებს ამ კანონის შესაბამისად.",
+                            "კლინიკური და ლაბორატორიული სკრინინგის, მკურნალობისა და სტაციონარული კონტროლის ხარჯები ანაზღაურდება ჯანმრთელობის დაცვის მოქმედი კანონმდებლობის შესაბამისად.",
+                        ],
+                    },
+                ],
+            },
+        ] as Chapter[],
+        noteTitle: "შენიშვნა",
+        noteText:
+            "ეს არის საქართველოს კანონის ინფორმაციული პრეზენტაცია. ოფიციალური სამართლებრივი ტექსტისთვის გთხოვთ მიმართოთ საქართველოს საკანონმდებლო მაცნეს:",
+        noteLinkLabel: "matsne.gov.ge",
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="legislation-page content-grid">
+    <div class="hero">
+        <p class="section-label">{c.pageTitle}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <div class="surface intro">
+        <h2>{c.introTitle}</h2>
+        <p>{c.introText}</p>
+    </div>
+
+    <div class="surface chapters">
+        <h2>{c.chaptersTitle}</h2>
+        <div class="chapter-list">
+            {
+                c.chapters.map((chapter) => (
+                    <details class="chapter" open={chapter.number === "I"}>
+                        <summary class="chapter-summary">
+                            <span class="chapter-badge">
+                                Chapter {chapter.number}
+                            </span>
+                            <span class="chapter-title">{chapter.title}</span>
+                            <span class="chevron" aria-hidden="true" />
+                        </summary>
+                        <div class="chapter-body">
+                            {chapter.articles.map((article) => (
+                                <article class="law-article">
+                                    <h4 class="article-title">
+                                        <span class="article-num">
+                                            Article {article.number}.
+                                        </span>{" "}
+                                        {article.title}
+                                    </h4>
+                                    <ol class="clause-list">
+                                        {article.clauses.map((clause) => (
+                                            <li>{clause}</li>
+                                        ))}
+                                    </ol>
+                                </article>
+                            ))}
+                        </div>
+                    </details>
+                ))
+            }
+        </div>
+    </div>
+
+    <div class="surface note">
+        <p>
+            <strong>{c.noteTitle}:</strong>
+            {" "}
+            {c.noteText}{" "}
+            <a href={matsneUrl} target="_blank" rel="noreferrer noopener">
+                {c.noteLinkLabel}
+            </a>
+        </p>
+    </div>
+</section>
+
+<style>
+    .legislation-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #002f66 0%, #0452a3 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        color: #f3f7ff;
+
+        h1 {
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+            line-height: 1.25;
+            margin-bottom: 0.75rem;
+        }
+    }
+
+    .hero-subtitle {
+        color: #d8e6ff;
+        font-size: 1.05rem;
+    }
+
+    .surface {
+        background: #fff;
+        border-radius: 14px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 24px rgba(3, 68, 133, 0.08);
+
+        h2 {
+            margin-bottom: 1rem;
+            font-size: 1.35rem;
+            color: #02386f;
+        }
+
+        p {
+            line-height: 1.7;
+            color: #223549;
+        }
+    }
+
+    /* Chapter accordions */
+    .chapter-list {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .chapter {
+        border: 1px solid #d8e4f2;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .chapter-summary {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem 1.1rem;
+        cursor: pointer;
+        background: #f3f8ff;
+        list-style: none;
+        user-select: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        &:hover {
+            background: #e8f1fd;
+        }
+    }
+
+    .chapter-badge {
+        flex-shrink: 0;
+        background: #0b4d95;
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+
+    .chapter-title {
+        flex: 1;
+        font-weight: 600;
+        color: #023472;
+        font-size: 0.95rem;
+    }
+
+    .chevron {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        border-right: 2px solid #0b4d95;
+        border-bottom: 2px solid #0b4d95;
+        transform: rotate(45deg);
+        transition: transform 0.2s ease;
+        margin-right: 0.25rem;
+    }
+
+    details[open] .chevron {
+        transform: rotate(-135deg);
+    }
+
+    .chapter-body {
+        padding: 1.1rem;
+        display: grid;
+        gap: 1.25rem;
+        border-top: 1px solid #d8e4f2;
+    }
+
+    .law-article {
+        display: grid;
+        gap: 0.65rem;
+    }
+
+    .article-title {
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #12365a;
+        line-height: 1.4;
+    }
+
+    .article-num {
+        color: #0b4d95;
+    }
+
+    .clause-list {
+        padding-left: 1.4rem;
+        display: grid;
+        gap: 0.55rem;
+        list-style: decimal;
+
+        li {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #2e4560;
+        }
+    }
+
+    .note {
+        background: oklch(from #034485 94% c h);
+        border-left: 4px solid #034485;
+        box-shadow: none;
+
+        p {
+            font-size: 0.88rem;
+            color: #1a3a5c;
+        }
+
+        a {
+            color: #034485;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 0.15em;
+        }
+    }
+
+    @media (max-width: 680px) {
+        .legislation-page {
+            padding-block: 2.5rem 4rem;
+        }
+
+        .hero,
+        .surface {
+            padding: 1.1rem;
+        }
+
+        .chapter-summary {
+            padding: 0.85rem;
+            gap: 0.5rem;
+        }
+    }
+</style>
