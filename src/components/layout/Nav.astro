@@ -6,6 +6,9 @@ import { useTranslations } from "../../i18n/utils";
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
 const homeUrl = lang === "ka" ? "/" : `/${lang}`;
+const newsUrl = lang === "ka" ? "/news" : `/${lang}/news`;
+const aboutUrl = lang === "ka" ? "/about" : `/${lang}/about`;
+const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
 ---
 
 <nav aria-label={t.nav.navAriaLabel} class="main-nav">
@@ -23,16 +26,45 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
           <a href="#">{t.nav.aboutHivAids}</a>
         </li>
         <li>
-          <a href="#">{t.nav.epidemiology}</a>
-        </li>
-        <li>
-          <a href="#">{t.nav.statistics}</a>
+          <a href="#">{t.nav.getTested}</a>
         </li>
         <li>
           <a href="#">{t.nav.waysOfTransmission}</a>
         </li>
         <li>
+          <a href="#">{t.nav.prevention}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.treatment}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.livingWithHiv}</a>
+        </li>
+        <li>
+          <span class="nav-group-title">{t.nav.forProfessionals}</span>
+          <ul class="nav-subgroup">
+            <li>
+              <a href="#">{t.nav.etiopathogenesis}</a>
+            </li>
+            <li>
+              <a href="#">{t.nav.clinicalSpectrum}</a>
+            </li>
+            <li>
+              <a href="#">{t.nav.diagnostic}</a>
+            </li>
+            <li>
+              <a href="#">{t.nav.palliativeCare}</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">{t.nav.epidemiologicalSituationStats}</a>
+        </li>
+        <li>
           <a href="#">{t.nav.legislation}</a>
+        </li>
+        <li>
+          <a href="#">{t.nav.importantDates}</a>
         </li>
         <li>
           <a href="#">{t.nav.qa}</a>
@@ -49,12 +81,16 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
     </li>
 
     <li>
+      <a href={newsUrl}>{t.nav.news}</a>
+    </li>
+
+    <li>
       <button class="nav-dropdown-btn" aria-expanded="false">
         {t.nav.about} <Icon name="heroicons:chevron-down" /></button
       >
       <ul class="nav-dropdown">
         <li>
-          <a href="#">{t.nav.about}</a>
+          <a href={aboutUrl}>{t.nav.about}</a>
         </li>
         <li>
           <a href="#">{t.nav.ourDoctors}</a>
@@ -80,7 +116,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
           <a href="#">{t.nav.scientificResearch}</a>
         </li>
         <li>
-          <a href="#">{t.nav.laboratory}</a>
+          <a href={labUrl}>{t.nav.laboratory}</a>
         </li>
       </ul>
     </li>
@@ -98,6 +134,7 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
   }
 
   .nav-dropdown {
+    list-style: none;
     position: absolute;
     display: grid;
     gap: 0.5rem;
@@ -127,6 +164,33 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
         text-decoration: underline;
       }
     }
+  }
+
+  .nav-dropdown > li,
+  .nav-subgroup {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-group-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
+  .nav-group-title::after {
+    content: ">";
+    opacity: 0.8;
+  }
+
+  .nav-subgroup {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.45rem;
+    padding-left: 1rem;
   }
 
   .nav-dropdown-btn {

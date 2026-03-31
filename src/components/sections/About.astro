@@ -6,6 +6,7 @@ import { useTranslations } from "../../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
 const t = useTranslations(lang);
+const aboutUrl = lang === "ka" ? "/about" : `/${lang}/about`;
 ---
 
 <section class="about content-grid" aria-labelledby="about-title">
@@ -22,7 +23,7 @@ const t = useTranslations(lang);
         {t.aboutUs.highlight}
       </div>
 
-      <a href="#" class="section-view-all">
+      <a href={aboutUrl} class="section-view-all">
         {t.aboutUs.linkText}
 
         <svg
@@ -102,7 +103,6 @@ const t = useTranslations(lang);
   }
 
   .section-view-all {
-    margin-block-start: 1.5rem;
     color: var(--primary);
   }
 </style>
