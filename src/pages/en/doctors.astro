@@ -1,0 +1,36 @@
+---
+import DoctorsPage from "../../components/sections/DoctorsPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import {
+    applyDoctorTranslation,
+    fetchDoctorTranslationByLang,
+    fetchDoctors,
+    getDoctorsApiBase,
+    type DoctorRecord,
+} from "../../lib/doctors-api";
+
+const apiBase = getDoctorsApiBase();
+let doctors: DoctorRecord[] = [];
+
+try {
+    const baseDoctors = await fetchDoctors(apiBase);
+    const translatedDoctors = await Promise.all(
+        baseDoctors.map(async (doctor) => {
+            const translation = await fetchDoctorTranslationByLang(
+                apiBase,
+                doctor.id,
+                "en",
+            );
+            return applyDoctorTranslation(doctor, translation);
+        }),
+    );
+
+    doctors = translatedDoctors;
+} catch {
+    doctors = [];
+}
+---
+
+<Layout title="Our Doctors — AIDS Center">
+    <DoctorsPage apiBase={apiBase} doctors={doctors} />
+</Layout>

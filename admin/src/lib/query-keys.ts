@@ -9,5 +9,7 @@ export const queryKeys = {
   deletedArticles: (adminView: boolean, userId?: string | number) =>
     ['deleted-articles', adminView, userId ?? null] as const,
   jobPostings: ['job-postings'] as const,
-  jobPosting: (jobId: number) => ['job-posting', jobId] as const
+  jobPosting: (jobId: number) => ['job-posting', jobId] as const,
+  doctors: ['doctors'] as const,
+  doctor: (doctorId: number) => ['doctor', doctorId] as const
 };

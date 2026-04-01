@@ -17,4 +17,9 @@ describe('queryKeys', () => {
     expect(queryKeys.jobPostings).toEqual(['job-postings']);
     expect(queryKeys.jobPosting(88)).toEqual(['job-posting', 88]);
   });
+
+  it('builds doctors keys', () => {
+    expect(queryKeys.doctors).toEqual(['doctors']);
+    expect(queryKeys.doctor(12)).toEqual(['doctor', 12]);
+  });
 });

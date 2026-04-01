@@ -216,6 +216,12 @@ label {
   flex-wrap: wrap;
 }
 
+.doctors-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
 @media (max-width: 860px) {
   .shell {
     grid-template-columns: 1fr;

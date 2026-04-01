@@ -8,9 +8,11 @@ const t = useTranslations(lang);
 const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 const newsUrl = lang === "ka" ? "/news" : `/${lang}/news`;
 const aboutUrl = lang === "ka" ? "/about" : `/${lang}/about`;
+const doctorsUrl = lang === "ka" ? "/doctors" : `/${lang}/doctors`;
 const legislationUrl = lang === "ka" ? "/legislation" : `/${lang}/legislation`;
 
 const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
+const transmissionUrl = lang === "ka" ? "/transmission" : `/${lang}/transmission`;
 
 ---
 
@@ -32,7 +34,7 @@ const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
           <a href="#">{t.nav.getTested}</a>
         </li>
         <li>
-          <a href="#">{t.nav.waysOfTransmission}</a>
+          <a href={transmissionUrl}>{t.nav.waysOfTransmission}</a>
         </li>
         <li>
           <a href="#">{t.nav.prevention}</a>
@@ -96,7 +98,7 @@ const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
           <a href={aboutUrl}>{t.nav.about}</a>
         </li>
         <li>
-          <a href="#">{t.nav.ourDoctors}</a>
+          <a href={doctorsUrl}>{t.nav.ourDoctors}</a>
         </li>
       </ul>
     </li>

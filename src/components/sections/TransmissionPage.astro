@@ -1,0 +1,503 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+
+const content = {
+    en: {
+        pageTitle: "Ways of Transmission — AIDS Center",
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "How HIV Is Transmitted",
+        heroSubtitle:
+            "HIV is transmitted in specific, well-understood ways. Understanding exactly how the virus spreads — and how it does not — is essential for both protecting yourself and reducing the stigma that prevents people from seeking help.",
+
+        transmissionTitle: "How HIV Is Transmitted",
+        transmissionIntro: "There are three main routes of HIV transmission.",
+        routes: [
+            {
+                icon: "💉",
+                title: "Blood Contact",
+                body: "Primarily through sharing needles, syringes, or other injecting equipment during drug use. HIV can also be transmitted through blood transfusions with unscreened blood or through invasive medical procedures with unsterilised instruments, though these risks are minimal in Georgia due to standard screening protocols.",
+            },
+            {
+                icon: "🔴",
+                title: "Sexual Contact",
+                body: "HIV is transmitted through unprotected sexual intercourse with an HIV-positive person. The risk varies by type of sexual activity. Consistent and correct use of condoms effectively prevents transmission.",
+            },
+            {
+                icon: "🤱",
+                title: "Mother to Child",
+                body: "An HIV-positive mother can transmit the virus to her child during pregnancy, labour, or breastfeeding. With appropriate antiretroviral treatment and medical care, this risk can be reduced to below 2%.",
+            },
+        ],
+
+        notTransmittedTitle: "How HIV Is NOT Transmitted",
+        notTransmittedIntro:
+            "You cannot become infected with HIV through everyday contact. HIV is not transmitted by:",
+        notTransmittedItems: [
+            "Shaking hands, hugging, or kissing",
+            "Coughing or sneezing",
+            "Sharing food, plates, or drinking glasses",
+            "Using the same toilet or shower",
+            "Swimming in the same pool",
+            "Mosquito or insect bites",
+            "Living, working, or socialising with people who have HIV",
+        ],
+
+        preventionTitle: "Prevention",
+        preventionSections: [
+            {
+                title: "Sexual Transmission",
+                items: [
+                    "Abstinence",
+                    "Mutual fidelity between partners",
+                    "Consistent and correct use of condoms (male and female condoms) — highly effective at preventing HIV and other sexually transmitted infections including Hepatitis B and C",
+                    "Early diagnosis and treatment of sexually transmitted infections — untreated STIs significantly increase the risk of HIV transmission",
+                    "PrEP (pre-exposure prophylaxis) — available free of charge through the state program at our center for individuals at elevated risk",
+                ],
+            },
+            {
+                title: "Injecting Drug Use",
+                items: [
+                    "Use only new, sterile needles and syringes for every injection",
+                    "Never share needles, syringes, or any injecting equipment with another person",
+                    "Harm reduction services are available",
+                ],
+            },
+            {
+                title: "Mother to Child",
+                items: [
+                    "All pregnant women in Georgia have access to free, voluntary HIV counselling and testing",
+                    "If a test returns positive, antiretroviral treatment combined with appropriate obstetric care can reduce the risk of transmission to the baby to below 2%",
+                    "Selective caesarean section may be recommended",
+                    "Counselling on breastfeeding is available",
+                ],
+            },
+        ],
+
+        pepTitle: "Post-Exposure Prophylaxis (PEP) — Act Within 72 Hours",
+        pepBody:
+            "If you believe you may have been exposed to HIV within the last 72 hours, post-exposure prophylaxis medication can prevent infection if started immediately. Do not wait.",
+        pepCta: "Contact our emergency line now:",
+        emergencyNumber: "595 395 566",
+
+        ctaTitle: "Free Anonymous Testing Available",
+        ctaBody:
+            "Knowing your status is the first step. Testing at our center is free, confidential, and voluntary.",
+        ctaLink: "#",
+        ctaLabel: "Get Tested →",
+    },
+
+    ka: {
+        pageTitle: "გადაცემის გზები — AIDS ცენტრი",
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "როგორ გადაეცემა აივ",
+        heroSubtitle:
+            "აივ გადაეცემა კონკრეტული, კარგად შესწავლილი გზებით. იმის გაგება, თუ როგორ ვრცელდება ვირუსი — და როგოც არ ვრცელდება — აუცილებელია როგორც საკუთარი თავის დაცვისთვის, ასევე იმ სტიგმის შესამცირებლად, რომელიც ადამიანებს დახმარების ძიებისგან ხელს უშლის.",
+
+        transmissionTitle: "გადაცემის გზები",
+        transmissionIntro: "აივ-ის გადაცემის სამი ძირითადი გზა არსებობს.",
+        routes: [
+            {
+                icon: "💉",
+                title: "სისხლის კონტაქტი",
+                body: "ძირითადად ნარკოტიკების მოხმარებისას ნემსების, შპრიცებისა ან სხვა ინიექციური ინვენტარის გაზიარების გზით. აივ ასევე შეიძლება გადაეცეს შეუმოწმებელი სისხლის გადასხმით ან გაუმომჟავებელი ინსტრუმენტებით განხორციელებული ინვაზიური სამედიცინო პროცედურების დროს, თუმცა საქართველოში სტანდარტული სკრინინგ-პროტოკოლების გამო ეს რისკი მინიმალურია.",
+            },
+            {
+                icon: "🔴",
+                title: "სქესობრივი კონტაქტი",
+                body: "აივ გადაეცემა დაუცველი სქესობრივი კონტაქტის გზით აივ-პოზიტიურ პირთან. რისკი იცვლება სქესობრივი კონტაქტის ტიპის მიხედვით. პრეზერვატივის სისტემატური და სწორი გამოყენება ეფექტურად ხელს უშლის გადაცემას.",
+            },
+            {
+                icon: "🤱",
+                title: "დედიდან შვილზე",
+                body: "აივ-პოზიტიური დედა შეიძლება ვირუსი გადასცეს ბავშვს ორსულობის, მელოგინეობის ან ძუძუთი კვების პერიოდში. სათანადო ანტირეტროვირუსული მკურნალობისა და სამედიცინო მოვლის პირობებში ეს რისკი 2%-ზე ქვემოთ შეიძლება შემცირდეს.",
+            },
+        ],
+
+        notTransmittedTitle: "როგორ არ გადაეცემა აივ",
+        notTransmittedIntro:
+            "ყოველდღიური კონტაქტის გზით აივ-ით ინფიცირება შეუძლებელია. აივ არ გადაეცემა:",
+        notTransmittedItems: [
+            "ხელის ჩამორთმევა, მოხვევა ან კოცნა",
+            "ხველა ან დახველება",
+            "საკვების, თეფშების ან ჭიქების გაზიარება",
+            "ერთი ტუალეტის ან შხაპის გამოყენება",
+            "ერთ აუზში ცურვა",
+            "კოღოსა ან მწერის კბენა",
+            "აივ-ით ინფიცირებულ პირებთან ცხოვრება, მუშაობა ან სოციალური ურთიერთობა",
+        ],
+
+        preventionTitle: "პრევენცია",
+        preventionSections: [
+            {
+                title: "სქესობრივი გადაცემა",
+                items: [
+                    "თავშეკავება",
+                    "ორმხრივი ერთგულება",
+                    "პრეზერვატივის (მამრობითი და მდედრობითი) სისტემატური და სწორი გამოყენება — მეტად ეფექტურია აივ-ისა და სხვა სქესობრივი გზით გადამდები ინფექციების, მ.შ. ჰეპატიტი B-სა და C-ის პრევენციისთვის",
+                    "სქესობრივი გზით გადამდები ინფექციების ადრეული დიაგნოსტიკა და მკურნალობა — მოუმკურნალებელი სსგი მნიშვნელოვნად ზრდის აივ-ის გადაცემის რისკს",
+                    "PrEP (ექსპოზიციამდელი პროფილაქტიკა) — ხელმისაწვდომია სახელმწიფო პროგრამის ფარგლებში, უფასოდ, ჩვენს ცენტრში — მაღალი რისკის ქვეშ მყოფი პირებისთვის",
+                ],
+            },
+            {
+                title: "ინტრავენური ნარკოტიკების გამოყენება",
+                items: [
+                    "გამოიყენეთ მხოლოდ ახალი, სტერილური ნემსები და შპრიცები ყოველი ინექციისთვის",
+                    "არასოდეს გაუზიაროთ ნემსები, შპრიცები ან ინიექციური ინვენტარი სხვა პირს",
+                    "ხელმისაწვდომია ზიანის შემცირების სერვისები",
+                ],
+            },
+            {
+                title: "დედიდან შვილზე",
+                items: [
+                    "საქართველოში ყველა ორსულ ქალს აქვს წვდომა უფასო, ნებაყოფლობით აივ-ის კონსულტაციასა და ტესტირებაზე",
+                    "დადებითი ტესტის შემთხვევაში, ანტირეტროვირუსული მკურნალობა სათანადო სამეანო მოვლასთან ერთად ამცირებს ჰედ-ზე გადაცემის რისკს 2%-ზე ქვემოთ",
+                    "შეიძლება რეკომენდირებულ იქნეს სელექციური საკეისრო კვეთა",
+                    "ხელმისაწვდომია კონსულტაცია ძუძუთი კვების შესახებ",
+                ],
+            },
+        ],
+
+        pepTitle:
+            "პოსტ-ექსპოზიციური პროფილაქტიკა (PEP) — 72 საათის განმავლობაში",
+        pepBody:
+            "თუ ფიქრობთ, რომ ბოლო 72 საათის განმავლობაში მოხდა კონტაქტი აივ-თან, PEP პრეპარატი შეუძლია ინფიცირება თავიდან აიცილოს, თუ მიღება დაუყოვნებლივ დაიწყება. ნუ დაელოდებით.",
+        pepCta: "დაუკავშირდით ჩვენს სასწრაფო ხაზს:",
+        emergencyNumber: "595 395 566",
+
+        ctaTitle: "უფასო ანონიმური ტესტირება",
+        ctaBody:
+            "სტატუსის ცოდნა პირველი ნაბიჯია. ჩვენს ცენტრში ტესტირება სრულიად უფასო, კონფიდენციალური და ნებაყოფლობითია.",
+        ctaLink: "#",
+        ctaLabel: "გამოიცადე →",
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="transmission-page content-grid">
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <!-- Section 1: How HIV IS transmitted -->
+    <div class="surface routes-section">
+        <h2>{c.transmissionTitle}</h2>
+        <p class="section-intro">{c.transmissionIntro}</p>
+        <div class="routes-grid">
+            {
+                c.routes.map((route) => (
+                    <article class="route-card">
+                        <div class="route-icon" aria-hidden="true">
+                            {route.icon}
+                        </div>
+                        <h3>{route.title}</h3>
+                        <p>{route.body}</p>
+                    </article>
+                ))
+            }
+        </div>
+    </div>
+
+    <!-- Section 2: How HIV is NOT transmitted -->
+    <div class="surface not-transmitted-section">
+        <h2 class="not-title">{c.notTransmittedTitle}</h2>
+        <p class="section-intro">{c.notTransmittedIntro}</p>
+        <ul class="no-list">
+            {
+                c.notTransmittedItems.map((item) => (
+                    <li>
+                        <span class="no-icon" aria-hidden="true">
+                            ✗
+                        </span>
+                        {item}
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+
+    <!-- Section 3: Prevention -->
+    <div class="surface prevention-section">
+        <h2>{c.preventionTitle}</h2>
+        <div class="prevention-grid">
+            {
+                c.preventionSections.map((sub) => (
+                    <div class="prevention-sub">
+                        <h3>{sub.title}</h3>
+                        <ul>
+                            {sub.items.map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <!-- Section 4: PEP -->
+    <div class="surface pep-section">
+        <div class="pep-content">
+            <h2>{c.pepTitle}</h2>
+            <p>{c.pepBody}</p>
+            <p class="pep-cta-text">{c.pepCta}</p>
+            <a
+                href={`tel:${c.emergencyNumber.replace(/\s/g, "")}`}
+                class="emergency-number"
+            >
+                {c.emergencyNumber}
+            </a>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="surface cta-section">
+        <div class="cta-inner">
+            <h2>{c.ctaTitle}</h2>
+            <p>{c.ctaBody}</p>
+            <a href={c.ctaLink} class="cta-btn">{c.ctaLabel}</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .transmission-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    /* ── Hero ────────────────────────────────── */
+    .hero {
+        text-align: center;
+        max-width: 720px;
+        margin-inline: auto;
+        padding-block: 2rem;
+    }
+
+    .section-label {
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-accent, #c0392b);
+        margin-bottom: 0.5rem;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+        color: var(--color-heading, #1a1a2e);
+    }
+
+    .hero-subtitle {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--color-text-muted, #555);
+    }
+
+    /* ── Shared surface ──────────────────────── */
+    .surface {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgb(0 0 0 / 0.07);
+        padding: 2.5rem;
+    }
+
+    .surface h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--color-heading, #1a1a2e);
+    }
+
+    .section-intro {
+        color: var(--color-text-muted, #555);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    /* ── Routes grid ─────────────────────────── */
+    .routes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1rem;
+    }
+
+    .route-card {
+        background: #f8f9fb;
+        border-radius: 10px;
+        padding: 1.5rem;
+        border-top: 4px solid var(--color-accent, #c0392b);
+    }
+
+    .route-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .route-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--color-heading, #1a1a2e);
+    }
+
+    .route-card p {
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: var(--color-text-muted, #555);
+    }
+
+    /* ── Not-transmitted list ────────────────── */
+    .not-title {
+        color: var(--color-accent, #c0392b) !important;
+    }
+
+    .no-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 0.6rem 1.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .no-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #333;
+        padding: 0.4rem 0;
+    }
+
+    .no-icon {
+        flex-shrink: 0;
+        width: 1.4rem;
+        height: 1.4rem;
+        background: #c0392b;
+        color: #fff;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-top: 0.05rem;
+    }
+
+    /* ── Prevention ──────────────────────────── */
+    .prevention-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .prevention-sub h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-accent, #c0392b);
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 2px solid var(--color-accent, #c0392b);
+    }
+
+    .prevention-sub ul {
+        padding-left: 1.2rem;
+        margin: 0;
+    }
+
+    .prevention-sub li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 0.45rem;
+    }
+
+    /* ── PEP ─────────────────────────────────── */
+    .pep-section {
+        background: #1a1a2e;
+        color: #fff;
+    }
+
+    .pep-section h2 {
+        color: #fff;
+        font-size: 1.35rem;
+    }
+
+    .pep-section p {
+        color: rgb(255 255 255 / 0.82);
+        line-height: 1.7;
+        margin-bottom: 0.75rem;
+    }
+
+    .pep-cta-text {
+        font-weight: 600;
+        color: rgb(255 255 255 / 0.9) !important;
+        margin-bottom: 0.3rem !important;
+    }
+
+    .emergency-number {
+        display: inline-block;
+        font-size: clamp(1.6rem, 4vw, 2.4rem);
+        font-weight: 700;
+        color: #fff;
+        text-decoration: none;
+        border-bottom: 3px solid var(--color-accent, #c0392b);
+        margin-top: 0.25rem;
+        transition: opacity 0.15s;
+    }
+
+    .emergency-number:hover {
+        opacity: 0.8;
+    }
+
+    /* ── CTA ─────────────────────────────────── */
+    .cta-section {
+        background: var(--color-accent, #c0392b);
+        color: #fff;
+        text-align: center;
+        padding: 3rem 2rem;
+    }
+
+    .cta-section h2 {
+        color: #fff;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .cta-section p {
+        color: rgb(255 255 255 / 0.85);
+        max-width: 520px;
+        margin-inline: auto;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .cta-btn {
+        display: inline-block;
+        background: #fff;
+        color: var(--color-accent, #c0392b);
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 0.75rem 2rem;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: opacity 0.15s;
+    }
+
+    .cta-btn:hover {
+        opacity: 0.9;
+    }
+</style>

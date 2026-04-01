@@ -6,6 +6,7 @@ import { AuthProvider } from './auth/auth-context';
 import { ProtectedRoute } from './auth/protected-route';
 import { AdminLayout } from './components/layout/admin-layout';
 import { DashboardPage } from './pages/dashboard-page';
+import { DoctorsCreatePage } from './pages/doctors-create-page';
 import { JobPostingCreatePage } from './pages/job-posting-create-page';
 import { LoginPage } from './pages/login-page';
 import { PlaceholderPage } from './pages/placeholder-page';
@@ -72,6 +73,21 @@ const router = createBrowserRouter([
             },
           },
           { path: 'job-postings/new', element: <JobPostingCreatePage /> },
+          { path: 'doctors/new', element: <DoctorsCreatePage /> },
+          {
+            path: 'doctors/list',
+            lazy: async () => {
+              const { DoctorsListPage } = await import('./pages/doctors-list-page');
+              return { Component: DoctorsListPage };
+            },
+          },
+          {
+            path: 'doctors/:doctorId/edit',
+            lazy: async () => {
+              const { DoctorsEditPage } = await import('./pages/doctors-edit-page');
+              return { Component: DoctorsEditPage };
+            },
+          },
           {
             path: 'job-postings/list',
             lazy: async () => {
@@ -80,6 +96,7 @@ const router = createBrowserRouter([
             },
           },
           { path: 'job-postings', element: <Navigate to="/job-postings/list" replace /> },
+          { path: 'doctors', element: <Navigate to="/doctors/list" replace /> },
           { path: 'articles', element: <Navigate to="/articles/mine" replace /> },
           { path: 'programs', element: <Navigate to="/job-postings/list" replace /> },
           { path: 'settings', element: <PlaceholderPage title="Settings" /> },

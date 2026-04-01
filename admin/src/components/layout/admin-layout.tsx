@@ -31,6 +31,9 @@ export function AdminLayout() {
           <h2 className={styles.sectionTitle}>ვაკანსიები</h2>
           <Link to="/job-postings/new" className={navClassName('/job-postings/new')}>ვაკანსიის დამატება</Link>
           <Link to="/job-postings/list" className={navClassName('/job-postings/list')}>ვაკანსიების სია</Link>
+          <h2 className={styles.sectionTitle}>ექიმები</h2>
+          <Link to="/doctors/new" className={navClassName('/doctors/new')}>ექიმის დამატება</Link>
+          <Link to="/doctors/list" className={navClassName('/doctors/list')}>ექიმების სია</Link>
           <h2 className={styles.sectionTitle}>მომხმარებლები</h2>
           <Link to="/users/new" className={navClassName('/users/new')}>მომხმარებლის დამატება</Link>
           <Link to="/users/list" className={navClassName('/users/list')}>მომხმარებლების სია</Link>

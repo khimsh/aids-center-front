@@ -1,0 +1,22 @@
+---
+import DoctorsPage from "../components/sections/DoctorsPage.astro";
+import Layout from "../layouts/Layout.astro";
+import {
+    fetchDoctors,
+    getDoctorsApiBase,
+    type DoctorRecord,
+} from "../lib/doctors-api";
+
+const apiBase = getDoctorsApiBase();
+let doctors: DoctorRecord[] = [];
+
+try {
+    doctors = await fetchDoctors(apiBase);
+} catch {
+    doctors = [];
+}
+---
+
+<Layout title="ჩვენი ექიმები — AIDS ცენტრი">
+    <DoctorsPage apiBase={apiBase} doctors={doctors} />
+</Layout>

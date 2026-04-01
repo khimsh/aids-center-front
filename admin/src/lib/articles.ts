@@ -93,7 +93,7 @@ export async function fetchArticles(params?: Record<string, unknown>): Promise<A
     const status = getErrorStatus(error);
     const hasIncludeDrafts = typeof params !== 'undefined' && Object.prototype.hasOwnProperty.call(params, 'include_drafts');
 
-    if (status === 422 && hasIncludeDrafts) {
+    if ((status === 422 || status === 401 || status === 403) && hasIncludeDrafts) {
       const fallbackParams = { ...(params ?? {}) };
       delete fallbackParams.include_drafts;
       response = await api.get('/api/articles', { params: fallbackParams });

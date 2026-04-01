@@ -98,4 +98,21 @@ describe('articles service', () => {
       params: { page: 1 }
     });
   });
+
+  it('fallbacks when include_drafts causes 401 and retries without it', async () => {
+    const failure = new Error('401');
+    apiGetMock.mockRejectedValueOnce(failure);
+    apiGetMock.mockResolvedValueOnce({ data: { items: [{ id: 8, title_ka: 'y' }], total: 1 } });
+    getErrorStatusMock.mockReturnValue(401);
+
+    await expect(fetchArticles({ include_drafts: true, page: 2 })).resolves.toEqual({
+      items: [{ id: 8, title_ka: 'y' }],
+      total: 1
+    });
+
+    expect(apiGetMock).toHaveBeenCalledTimes(2);
+    expect(apiGetMock).toHaveBeenNthCalledWith(2, '/api/articles', {
+      params: { page: 2 }
+    });
+  });
 });

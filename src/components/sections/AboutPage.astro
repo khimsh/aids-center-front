@@ -8,6 +8,7 @@ interface TimelineItem {
 
 const lang = (Astro.currentLocale ?? "ka") as Lang;
 const newsUrl = lang === "ka" ? "/news" : "/en/news";
+const doctorsUrl = lang === "ka" ? "/doctors" : "/en/doctors";
 
 const content = {
     en: {
@@ -46,7 +47,7 @@ const content = {
             "In addition to its main campus in Tbilisi, the Center operates through district and regional branch offices to ensure broader access to diagnostics, treatment, and long-term follow-up services across Georgia. Specific branch location details can be published here once confirmed by the Center.",
         sectionNavTitle: "In This Section",
         sectionLinks: [
-            { label: "Our Doctors", href: "#" },
+            { label: "Our Doctors", href: doctorsUrl },
             { label: "Vacancies", href: "#" },
             { label: "News & Announcements", href: newsUrl },
         ],
@@ -109,7 +110,7 @@ const content = {
             "თბილისის მთავარი ცენტრის გარდა, დაწესებულება მუშაობს რაიონულ და რეგიონულ ფილიალებთან ერთად, რათა მოსახლეობას საქართველოს მასშტაბით მისაწვდომი ჰქონდეს დიაგნოსტიკა, მკურნალობა და ხანგრძლივი მეთვალყურეობა. დეტალური მისამართები გამოქვეყნდება ცენტრთან საბოლოო დაზუსტების შემდეგ.",
         sectionNavTitle: "ამ სექციაში",
         sectionLinks: [
-            { label: "ჩვენი ექიმები", href: "#" },
+            { label: "ჩვენი ექიმები", href: doctorsUrl },
             { label: "ვაკანსიები", href: "#" },
             { label: "სიახლეები და განცხადებები", href: newsUrl },
         ],
