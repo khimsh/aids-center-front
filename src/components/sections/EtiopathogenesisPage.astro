@@ -1,0 +1,169 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+
+const content = {
+    en: {
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "Etiopathogenesis",
+        heroSubtitle:
+            "HIV primarily targets CD4+ T-lymphocytes and progressively impairs immune regulation, resulting in deep immunosuppression and susceptibility to opportunistic disease.",
+        introTitle: "Core Concepts",
+        introParagraphs: [
+            "CD4+ lymphocytes are central to both humoral and cellular immunity, which is why they are often called the 'conductors' of the immune system.",
+            "HIV pathogenesis is primarily driven by infection and dysfunction of CD4+ cells, followed by progressive decline in their number over time.",
+            "CD4+ count together with viral load is used as the main framework for disease monitoring and prognosis.",
+        ],
+        survivalTitle: "Virus Survival and Stability",
+        survivalParagraphs: [
+            "HIV is generally unstable in the external environment and is readily inactivated by drying, heat, and standard chemical sterilization methods.",
+            "In clinical practice, strict adherence to disinfection and sterilization protocols remains essential for prevention.",
+        ],
+        cycleTitle: "HIV Life Cycle (Simplified)",
+        cycleSteps: [
+            "Attachment: viral envelope protein gp120 binds to CD4 receptor on target cells.",
+            "Entry/Fusion: virus enters the cell and releases its genetic material.",
+            "Integration: viral genetic material integrates into host genome.",
+            "Replication/Assembly: new viral components are synthesized and assembled.",
+            "Release: new virions leave the cell and continue infection.",
+        ],
+        immunityTitle: "Immune Response and Progression",
+        immunityParagraphs: [
+            "Neutralizing antibodies emerge after primary infection and peak during the asymptomatic stage; the interval before detectable antibodies is the window period.",
+            "Cytotoxic immune responses can suppress replication, but complete elimination of HIV does not occur, leading to chronic infection.",
+            "High mutation capacity enables immune escape, complicates vaccine development, and contributes to antiviral drug resistance.",
+            "Route of transmission, inoculum size, viral pathogenicity, and host genetic factors all influence disease course.",
+        ],
+        outcomeTitle: "Clinical Outcome",
+        outcomeParagraph:
+            "Persistent replication, integration into host cells, and progressive CD4+ destruction ultimately lead to severe immunodeficiency if untreated.",
+    },
+    ka: {
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "ეტიოპათოგენეზი",
+        heroSubtitle:
+            "აივ-ის ძირითადი სამიზნე CD4+ T-ლიმფოციტებია. მათი პროგრესული დაზიანება იწვევს იმუნური რეგულაციის დარღვევასა და ღრმა იმუნოსუპრესიას.",
+        introTitle: "ძირითადი ცნებები",
+        introParagraphs: [
+            'CD4+ ლიმფოციტები გადამწყვეტ როლს ასრულებენ როგორც ჰუმორულ, ისე უჯრედულ იმუნურ პასუხში და ამიტომ ხშირად იმუნური სისტემის "დირიჟორებად" მოიხსენიებიან.',
+            "აივ-ის იმუნოპათოგენეზში წამყვანია CD4+ უჯრედების ინფიცირება, მათი ფუნქციის დათრგუნვა და რაოდენობის პროგრესული კლება.",
+            "CD4+ ლიმფოციტების რაოდენობა და ვირუსული დატვირთვა დაავადების მონიტორინგისა და პროგნოზის მთავარი მაჩვენებლებია.",
+        ],
+        survivalTitle: "ვირუსის სიცოცხლისუნარიანობა გარემოში",
+        survivalParagraphs: [
+            "აივ გარემოში შედარებით ადვილად ინაქტივირდება და მგრძნობიარეა გამოშრობის, ტემპერატურისა და ქიმიური სტერილიზაციის მიმართ.",
+            "პრევენციისთვის კრიტიკულად მნიშვნელოვანია დეზინფექციისა და სტერილიზაციის სტანდარტების დაცვა.",
+        ],
+        cycleTitle: "აივ-ის სასიცოცხლო ციკლი (გამარტივებული)",
+        cycleSteps: [
+            "მიბმა: ვირუსის გარსის ცილა gp120 უკავშირდება სამიზნე უჯრედის CD4 რეცეპტორს.",
+            "შეღწევა: ვირუსი შედის უჯრედში და ათავისუფლებს გენეტიკურ მასალას.",
+            "ინტეგრაცია: ვირუსული გენეტიკური მასალა ინტეგრირდება მასპინძლის გენომში.",
+            "რეპლიკაცია და აწყობა: სინთეზდება და ერთიანდება ახალი ვირუსული კომპონენტები.",
+            "გამოსვლა: ახალი ვირიონები ტოვებენ უჯრედს და აგრძელებენ ინფექციას.",
+        ],
+        immunityTitle: "იმუნური პასუხი და პროგრესირება",
+        immunityParagraphs: [
+            'განეიტრალებელი ანტისხეულები ინფიცირებიდან რამდენიმე კვირაში ჩნდება; სეროკონვერსიამდე პერიოდს "ფანჯარა პერიოდი" ეწოდება.',
+            "ციტოტოქსიური იმუნური პასუხი დროებით ზღუდავს რეპლიკაციას, თუმცა ვირუსის სრული ელიმინაცია არ ხდება, რის შედეგადაც ინფექცია ქრონიკულ ხასიათს იღებს.",
+            "აივ-ის მაღალი მუტაგენობა ხელს უწყობს იმუნური პასუხისგან გაქცევას, ვაქცინის შექმნის სირთულეს და წამლის მიმართ რეზისტენტობას.",
+            "ინფიცირების გზა, მოხვედრილი ვირუსის რაოდენობა, ვირუსის პათოგენურობა და მასპინძლის გენეტიკური ფაქტორები განსაზღვრავს დაავადების მიმდინარეობას.",
+        ],
+        outcomeTitle: "კლინიკური შედეგი",
+        outcomeParagraph:
+            "ვირუსის მუდმივი რეპლიკაცია, მასპინძლის გენომში ინტეგრაცია და CD4+ უჯრედების პროგრესული დესტრუქცია მკურნალობის გარეშე იწვევს ღრმა იმუნოდეფიციტს.",
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="etiopathogenesis-page content-grid">
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <div class="surface">
+        <h2>{c.introTitle}</h2>
+        {c.introParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.survivalTitle}</h2>
+        {c.survivalParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.cycleTitle}</h2>
+        <ol class="list">
+            {c.cycleSteps.map((step) => <li>{step}</li>)}
+        </ol>
+    </div>
+
+    <div class="surface">
+        <h2>{c.immunityTitle}</h2>
+        {c.immunityParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.outcomeTitle}</h2>
+        <p>{c.outcomeParagraph}</p>
+    </div>
+</section>
+
+<style>
+    .etiopathogenesis-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .hero {
+        text-align: center;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 4vw, 2.9rem);
+        margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    .surface {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .surface h2 {
+        margin-bottom: 0.8rem;
+    }
+
+    .surface p {
+        color: #0f172a;
+        line-height: 1.7;
+        margin-bottom: 0.8rem;
+    }
+
+    .surface p:last-child {
+        margin-bottom: 0;
+    }
+
+    .list {
+        margin: 0;
+        padding-left: 1.2rem;
+        display: grid;
+        gap: 0.45rem;
+        color: #0f172a;
+        line-height: 1.6;
+    }
+</style>
