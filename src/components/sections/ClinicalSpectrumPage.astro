@@ -1,0 +1,394 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+
+const content = {
+    en: {
+        pageTitle: "Clinical Spectrum",
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "Clinical Spectrum of HIV Infection",
+        heroSubtitle:
+            "HIV infection progresses through identifiable stages. Clinical manifestations vary by immune suppression level and are closely linked to CD4+ decline and viral load increase.",
+        symptomsTitle: "Symptoms Suggestive of HIV/AIDS",
+        symptomsIntro:
+            "HIV has no single pathognomonic sign, but these findings should raise suspicion and prompt testing together with epidemiologic risk assessment.",
+        symptoms: [
+            "Unexplained fever",
+            "Marked fatigue and weakness",
+            "Weight loss of 10% or more",
+            "Night sweats",
+            "Generalized lymph node enlargement",
+            "Persistent diarrhea",
+            "Skin and mucosal eruptions",
+            "White coating in oral cavity",
+            "Prolonged pneumonia poorly responsive to standard antibacterial therapy",
+            "Neurological manifestations (for example dementia, meningitis, encephalitis, myelopathy, peripheral neuropathy)",
+        ],
+        stagesTitle: "Natural Clinical Course (Untreated)",
+        stages: [
+            {
+                stage: "Entry of HIV into the body to asymptomatic interval",
+                duration: "2-3 weeks",
+            },
+            { stage: "Acute retroviral syndrome", duration: "2-3 weeks" },
+            {
+                stage: "Clinical improvement and seroconversion",
+                duration: "2-4 weeks",
+            },
+            {
+                stage: "Asymptomatic chronic HIV infection",
+                duration: "Average 8 years",
+            },
+            {
+                stage: "Symptomatic HIV infection/AIDS",
+                duration: "Average 1.3 years",
+            },
+            { stage: "Death", duration: "Variable" },
+        ],
+        acuteTitle: "Acute Retroviral Syndrome (Common Findings)",
+        acuteFindings: [
+            "Fever (96%)",
+            "Adenopathy (74%)",
+            "Pharyngitis (70%)",
+            "Rash (70%)",
+            "Myalgia (54%)",
+            "Headache (43%)",
+            "Diarrhea (32%)",
+            "Fatigue/lethargy (27%)",
+            "Hepatosplenomegaly (14%)",
+            "Oral candidiasis (12%)",
+            "Neurological manifestations (12%)",
+        ],
+        spectrumTitle: "Clinical Spectrum and Progression",
+        spectrumParagraphs: [
+            "In advanced immunodeficiency, nearly any infection or malignancy may develop, but opportunistic infections and virus-associated cancers are most frequent.",
+            "Viral load and absolute CD4+ count are the best surrogate markers for disease progression and help predict clinical deterioration before severe manifestations appear.",
+            "As viral load rises, CD4+ count generally declines. Lower CD4+ counts are directly associated with a higher risk of specific opportunistic diseases.",
+        ],
+        whoTitle: "WHO Adult/Adolescent Clinical Staging (Summary)",
+        whoStages: [
+            {
+                name: "Stage I",
+                items: ["Asymptomatic", "Generalized lymphadenopathy"],
+            },
+            {
+                name: "Stage II",
+                items: [
+                    "Weight loss <10%",
+                    "Minor mucocutaneous manifestations",
+                    "Herpes zoster (last 5 years)",
+                    "Recurrent upper respiratory infections",
+                ],
+            },
+            {
+                name: "Stage III",
+                items: [
+                    "Weight loss >10%",
+                    "Unexplained chronic diarrhea (>1 month)",
+                    "Unexplained fever (>1 month)",
+                    "Oral candidiasis / oral hairy leukoplakia",
+                    "Pulmonary tuberculosis",
+                    "Severe bacterial infections",
+                ],
+            },
+            {
+                name: "Stage IV",
+                items: [
+                    "HIV wasting syndrome",
+                    "Pneumocystis pneumonia",
+                    "Cerebral toxoplasmosis",
+                    "Extrapulmonary cryptococcosis",
+                    "CMV disease (for example retinitis)",
+                    "Progressive multifocal leukoencephalopathy",
+                    "Esophageal/tracheal/bronchial candidiasis",
+                    "Disseminated atypical mycobacterial disease",
+                    "Kaposi sarcoma / lymphoma / HIV encephalopathy",
+                ],
+            },
+        ],
+        note: "Clinical signs alone are insufficient for HIV diagnosis. Laboratory confirmation and differential diagnosis remain essential.",
+    },
+    ka: {
+        pageTitle: "კლინიკური სპექტრი",
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "აივ ინფექციის კლინიკური სპექტრი",
+        heroSubtitle:
+            "აივ ინფექციას ახასიათებს ეტაპობრივი მიმდინარეობა. კლინიკური გამოვლინებები მჭიდროდ არის დაკავშირებული CD4+ ლიმფოციტების კლებასა და ვირუსული დატვირთვის მატებასთან.",
+        symptomsTitle: "შიდსზე საეჭვო სიმპტომები",
+        symptomsIntro:
+            "მართალია, აივ ინფექციას პათოგნომური ნიშანი არ აქვს, თუმცა ქვემოთ ჩამოთვლილი ნიშნები უნდა გახდეს აივ/შიდსზე კვლევის საფუძველი ეპიდემიოლოგიურ მონაცემებთან ერთად.",
+        symptoms: [
+            "არამოტივირებული ცხელება",
+            "ძლიერი საერთო სისუსტე",
+            "წონაში კლება 10%-ით და მეტად",
+            "ოფლიანობა",
+            "ლიმფური კვანძების გადიდება",
+            "გახანგრძლივებული ფაღარათი",
+            "კანისა და ლორწოვანის სხვადასხვა გამონაყარი",
+            "თეთრი ნადები პირის ღრუში",
+            "გახანგრძლივებული პნევმონია, რომელიც ცუდად ექვემდებარება ჩვეულებრივ ანტიბაქტერიულ თერაპიას",
+            "ნერვული სისტემის დაზიანებები (დემენცია, მენინგიტი, ენცეფალიტი, მიელოპათია, პერიფერიული ნეიროპათია)",
+        ],
+        stagesTitle:
+            "დაავადების ბუნებრივი კლინიკური მიმდინარეობა (მკურნალობის გარეშე)",
+        stages: [
+            {
+                stage: "ვირუსის ორგანიზმში შეჭრიდან ასიმპტომურ პერიოდამდე",
+                duration: "2-3 კვირა",
+            },
+            { stage: "მწვავე რეტროვირუსული სინდრომი", duration: "2-3 კვირა" },
+            {
+                stage: "კლინიკური გაუმჯობესება და სეროკონვერსია",
+                duration: "2-4 კვირა",
+            },
+            {
+                stage: "ასიმპტომური ქრონიკული აივ ინფექცია",
+                duration: "საშუალოდ 8 წელი",
+            },
+            {
+                stage: "სიმპტომური აივ ინფექცია/შიდსი",
+                duration: "საშუალოდ 1.3 წელი",
+            },
+            { stage: "სიკვდილი", duration: "ვარიაბელური" },
+        ],
+        acuteTitle: "მწვავე რეტროვირუსული სინდრომი (ხშირი გამოვლინებები)",
+        acuteFindings: [
+            "ცხელება (96%)",
+            "ადენოპათია (74%)",
+            "ფარინგიტი (70%)",
+            "გამონაყარი (70%)",
+            "მიალგია (54%)",
+            "თავის ტკივილი (43%)",
+            "დიარეა (32%)",
+            "სისუსტე და მოთენთილობა (27%)",
+            "ჰეპატოსპლენომეგალია (14%)",
+            "რძიანა (12%)",
+            "ნევროლოგიური გამოვლინებები (12%)",
+        ],
+        spectrumTitle: "კლინიკური სპექტრი და პროგრესირება",
+        spectrumParagraphs: [
+            "ღრმა იმუნოდეფიციტის ფონზე შეიძლება განვითარდეს პრაქტიკულად ნებისმიერი ინფექცია და სიმსივნე, თუმცა ყველაზე ხშირად გვხვდება ოპორტუნისტული ინფექციები და ვირუსებთან ასოცირებული სიმსივნეები.",
+            "დაავადების პროგრესირების საუკეთესო სუროგატული მარკერებია ვირუსული დატვირთვა და CD4+ ლიმფოციტების აბსოლუტური რიცხვი.",
+            "ვირუსული დატვირთვის მატებას, როგორც წესი, თან ახლავს CD4+ ლიმფოციტების კლება, რაც ზრდის კონკრეტული ოპორტუნისტული გართულებების რისკს.",
+        ],
+        whoTitle: "ჯანმოს კლინიკური სტადიები (მოკლე მიმოხილვა)",
+        whoStages: [
+            {
+                name: "I კლინიკური სტადია",
+                items: [
+                    "ასიმპტომური მიმდინარეობა",
+                    "გენერალიზებული ლიმფადენოპათია",
+                ],
+            },
+            {
+                name: "II კლინიკური სტადია",
+                items: [
+                    "წონაში კლება <10%",
+                    "კანისა და ლორწოვანის მსუბუქი დაზიანებები",
+                    "სარტყლისებული ლიქენი ბოლო 5 წელში",
+                    "ზემო სასუნთქი გზების მორეციდივე ინფექციები",
+                ],
+            },
+            {
+                name: "III კლინიკური სტადია",
+                items: [
+                    "წონაში კლება >10%",
+                    "1 თვეზე მეტი დიარეა უცნობი ეტიოლოგიით",
+                    "1 თვეზე მეტი ცხელება უცნობი ეტიოლოგიით",
+                    "პირის ღრუს კანდიდოზი / თმოვანი ლეიკოპლაკია",
+                    "ფილტვის ტუბერკულოზი",
+                    "მძიმე ბაქტერიული ინფექციები",
+                ],
+            },
+            {
+                name: "IV კლინიკური სტადია",
+                items: [
+                    "აივ კახექსია",
+                    "პნევმოცისტური პნევმონია",
+                    "ცერებრული ტოქსოპლაზმოზი",
+                    "ფილტვგარეშე კრიპტოკოკოზი",
+                    "ციტომეგალოვირუსული ინფექცია (მაგ. რეტინიტი)",
+                    "პროგრესირებადი მულტიფოკალური ლეიკოენცეფალოპათია",
+                    "საყლაპავის/ტრაქეის/ბრონქების კანდიდოზი",
+                    "დისემინირებული ატიპიური მიკობაქტერიოზი",
+                    "კაპოშის სარკომა / ლიმფომა / აივ ენცეფალოპათია",
+                ],
+            },
+        ],
+        note: "მხოლოდ კლინიკური ნიშნებით შიდსის დიაგნოზის დასმა შეუძლებელია — აუცილებელია ლაბორატორიული დადასტურება და დიფერენციული დიაგნოსტიკა.",
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="spectrum-page content-grid">
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <div class="surface">
+        <h2>{c.symptomsTitle}</h2>
+        <p>{c.symptomsIntro}</p>
+        <ul class="list">
+            {c.symptoms.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class="surface">
+        <h2>{c.stagesTitle}</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{lang === "en" ? "Stage" : "სტადია"}</th>
+                        <th
+                            >{
+                                lang === "en"
+                                    ? "Average Duration"
+                                    : "საშუალო ხანგრძლივობა"
+                            }</th
+                        >
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        c.stages.map((row) => (
+                            <tr>
+                                <td>{row.stage}</td>
+                                <td>{row.duration}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="surface">
+        <h2>{c.acuteTitle}</h2>
+        <ul class="list two-col">
+            {c.acuteFindings.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class="surface">
+        <h2>{c.spectrumTitle}</h2>
+        {c.spectrumParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.whoTitle}</h2>
+        <div class="grid">
+            {
+                c.whoStages.map((stage) => (
+                    <article class="card">
+                        <h3>{stage.name}</h3>
+                        <ul class="list">
+                            {stage.items.map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </article>
+                ))
+            }
+        </div>
+        <p class="note">{c.note}</p>
+    </div>
+</section>
+
+<style>
+    .spectrum-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .hero {
+        text-align: center;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 4vw, 2.9rem);
+        margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    .surface {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .surface h2 {
+        margin-bottom: 0.8rem;
+    }
+
+    .list {
+        margin: 0;
+        padding-left: 1.2rem;
+        display: grid;
+        gap: 0.45rem;
+        line-height: 1.6;
+        color: #0f172a;
+    }
+
+    .two-col {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .table-wrap {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 0.7rem;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: top;
+    }
+
+    th {
+        color: #334155;
+        font-size: 0.92rem;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+
+    .card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+
+    .card h3 {
+        margin-bottom: 0.7rem;
+        font-size: 1.05rem;
+    }
+
+    .note {
+        margin-top: 1rem;
+        color: #475569;
+    }
+</style>

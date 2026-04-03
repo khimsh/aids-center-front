@@ -12,6 +12,8 @@ const doctorsUrl = lang === "ka" ? "/doctors" : `/${lang}/doctors`;
 const legislationUrl = lang === "ka" ? "/legislation" : `/${lang}/legislation`;
 const palliativeCareUrl =
   lang === "ka" ? "/palliative-care" : `/${lang}/palliative-care`;
+const clinicalSpectrumUrl =
+  lang === "ka" ? "/clinical-spectrum" : `/${lang}/clinical-spectrum`;
 
 const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
 const transmissionUrl =
@@ -54,7 +56,7 @@ const transmissionUrl =
               <a href="#">{t.nav.etiopathogenesis}</a>
             </li>
             <li>
-              <a href="#">{t.nav.clinicalSpectrum}</a>
+              <a href={clinicalSpectrumUrl}>{t.nav.clinicalSpectrum}</a>
             </li>
             <li>
               <a href="#">{t.nav.diagnostic}</a>
