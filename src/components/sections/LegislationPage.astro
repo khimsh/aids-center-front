@@ -15,6 +15,12 @@ interface Chapter {
 
 const lang = (Astro.currentLocale ?? "ka") as Lang;
 const matsneUrl = "https://matsne.gov.ge";
+const homeUrl = lang === "ka" ? "/" : `/${lang}`;
+const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const breadcrumb =
+    lang === "ka"
+        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
+        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
 
 const content = {
     en: {
@@ -236,6 +242,14 @@ const c = content[lang];
 ---
 
 <section class="legislation-page content-grid">
+    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+        <a href={homeUrl}>{breadcrumb.home}</a>
+        <span>/</span>
+        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+        <span>/</span>
+        <span aria-current="page">{c.pageTitle}</span>
+    </nav>
+
     <div class="hero">
         <p class="section-label">{c.pageTitle}</p>
         <h1>{c.heroTitle}</h1>
@@ -300,6 +314,23 @@ const c = content[lang];
         padding-block: 4rem 5rem;
         display: grid;
         gap: 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .breadcrumbs a {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
     }
 
     .hero {

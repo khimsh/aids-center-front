@@ -2,77 +2,67 @@
 type Lang = "ka" | "en";
 
 const lang = (Astro.currentLocale ?? "ka") as Lang;
+const homeUrl = lang === "ka" ? "/" : `/${lang}`;
+const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const breadcrumb =
+    lang === "ka"
+        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
+        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
 
 const content = {
     en: {
         sectionLabel: "HIV / AIDS",
         heroTitle: "Etiopathogenesis",
-        heroSubtitle:
-            "HIV primarily targets CD4+ T-lymphocytes and progressively impairs immune regulation, resulting in deep immunosuppression and susceptibility to opportunistic disease.",
-        introTitle: "Core Concepts",
         introParagraphs: [
-            "CD4+ lymphocytes are central to both humoral and cellular immunity, which is why they are often called the 'conductors' of the immune system.",
-            "HIV pathogenesis is primarily driven by infection and dysfunction of CD4+ cells, followed by progressive decline in their number over time.",
-            "CD4+ count together with viral load is used as the main framework for disease monitoring and prognosis.",
+            "HIV stands for Human Immunodeficiency Virus. Like all viruses, HIV cannot grow or reproduce on its own. In order to make new copies of itself it must infect the cells of a living organism.",
+            "HIV belongs to a special class of viruses called retroviruses. Within this class, HIV is placed in the subgroup of lentiviruses.",
+            "There are two types of HIV: HIV-1 and HIV-2. Both types are transmitted by sexual contact, through blood, and from mother to child, and they appear to cause clinically indistinguishable AIDS.",
+            "However, it seems that HIV-2 is less easily transmitted, and the period between initial infection and illness is longer in the case of HIV-2.",
+            "Worldwide, the predominant virus is HIV-1. The relatively uncommon HIV-2 type is concentrated in West Africa and is rarely found elsewhere.",
         ],
-        survivalTitle: "Virus Survival and Stability",
-        survivalParagraphs: [
-            "HIV is generally unstable in the external environment and is readily inactivated by drying, heat, and standard chemical sterilization methods.",
-            "In clinical practice, strict adherence to disinfection and sterilization protocols remains essential for prevention.",
+        cellsTitle: "Target Cells and Entry",
+        cellsParagraphs: [
+            "HIV infects cells in the immune system and the central nervous system. The main cell HIV infects is called a T helper lymphocyte.",
+            "The T helper cell is a crucial part of the immune system and coordinates the actions of other immune cells.",
+            "HIV infects the T helper cell because it has the protein CD4 on its surface, which HIV uses to attach before gaining entry.",
+            "This is why the T helper cell is often referred to as a CD4+ lymphocyte.",
+            "Once inside the cell, HIV produces new copies of itself, which can infect other cells. Infected cells are often destroyed or stop functioning properly.",
         ],
-        cycleTitle: "HIV Life Cycle (Simplified)",
-        cycleSteps: [
-            "Attachment: viral envelope protein gp120 binds to CD4 receptor on target cells.",
-            "Entry/Fusion: virus enters the cell and releases its genetic material.",
-            "Integration: viral genetic material integrates into host genome.",
-            "Replication/Assembly: new viral components are synthesized and assembled.",
-            "Release: new virions leave the cell and continue infection.",
-        ],
-        immunityTitle: "Immune Response and Progression",
+        immunityTitle: "Immune Response",
         immunityParagraphs: [
-            "Neutralizing antibodies emerge after primary infection and peak during the asymptomatic stage; the interval before detectable antibodies is the window period.",
-            "Cytotoxic immune responses can suppress replication, but complete elimination of HIV does not occur, leading to chronic infection.",
-            "High mutation capacity enables immune escape, complicates vaccine development, and contributes to antiviral drug resistance.",
-            "Route of transmission, inoculum size, viral pathogenicity, and host genetic factors all influence disease course.",
+            "When HIV enters the body, antibodies are produced as an immune response. If a person has antibodies to HIV in blood, it means infection has occurred (with the exception of passive maternal antibodies in some newborns).",
+            "Most people develop antibodies within 3 months; in rare cases it can take up to 6 months.",
+            "Testing earlier than 3 months may give an unclear result. The period between infection and detectable antibodies is called the window period.",
+            "Ways of transmission, virus concentration, pathogenic characteristics of HIV, and host genetic factors influence HIV-specific immune response.",
+            "As AIDS progresses, HIV antibody concentration may decrease. Integration of provirus DNA and destruction of CD4+ lymphocytes lead to severe weakening of the immune system.",
         ],
-        outcomeTitle: "Clinical Outcome",
-        outcomeParagraph:
-            "Persistent replication, integration into host cells, and progressive CD4+ destruction ultimately lead to severe immunodeficiency if untreated.",
     },
     ka: {
         sectionLabel: "აივ / შიდსი",
         heroTitle: "ეტიოპათოგენეზი",
-        heroSubtitle:
-            "აივ-ის ძირითადი სამიზნე CD4+ T-ლიმფოციტებია. მათი პროგრესული დაზიანება იწვევს იმუნური რეგულაციის დარღვევასა და ღრმა იმუნოსუპრესიას.",
-        introTitle: "ძირითადი ცნებები",
         introParagraphs: [
-            'CD4+ ლიმფოციტები გადამწყვეტ როლს ასრულებენ როგორც ჰუმორულ, ისე უჯრედულ იმუნურ პასუხში და ამიტომ ხშირად იმუნური სისტემის "დირიჟორებად" მოიხსენიებიან.',
-            "აივ-ის იმუნოპათოგენეზში წამყვანია CD4+ უჯრედების ინფიცირება, მათი ფუნქციის დათრგუნვა და რაოდენობის პროგრესული კლება.",
-            "CD4+ ლიმფოციტების რაოდენობა და ვირუსული დატვირთვა დაავადების მონიტორინგისა და პროგნოზის მთავარი მაჩვენებლებია.",
+            "აივ მიეკუთვნება რეტროვირუსების ოჯახს, ლენტივირუსების ქვეოჯახს. ლენტივირუსები, ჩვეულებრივ, ნელ ინფექციებს იწვევენ.",
+            "მათთვის დამახასიათებელია დაავადების ხანგრძლივი ლატენტური პერიოდი, პათოლოგიურ პროცესში ნერვული სისტემის ჩართვა და სუსტი იმუნური პასუხი, რასაც თან სდევს პერსისტული ვირემია.",
+            "განასხვავებენ აივ-1-სა და აივ-2-ს. აივ-2 მოგვიანებით აღმოაჩინეს. იგი აივ-1-სგან გენეტიკური თავისებურებების მიხედვით განსხვავდება და ძირითადად დასავლეთ აფრიკის ზოგიერთ ქვეყანაშია გავრცელებული, თუმცა სხვა ქვეყნებშიც გვხვდება.",
+            "აივ-2 აივ-1-თან შედარებით უფრო ძნელად გადაეცემა. იშვათია მისი ვერტიკალური გადაცემის შემთხვევებიც.",
+            "აივ-2 ინფექცია კლინიკურად აივ-1 ინფექციის მსგავსია, თუმცა ვირუსული დატვირთვა, ჩვეულებრივ, დაბალია და დაავადების კლინიკური პროგრესირება უფრო ნელია.",
         ],
-        survivalTitle: "ვირუსის სიცოცხლისუნარიანობა გარემოში",
-        survivalParagraphs: [
-            "აივ გარემოში შედარებით ადვილად ინაქტივირდება და მგრძნობიარეა გამოშრობის, ტემპერატურისა და ქიმიური სტერილიზაციის მიმართ.",
-            "პრევენციისთვის კრიტიკულად მნიშვნელოვანია დეზინფექციისა და სტერილიზაციის სტანდარტების დაცვა.",
+        cellsTitle: "სამიზნე უჯრედები და ციკლი",
+        cellsParagraphs: [
+            "აივ ადვილად ინაქტივირდება გარემოში. მშრალ პირობებში ვირუსი რამდენიმე საათში იღუპება, თუმცა შესაძლოა 1-3 დღე გაძლოს.",
+            "აივ-ის ძირითადი სამიზნე უჯრედებია CD4+ ლიმფოციტები (T helper ანუ Th ლიმფოციტები), გარდა ამისა იგი აინფიცირებს მონოციტ/მაკროფაგებს, ცნს-ის მიკროგლიას, ფოლიკულურ-დენდრიტულ უჯრედებს და სხვა.",
+            "აივ-ით უჯრედის ინფიცირებისას ვირუსის გარსის ცილა - gp120 უერთდება სამიზნე უჯრედის CD4 მოლეკულას, რასაც მოჰყვება ვირუსის შესვლა უჯრედში და მისი გენეტიკური მასალის ინტეგრაცია მასპინძლის გენომში. შემდეგ კი ახალი ვირიონების აწყობა.",
         ],
-        cycleTitle: "აივ-ის სასიცოცხლო ციკლი (გამარტივებული)",
-        cycleSteps: [
-            "მიბმა: ვირუსის გარსის ცილა gp120 უკავშირდება სამიზნე უჯრედის CD4 რეცეპტორს.",
-            "შეღწევა: ვირუსი შედის უჯრედში და ათავისუფლებს გენეტიკურ მასალას.",
-            "ინტეგრაცია: ვირუსული გენეტიკური მასალა ინტეგრირდება მასპინძლის გენომში.",
-            "რეპლიკაცია და აწყობა: სინთეზდება და ერთიანდება ახალი ვირუსული კომპონენტები.",
-            "გამოსვლა: ახალი ვირიონები ტოვებენ უჯრედს და აგრძელებენ ინფექციას.",
-        ],
-        immunityTitle: "იმუნური პასუხი და პროგრესირება",
+        immunityTitle: "იმუნოპათოგენეზი",
         immunityParagraphs: [
-            'განეიტრალებელი ანტისხეულები ინფიცირებიდან რამდენიმე კვირაში ჩნდება; სეროკონვერსიამდე პერიოდს "ფანჯარა პერიოდი" ეწოდება.',
-            "ციტოტოქსიური იმუნური პასუხი დროებით ზღუდავს რეპლიკაციას, თუმცა ვირუსის სრული ელიმინაცია არ ხდება, რის შედეგადაც ინფექცია ქრონიკულ ხასიათს იღებს.",
-            "აივ-ის მაღალი მუტაგენობა ხელს უწყობს იმუნური პასუხისგან გაქცევას, ვაქცინის შექმნის სირთულეს და წამლის მიმართ რეზისტენტობას.",
-            "ინფიცირების გზა, მოხვედრილი ვირუსის რაოდენობა, ვირუსის პათოგენურობა და მასპინძლის გენეტიკური ფაქტორები განსაზღვრავს დაავადების მიმდინარეობას.",
+            "CD4+ ლიმფოციტები აივ-ის ძირითადი სამიზნე უჯრედებია. ისინი ძირითად როლს ასრულებენ როგორც ჰუმორული, ისე უჯრედული იმუნური პასუხის განხორციელებაში.",
+            "აივ ინფექციის იმუნოპათოგენეზში წამყვანი მნიშვნელობა ენიჭება CD4+ ლიმფოციტების რაოდენობის შემცირებას და მათი ფუნქციის დათრგუნვას, რასაც შედეგად მოჰყვება იმუნოსუპრესია.",
+            "ვირუსის რეპლიკაციის თითოეულ ციკლში წარმოქმნილი შტამები ერთმანეთისგან განსხვავდება უჯრედული ტროპიზმით, ანტიგენურობითა და წამლების მიმართ მგრძნობელობით.",
+            "აივ-ის მაღალი მუტაგენობა ხელს უწყობს ანტივირუსული იმუნური პასუხისგან თავის არიდებას, ვირუსის პერსისტენციას და მედიკამენტებისადმი რეზისტენტული შტამების წარმოქმნას.",
+            "განეიტრალიზებელი ანტისხეულები გამომუშავდებიან პირველადი ინფექციიდან 2-4 კვირის შემდეგ და მათი განსაზღვრა სისხლში რუტინული სეროლოგიური ტესტებით შესაძლებელია ინფიცირებიდან 4-8 კვირის შემდეგ.",
+            "ანტისხეულების გაჩენას სისხლში სეროკონვერსია ეწოდება, ხოლო პერიოდს ინფიცირებიდან სეროკონვერსიამდე - ფანჯარა პერიოდი.",
+            "პროვირუს დნმ-ის ინტეგრაცია მასპინძელი უჯრედის გენეტიკურ მასალაში და იმუნოკომპეტენტური უჯრედების, უპირატესად CD4+ ლიმფოციტების დესტრუქცია, ღრმა იმუნოდეფიციტს იწვევს.",
         ],
-        outcomeTitle: "კლინიკური შედეგი",
-        outcomeParagraph:
-            "ვირუსის მუდმივი რეპლიკაცია, მასპინძლის გენომში ინტეგრაცია და CD4+ უჯრედების პროგრესული დესტრუქცია მკურნალობის გარეშე იწვევს ღრმა იმუნოდეფიციტს.",
     },
 } as const;
 
@@ -80,37 +70,31 @@ const c = content[lang];
 ---
 
 <section class="etiopathogenesis-page content-grid">
+    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+        <a href={homeUrl}>{breadcrumb.home}</a>
+        <span>/</span>
+        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+        <span>/</span>
+        <span aria-current="page">{c.heroTitle}</span>
+    </nav>
+
     <div class="hero">
         <p class="section-label">{c.sectionLabel}</p>
         <h1>{c.heroTitle}</h1>
-        <p class="hero-subtitle">{c.heroSubtitle}</p>
     </div>
 
     <div class="surface">
-        <h2>{c.introTitle}</h2>
         {c.introParagraphs.map((text) => <p>{text}</p>)}
     </div>
 
     <div class="surface">
-        <h2>{c.survivalTitle}</h2>
-        {c.survivalParagraphs.map((text) => <p>{text}</p>)}
-    </div>
-
-    <div class="surface">
-        <h2>{c.cycleTitle}</h2>
-        <ol class="list">
-            {c.cycleSteps.map((step) => <li>{step}</li>)}
-        </ol>
+        <h2>{c.cellsTitle}</h2>
+        {c.cellsParagraphs.map((text) => <p>{text}</p>)}
     </div>
 
     <div class="surface">
         <h2>{c.immunityTitle}</h2>
         {c.immunityParagraphs.map((text) => <p>{text}</p>)}
-    </div>
-
-    <div class="surface">
-        <h2>{c.outcomeTitle}</h2>
-        <p>{c.outcomeParagraph}</p>
     </div>
 </section>
 
@@ -119,6 +103,23 @@ const c = content[lang];
         padding-block: 4rem 5rem;
         display: grid;
         gap: 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .breadcrumbs a {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
     }
 
     .hero {
@@ -130,11 +131,6 @@ const c = content[lang];
     .hero h1 {
         font-size: clamp(1.9rem, 4vw, 2.9rem);
         margin-bottom: 0.65rem;
-    }
-
-    .hero-subtitle {
-        color: #475569;
-        line-height: 1.7;
     }
 
     .surface {
@@ -156,14 +152,5 @@ const c = content[lang];
 
     .surface p:last-child {
         margin-bottom: 0;
-    }
-
-    .list {
-        margin: 0;
-        padding-left: 1.2rem;
-        display: grid;
-        gap: 0.45rem;
-        color: #0f172a;
-        line-height: 1.6;
     }
 </style>

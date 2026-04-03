@@ -1,0 +1,271 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+const base = lang === "ka" ? "" : `/${lang}`;
+const homeUrl = lang === "ka" ? "/" : `/${lang}`;
+const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const breadcrumb =
+    lang === "ka"
+        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
+        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
+
+const relatedLinks =
+    lang === "ka"
+        ? [
+              { label: "აივ ინფექცია/შიდსი", href: "/hiv-aids", active: true },
+              { label: "გადაცემის გზები", href: "/transmission", active: true },
+              {
+                  label: "ეტიოპათოგენეზი",
+                  href: "/etiopathogenesis",
+                  active: true,
+              },
+              {
+                  label: "კლინიკური სპექტრი",
+                  href: "/clinical-spectrum",
+                  active: true,
+              },
+              { label: "დიაგნოსტიკა", href: "/diagnostic", active: true },
+              {
+                  label: "პალიატიური დახმარება",
+                  href: "/palliative-care",
+                  active: true,
+              },
+              { label: "კანონი", href: "/legislation", active: true },
+              {
+                  label: "მნიშვნელოვანი თარიღები",
+                  href: "/important-dates",
+                  active: true,
+              },
+              { label: "ეპიდსიტუაცია", href: "#", active: false },
+              { label: "ტესტირება", href: "#", active: false },
+              { label: "პროფილაქტიკა", href: "#", active: false },
+              { label: "მკურნალობა", href: "#", active: false },
+              { label: "ცხოვრება აივ-თან", href: "#", active: false },
+              { label: "კითხვა-პასუხი", href: "#", active: false },
+          ]
+        : [
+              { label: "HIV/AIDS", href: `${base}/hiv-aids`, active: true },
+              {
+                  label: "Ways of Transmission",
+                  href: `${base}/transmission`,
+                  active: true,
+              },
+              {
+                  label: "Etiopathogenesis",
+                  href: `${base}/etiopathogenesis`,
+                  active: true,
+              },
+              {
+                  label: "Clinical Spectrum",
+                  href: `${base}/clinical-spectrum`,
+                  active: true,
+              },
+              { label: "Diagnostic", href: `${base}/diagnostic`, active: true },
+              {
+                  label: "Palliative Care",
+                  href: `${base}/palliative-care`,
+                  active: true,
+              },
+              {
+                  label: "Legislation",
+                  href: `${base}/legislation`,
+                  active: true,
+              },
+              {
+                  label: "Important Dates",
+                  href: `${base}/important-dates`,
+                  active: true,
+              },
+              { label: "Epidsituation", href: "#", active: false },
+              { label: "Get Tested", href: "#", active: false },
+              { label: "Prevention", href: "#", active: false },
+              { label: "Treatment", href: "#", active: false },
+              { label: "Living with HIV", href: "#", active: false },
+              { label: "Questions and Answers", href: "#", active: false },
+          ];
+
+const content = {
+    en: {
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "HIV/AIDS",
+        subtitle: "HIV/AIDS",
+        sidebarTitle: "HIV/AIDS Navigation",
+        paragraphs: [
+            "AIDS was first recognized as a new and distinct clinical entity in 1981. The first cases were recognized because of an unusual clustering of diseases such as Kaposi's sarcoma and Pneumocystis carinii pneumonia in young homosexual men.",
+            "Although such syndromes had occasionally been observed in other groups, the occurrence of these diseases in previously healthy young people was unprecedented.",
+            "Because most of the first cases of this newly defined clinical syndrome involved homosexual men, it seemed logical at first that the cause of this syndrome could be related to a lifestyle habit unique to that population.",
+            "At the same time, Gallo and his colleagues, and Montagnier and his colleagues postulated that a variant T-lymphotropic retrovirus could be the etiologic agent of AIDS.",
+            "Among the most compelling reasons for this hypothesis was that this virus, discovered by Gallo and his colleagues in 1980, was the only human virus known to infect T-helper lymphocytes.",
+            "HIV was also known to be transmitted by sexual contacts, by blood, and from mothers to newborns.",
+            "HIV was detected in the blood of population in Zaire, Uganda, and other African countries. The blood in frozen form was kept at blood banks of Europe.",
+            "According to one hypothesis, HIV as a biological weapon had been artificially created in military laboratories of the USA. This version was very popular among officials of the former Soviet Union, and is now completely disclaimed.",
+        ],
+    },
+    ka: {
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "აივ ინფექცია/შიდსი",
+        subtitle: "შიდსის ისტორია",
+        sidebarTitle: "აივ/შიდსი ნავიგაცია",
+        paragraphs: [
+            "კაცობრიობის არსებობის ხანგრძლივ ისტორიას მრავალი ეპიდემია ახსოვს, მათ შორისაა აივ ინფექცია/შიდსი, რომელმაც აღმოჩენის დღიდან დიდი ყურადღება მიიქცია და მოკლე ხანში გლობალურ პრობლემად იქცა.",
+            "ამ დაავადების წარმოშობის შესახებ მრავალი თეორია არსებობს და დღემდე სადავოა მისი ზუსტი წარმოშობის ადგილი და თარიღი.",
+            "აივ ინფექცია/შიდსი კლინიკურად პირველად აღწერეს ამერიკის შეერთებულ შტატებში 1981 წელს, როდესაც ჰომოსექსუალ მამაკაცთა შორის ზედიზედ იქნა დიაგნოსტირებული იშვიათი დაავადებების - პნევმოცისტური პნევმონიისა და კაპოშის სარკომის რამდენიმე შემთხვევა.",
+            "აღნიშნული დაავადებები მანამდე მხოლოდ იმუნოკომპრომეტირებულ პირებში იყო აღწერილი.",
+            "1982 წელს აშშ დაავადებათა კონტროლისა და პრევენციის ცენტრის მიერ ოფიციალურად იქნა რეგისტრირებული შიდსი, როგორც ახალი დაავადება.",
+            "1983 წელს შიდსის გამომწვევი ადამიანის იმუნოდეფიციტის ვირუსი ერთდროულად აღმოჩენილი იქნა პარიზში (საფრანგეთი) პასტერის ინსტიტუტში ლუკ მონტანიესა და ბეთესდაში (აშშ) კიბოს ნაციონალურ ინსტიტუტში რობერტ ჰალოს მიერ.",
+            "აივ-ის წარმოშობის შესახებ განსხვავებული ვერსიები არსებობს. ზოგიერთი მიიჩნევს, რომ შიდსის გამომწვევი ვირუსი არ არის ახალი - იგი ხანგრძლივად არსებობდა ცენტრალური და დასავლეთ აფრიკის ზოგიერთ რეგიონში, მაგრამ გლობალურად გავრცელდა მხოლოდ უკანასკნელ ათწლეულებში.",
+            "ყველაზე გავრცელებული ვერსიის თანახმად, აფრიკის კონტინენტზე მცხოვრები მაიმუნების ზოგიერთ სახეობაში (მწვანე მაიმუნები, მაკაკები) ხანგრძლივი დროის მანძილზე ფართოდ იყო გავრცელებული შიდსის ვირუსის წინამორბედი, რომელიც არ იყო პათოგენური ადამიანისათვის.",
+            "შემდგომში, მუტაციის ან/და სხვა ფაქტორების შედეგად, მაიმუნის ვირუსმა გადალახა სახეობრივი ბარიერი და გავრცელდა ადამიანებში.",
+            "აღსანიშნავია, რომ შიდსის ვირუსი აღმოჩენილია ზაირის, უგანდის და ზოგიერთი სხვა აფრიკული ქვეყნის მცხოვრებთა 50-იან წლებში აღებულ სისხლში, რომელიც ამ ხნის განმავლობაში სხვადასხვა მიზეზის გამო ინახებოდა გაყინულ მდგომარეობაში.",
+            "კიდევ ერთი ჰიპოთეზის მიხედვით, შიდსის ვირუსი ხელოვნურად შეიქმნა ამერიკის სამხედრო დანიშნულების ლაბორატორიებში, როგორც ბიოლოგიური იარაღი. ეს ვერსია ამჟამად მთლიანად უარყოფილია.",
+        ],
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="hiv-aids-page content-grid">
+    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+        <a href={homeUrl}>{breadcrumb.home}</a>
+        <span>/</span>
+        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+        <span>/</span>
+        <span aria-current="page">{c.heroTitle}</span>
+    </nav>
+
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.subtitle}</p>
+    </div>
+
+    <div class="blog-layout">
+        <article class="surface article">
+            {c.paragraphs.map((text) => <p>{text}</p>)}
+        </article>
+
+        <aside class="surface sidebar">
+            <h2>{c.sidebarTitle}</h2>
+            <ul class="sidebar-list">
+                {
+                    relatedLinks.map((item) => (
+                        <li>
+                            {item.active ? (
+                                <a href={item.href}>{item.label}</a>
+                            ) : (
+                                <span class="muted">{item.label}</span>
+                            )}
+                        </li>
+                    ))
+                }
+            </ul>
+        </aside>
+    </div>
+</section>
+
+<style>
+    .hiv-aids-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .breadcrumbs a {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
+    }
+
+    .blog-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 1rem;
+        align-items: start;
+    }
+
+    .hero {
+        text-align: center;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 4vw, 2.9rem);
+        margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    .surface {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .surface p {
+        color: #0f172a;
+        line-height: 1.7;
+        margin-bottom: 0.8rem;
+    }
+
+    .surface p:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar {
+        position: sticky;
+        top: 1rem;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 0.8rem;
+        font-size: 1.05rem;
+    }
+
+    .sidebar-list {
+        margin: 0;
+        padding-left: 1rem;
+        display: grid;
+        gap: 0.45rem;
+    }
+
+    .sidebar-list a {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .sidebar-list a:hover {
+        text-decoration: underline;
+    }
+
+    .muted {
+        color: #64748b;
+    }
+
+    @media (max-width: 900px) {
+        .blog-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+            position: static;
+        }
+    }
+</style>

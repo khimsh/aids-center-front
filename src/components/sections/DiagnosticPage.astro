@@ -1,0 +1,181 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+const homeUrl = lang === "ka" ? "/" : `/${lang}`;
+const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const breadcrumb =
+    lang === "ka"
+        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
+        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
+
+const content = {
+    en: {
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "Diagnostic",
+        heroSubtitle: "Laboratory Diagnostic",
+        introParagraphs: [
+            "There are three main types of HIV test.",
+            "The first type of test is the HIV antibody test. This test shows whether a person has been infected with HIV, the virus which causes AIDS. Information on this page concentrates on HIV antibody testing.",
+            "The second type of test is P24 antigen testing. It is primarily used to screen the blood supply but in some places it is used for testing for HIV in individuals. P24 antigen is a protein that is part of the HIV. Early in the infection, it is produced in excess and can be detected in the blood serum by a commercial test. The P24 test can detect HIV infection before the HIV antibody test can. Therefore, P24 antigen testing is used in diagnosing HIV early in the course of infection.",
+            "The third type of test is used when a person knows that she or he is already infected with HIV. These tests show the level of virus in the blood (viral load test).",
+        ],
+        antibodyTitle: "HIV Antibody Test",
+        antibodyParagraphs: [
+            "The HIV test looks for antibodies in a person's blood. When HIV (which is a virus) enters a person's body, special chemicals are produced. These are called antibodies. Antibodies are the body's response to an infection. So if a person has antibodies to HIV in their blood, it means they have been infected with HIV (an exception is the case of an HIV negative baby born to a positive mother, who will retain her antibodies for some months).",
+            "Most people develop these antibodies within 3 months of infection. In rare cases, it can take up to 6 months. It would be extremely uncommon to take longer than 6 months for antibodies to develop.",
+            "Getting tested earlier than 3 months may result in an unclear test result, as an infected person may not yet have developed antibodies to HIV. The time between infection and the development of antibodies is called the window period.",
+            "In the window period people infected with HIV have no antibodies in their blood that can be detected by an HIV test. However, the person may already have high levels of HIV in their blood, sexual fluids or breast milk. HIV can be passed on to another person during the window period even though an HIV test will not show that you are infected with HIV.",
+            "So it is best to wait for at least three months after the last time you were at risk before taking the test. Some test centers may recommend testing again at 6 months, just to be extra sure.",
+            "It is also important that you are not at further risk of getting infected with HIV during this time period. The test is only accurate if there are no other exposures between the time of possible exposure to HIV and testing.",
+            "The only way to know for sure whether you are infected with HIV is to have an HIV antibody test. It is not possible to tell from any symptoms.",
+        ],
+        methodsTitle: "Laboratory Methods",
+        methodsParagraphs: [
+            "Several laboratory methods are know for HIV diagnostic, Viral cultivation and following identification, identification of antigen, antibody and genome in the blood and other liquids.",
+            "Recently identification of HIV antibodies and genome are the main methods of HIV/AIDS diagnostic. HIV antibody test includes screening (ELISA and Rapid test) and confirmation (Western Blot).",
+        ],
+        pcrTitle: "PCR",
+        pcrParagraphs: [
+            "PCR has very quickly become an essential tool for improving human health and human life. Medical research and clinical medicine are profiting from PCR mainly in two areas: detection of infectious disease organisms, and detection of variations and mutations in genes.",
+            "PCR (Polymerase Chain Reaction) is a key technique in molecular genetics that permits the analysis of any short sequence of DNA (or RNA) without having to clone it.",
+            "PCR is used to reproduce (amplify) selected sections of DNA. Previously, amplifying was done in bacteria, and took weeks. But now, with PCR done in test tubes, it takes only a few hours. PCR is highly efficient so that untold numbers of copies can be made of the DNA. What is more, PCR uses the same molecules that nature uses for copying DNA: PCR is the most sensitive and specific test.",
+            "There are two kinds of PCR: qualitative and quantitative PCR.",
+            "Qualitative PCR is used for HIV diagnostic on the early stage. PCR is the most sensitive and specific test in case of mother to child transmission.",
+            "Quantitative PCR is used for identification of viral load, which is the best marker for evaluation of prognosis and treatment effectiveness of HIV/AIDS.",
+        ],
+    },
+    ka: {
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "დიაგნოსტიკა",
+        heroSubtitle: "ლაბორატორიული დიაგნოსტიკა",
+        introParagraphs: [
+            "ვინაიდან აივ ინფექციას პათოგნომური კლინიკურუი ნიშნები არ გააჩნია, გადამწყვეტი მის დიაგნოსტიკაში ლაბორატორიული გამოკვლევაა.",
+            "აივ ინფექციის ლაბორატორიული დიაგნოსტიკა სხვადასხვა მეთოდით ხორციელდება, ვირუსის კულტივირება შემდგომი იდენთიფიკაციით, სისხლსა და სხვა ბიოლოგიურ სითხეებში ვირუსის ანტიგენის და ანტისხეულების განსაზღვრა, ვირუსის გენომის გამოვლენა და სხვა.",
+            "დღეისათვის აივ ინფექციის ლაბორატორიული დიაგნოსტიკის ძირითადი საშუალებებია სისხლში აივ საწინააღმდეგო ანტისხეულების და ვირუსის გენეტიკური მასალის განსაზღვრა.",
+        ],
+        antibodyTitle: "აივ ანტისხეულების განსაზღვრა",
+        antibodyParagraphs: [
+            "აივ ანტისხეულების განსაზღვრის მეთოდები ორ ჯგუფად იყოფა:",
+            "პირველადი ანუ სკრინინგული.",
+            "დამადასტურებელი ანუ კომფირმაციული.",
+            "სკრინინგულ მეთოდებს მიეკუთვნება: აივ ანტისხეულების გამოვლენა იმუნოფერმენტული ანალიზის (იფა), იმუნოფლუორესცენციის, ჰემაგლუტინაციის, იმუნოქრომატოგრაფიის, მიკროპრეციპიტაციის და სხვა მეთოდებით. გამოკვლევის ხანგრძლივობის მიხედვით ეს მეთოდები იყოფა ჩვეულებრივ (ხანგრძლივობა 2-5 საათი) და სწრაფ/მარტივ (ხანგრძლივობა 5-30 წუთი) მეთოდებად. კონფირმაციული მეთოდებიდან ძირითადად გამოიყენება იმუნობლოტინგი (Western blot).",
+            "სკრინინგულ მეთოდებს შორის ყველაზე ფართოდ გამოიყენება აივ ანტისხეულების გამოვლენა იფა და სწრაფი/მარტივი მეთოდებით, რომლებიც მაღალი მგრძნობელობითა და სპეციფიკურობით ხასიათდება და ამასთან, ადვილად ხელმისაწვდომია.",
+            "მათი საშუალებით აივ ანტისხეულები სისხლში ვლინდება ინფიცირებიდან 4-8 კვირის შემდეგ. დადებითი შედეგის შემთხვევაში კვლევა გრძელდება დამადასტურებელი ანუ, კონფირმაციული მეთოდით - იმუნობლოტინგით.",
+        ],
+        methodsTitle: "მოლეკულური დიაგნოსტიკა",
+        methodsParagraphs: [
+            "სადღეისოდ ყველაზე ზუსტი და მაღალმგრძნობიარე მეთოდია ვირუსის გენომის (რნმ, დნმ) გამოვლენა პოლიმერიზაციის ჯაჭვური რეაქციის (PCR) მეთოდით.",
+            "არსებობს ვირუსის გენომის გამოვლენის ალტერნატიული მეთოდებიც - bDNA (branched chain DNA) და NASBA (Nucleic Acid Sequence-Based Amplification). თუმცა თავისი მგრძნობელობითა და სპეციფიკურობით სადღეისოდ ისინი PCR მეთოდს ჩამორჩება.",
+        ],
+        pcrTitle: "PCR",
+        pcrParagraphs: [
+            "PCR, რომელიც 80-იან წლებში დაინერგა, დიდი წინ გადადგმული ნაბიჯია ინფექციური დაავადების, მათ შორის აივ ინფექციის დიაგნოსტიკაშიც.",
+            "მისი საშუალებით ხდება ინფექციური აგენტის გენეტიკური მასალის ამპლიფიკაცია და გამოვლენა იმ შემთხვევაშიც კი, როცა მისი კონცენტრაცია გამოსაკვლევ მასალაში უკიდურესად მცირეა (1 ვირუსი 100 000 უჯრედზე).",
+            "PCR მეთოდი ორი სახისაა: თვისობრივი და რაოდენობრივი.",
+            "თვისობრივი გამოიყენება აივ ინფექციის დიაგნოსტიკისათვის ადრეულ სტადიაზე - სისხლში ანტისხეულების გაჩენამდე, აგრეთვე იფა და იმუნობლოტინგით საეჭვო პასუხის მიღების შემთხვევაში.",
+            "განსაკუთრებით დიდია მისი დიაგნოსტიკური ღირებულება ინფიცირებული დედის ახალშობილის აივ ინფექციის დიაგნოსტირებისას.",
+            "რაოდენობრივი მეთოდი საშუალებას იძლევა განისაზღვროს ე. წ. ვირუსული დატვირთვა, ანუ ვირუსის რაოდენობა 1 მლ პლაზმაში. ვირუსული დატვირთვა საუკეთესო მარკერია დაავადების პროგნოზირებისა და მკურნალობის ეფექტიანობის შესაფასებლად.",
+        ],
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="diagnostic-page content-grid">
+    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+        <a href={homeUrl}>{breadcrumb.home}</a>
+        <span>/</span>
+        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+        <span>/</span>
+        <span aria-current="page">{c.heroTitle}</span>
+    </nav>
+
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <div class="surface">
+        {c.introParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.antibodyTitle}</h2>
+        {c.antibodyParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.methodsTitle}</h2>
+        {c.methodsParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+
+    <div class="surface">
+        <h2>{c.pcrTitle}</h2>
+        {c.pcrParagraphs.map((text) => <p>{text}</p>)}
+    </div>
+</section>
+
+<style>
+    .diagnostic-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .breadcrumbs a {
+        color: #0f172a;
+        text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+        text-decoration: underline;
+    }
+
+    .hero {
+        text-align: center;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 4vw, 2.9rem);
+        margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    .surface {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .surface h2 {
+        margin-bottom: 0.8rem;
+    }
+
+    .surface p {
+        color: #0f172a;
+        line-height: 1.7;
+        margin-bottom: 0.8rem;
+    }
+
+    .surface p:last-child {
+        margin-bottom: 0;
+    }
+</style>
