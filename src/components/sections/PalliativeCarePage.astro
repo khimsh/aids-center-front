@@ -1,0 +1,238 @@
+---
+type Lang = "ka" | "en";
+
+const lang = (Astro.currentLocale ?? "ka") as Lang;
+
+const content = {
+    en: {
+        pageTitle: "Palliative Care",
+        sectionLabel: "HIV / AIDS",
+        heroTitle: "Palliative Care",
+        heroSubtitle:
+            "Palliative care is a key part of comprehensive HIV/AIDS care. It focuses on relief of suffering, symptom control, and preserving quality of life for patients and families.",
+        whyTitle: "Why It Is Important",
+        whyText:
+            "People living with HIV/AIDS may experience pain, diarrhea, cough, shortness of breath, nausea, weakness, fatigue, and confusion. Without palliative care these symptoms may remain untreated, reducing daily function and increasing avoidable hospital burden.",
+        principlesTitle: "General Principles",
+        principles: [
+            "Palliative care includes symptomatic treatment and terminal care.",
+            "It may be provided at home, in hospitals, and in dedicated palliative wards.",
+            "A patient may access palliative care when curative treatment is refused, unavailable, unaffordable, or unlikely to improve outcomes.",
+            "Regional AIDS centers coordinate referrals to palliative and related services.",
+            "Partner organizations (including NGOs) may provide services in line with national standards.",
+            "Access must not be restricted for political or social reasons.",
+            "Care should be provided according to patient needs and WHO standards.",
+            "Treatment of co-existing conditions (for example TB, ART continuity, substitution therapy where indicated) should continue as clinically appropriate.",
+            "Drug substitution treatment should be offered to injecting drug users when indicated.",
+        ],
+        terminalTitle: "Special Advice for Terminal Care",
+        terminalSections: [
+            {
+                title: "Preparing for Death",
+                items: [
+                    "Encourage communication within the family.",
+                    "Discuss practical concerns such as children, schooling, and family support.",
+                    "Reassure the patient they are loved and will be remembered.",
+                    "Talk about death if the patient wishes.",
+                    "Support feelings of regret or guilt.",
+                    "Arrange spiritual counseling if desired.",
+                ],
+            },
+            {
+                title: "Presence",
+                items: [
+                    "Be present with compassion.",
+                    "Visit regularly, hold hands, listen, and converse.",
+                ],
+            },
+            {
+                title: "Care",
+                items: [
+                    "Create comfortable conditions.",
+                    "Moisten lips, mouth, and eyes as needed.",
+                    "Keep the patient clean, dry, and comfortable.",
+                    "Treat fever and pain (including around-the-clock analgesia where needed).",
+                    "Manage other symptoms with appropriate medications.",
+                    "Provide fluids and small amounts of food according to tolerance.",
+                    "Maintain gentle physical contact.",
+                ],
+            },
+            {
+                title: "Referral",
+                items: [
+                    "Regional AIDS centers should coordinate referral according to patient needs.",
+                    "Other institutions and partners should work closely with regional AIDS centers.",
+                    "NGOs should actively support referral and care delivery.",
+                    "If a patient is on ART or other ongoing treatment, continuity and monitoring should be ensured.",
+                ],
+            },
+        ],
+    },
+    ka: {
+        pageTitle: "პალიატიური დახმარება",
+        sectionLabel: "აივ / შიდსი",
+        heroTitle: "პალიატიური დახმარება",
+        heroSubtitle:
+            "პალიატიური დახმარება აივ/შიდსით მცხოვრები ადამიანებისთვის კომპლექსური ზრუნვის მნიშვნელოვანი ნაწილია. მისი მიზანია ტანჯვის შემცირება, სიმპტომების კონტროლი და ცხოვრების ხარისხის შენარჩუნება.",
+        whyTitle: "რატომ არის ეს მნიშვნელოვანი",
+        whyText:
+            "აივ/შიდსით მცხოვრებ პაციენტებს ხშირად აწუხებთ ტკივილი, დიარეა, ხველა, სუნთქვის უკმარისობა, გულისრევა, სისუსტე, დაღლილობა და აზროვნების არევა. პალიატიური დახმარების გარეშე ეს სიმპტომები ხშირად დაუმუშავებელი რჩება, ამცირებს ყოველდღიურ ფუნქციონირებას და ზრდის საავადმყოფოების დატვირთვას.",
+        principlesTitle: "ზოგადი პრინციპები",
+        principles: [
+            "პალიატიური დახმარება მოიცავს სიმპტომურ მკურნალობას და ტერმინალურ ეტაპზე ზრუნვას.",
+            "პალიატიური დახმარება შესაძლებელია ბინაზე, საავადმყოფოში და პალიატიურ განყოფილებებში.",
+            "პაციენტს შეუძლია მიიღოს პალიატიური დახმარება, როცა ძირითადი მკურნალობა მიუწვდომელია, უარს ამბობს მასზე ან მოსალოდნელი ეფექტი დაბალია.",
+            "შიდსთან ბრძოლის რეგიონული ცენტრები კოორდინაციას უწევენ პალიატიურ და სხვა მომსახურებებზე მიმართვას.",
+            "არასამთავრობო ორგანიზაციებს შეუძლიათ ჩაერთონ მომსახურებაში ეროვნული სტანდარტების შესაბამისად.",
+            "პალიატიურ დახმარებაზე წვდომა არ უნდა შეიზღუდოს პოლიტიკური ან სოციალური მიზეზით.",
+            "დახმარება უნდა განხორციელდეს პაციენტის საჭიროებებსა და ჯანმოს სტანდარტებზე დაყრდნობით.",
+            "თანმხლები დაავადებების მკურნალობა (მაგალითად, ტუბერკულოზი, არტ, ჩანაცვლებითი თერაპია) უნდა გაგრძელდეს კლინიკური ჩვენების მიხედვით.",
+            "ინექციური ნარკოტიკების მომხმარებლებისთვის, შესაბამისი ჩვენებისას, უნდა შეთავაზდეს ჩანაცვლებითი თერაპია.",
+        ],
+        terminalTitle: "მომაკვდავი ავადმყოფის დახმარება",
+        terminalSections: [
+            {
+                title: "სიკვდილისთვის მომზადება",
+                items: [
+                    "ხელი შეუწყვეთ ოჯახის წევრებს შორის კომუნიკაციას.",
+                    "განიხილეთ პაციენტის პრაქტიკული საზრუნავი: ბავშვები, სწავლა, ოჯახის მხარდაჭერა.",
+                    "აუხსენით, რომ ის უყვართ და ემახსოვრებათ.",
+                    "სიკვდილზე ისაუბრეთ მხოლოდ პაციენტის სურვილის შემთხვევაში.",
+                    "დაეხმარეთ სინანულისა და დანაშაულის განცდების შემსუბუქებაში.",
+                    "სურვილის შემთხვევაში დაუკავშირდით სულიერ მოძღვარს.",
+                ],
+            },
+            {
+                title: "ავადმყოფის მონახულება",
+                items: [
+                    "გამოიჩინეთ თანაგრძნობა.",
+                    "რეგულარულად ეწვიეთ, მოუსმინეთ, ესაუბრეთ და არ დატოვოთ მარტო.",
+                ],
+            },
+            {
+                title: "ავადმყოფის მოვლა",
+                items: [
+                    "შექმენით კომფორტული პირობები.",
+                    "დაასველეთ ტუჩები, პირი და თვალები საჭიროებისამებრ.",
+                    "შეინარჩუნეთ სისუფთავე და სიმშრალე.",
+                    "უმკურნალეთ ტკივილსა და ცხელებას, საჭიროების შემთხვევაში 24-საათიანი რეჟიმით.",
+                    "სხვა სიმპტომებიც მართეთ შესაბამისი პრეპარატებით.",
+                    "მიაწოდეთ სითხე და მცირე რაოდენობის საკვები პაციენტის მდგომარეობის მიხედვით.",
+                    "შეინარჩუნეთ ფიზიკური კონტაქტი.",
+                ],
+            },
+            {
+                title: "მიმართვა პალიატიური დახმარების სამსახურებში",
+                items: [
+                    "რეგიონულმა ცენტრმა უნდა გაუწიოს კოორდინაცია საჭირო დაწესებულებებთან მიმართვას.",
+                    "სხვა ორგანიზაციებმა მჭიდროდ უნდა ითანამშრომლონ რეგიონულ ცენტრთან.",
+                    "არასამთავრობო სექტორი აქტიურად უნდა ჩაერთოს მიმართვასა და სერვისის მიწოდებაში.",
+                    "თუ პაციენტი იღებს არტ-ს ან სხვა მკურნალობას, აუცილებელია უწყვეტობისა და მონიტორინგის უზრუნველყოფა.",
+                ],
+            },
+        ],
+    },
+} as const;
+
+const c = content[lang];
+---
+
+<section class="palliative-page content-grid">
+    <div class="hero">
+        <p class="section-label">{c.sectionLabel}</p>
+        <h1>{c.heroTitle}</h1>
+        <p class="hero-subtitle">{c.heroSubtitle}</p>
+    </div>
+
+    <div class="surface">
+        <h2>{c.whyTitle}</h2>
+        <p>{c.whyText}</p>
+    </div>
+
+    <div class="surface">
+        <h2>{c.principlesTitle}</h2>
+        <ul class="list">
+            {c.principles.map((item) => <li>{item}</li>)}
+        </ul>
+    </div>
+
+    <div class="surface">
+        <h2>{c.terminalTitle}</h2>
+        <div class="grid">
+            {
+                c.terminalSections.map((section) => (
+                    <article class="card">
+                        <h3>{section.title}</h3>
+                        <ul class="list">
+                            {section.items.map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </article>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .palliative-page {
+        padding-block: 4rem 5rem;
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .hero {
+        text-align: center;
+        max-width: 760px;
+        margin-inline: auto;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 4vw, 2.9rem);
+        margin-bottom: 0.65rem;
+    }
+
+    .hero-subtitle {
+        color: #475569;
+        line-height: 1.7;
+    }
+
+    .surface {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .surface h2 {
+        margin-bottom: 0.8rem;
+    }
+
+    .list {
+        margin: 0;
+        padding-left: 1.2rem;
+        display: grid;
+        gap: 0.5rem;
+        color: #0f172a;
+        line-height: 1.6;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+
+    .card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+
+    .card h3 {
+        margin-bottom: 0.7rem;
+        font-size: 1.05rem;
+    }
+</style>

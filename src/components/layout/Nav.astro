@@ -10,10 +10,12 @@ const newsUrl = lang === "ka" ? "/news" : `/${lang}/news`;
 const aboutUrl = lang === "ka" ? "/about" : `/${lang}/about`;
 const doctorsUrl = lang === "ka" ? "/doctors" : `/${lang}/doctors`;
 const legislationUrl = lang === "ka" ? "/legislation" : `/${lang}/legislation`;
+const palliativeCareUrl =
+  lang === "ka" ? "/palliative-care" : `/${lang}/palliative-care`;
 
 const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
-const transmissionUrl = lang === "ka" ? "/transmission" : `/${lang}/transmission`;
-
+const transmissionUrl =
+  lang === "ka" ? "/transmission" : `/${lang}/transmission`;
 ---
 
 <nav aria-label={t.nav.navAriaLabel} class="main-nav">
@@ -58,7 +60,7 @@ const transmissionUrl = lang === "ka" ? "/transmission" : `/${lang}/transmission
               <a href="#">{t.nav.diagnostic}</a>
             </li>
             <li>
-              <a href="#">{t.nav.palliativeCare}</a>
+              <a href={palliativeCareUrl}>{t.nav.palliativeCare}</a>
             </li>
           </ul>
         </li>
