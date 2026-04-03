@@ -90,12 +90,9 @@ const cards = hydratedArticles.map((entry) => {
 <section class="news-archive content-grid" aria-labelledby="news-archive-title">
     <div class="archive-shell">
         <div class="archive-header">
-            <p class="section-label">{t.news.label}</p>
-            <h1 id="news-archive-title">{t.news.archiveTitle}</h1>
-            <p class="archive-summary">
-                {t.news.pageSummary}
-                {currentPage} / {totalPages}
-            </p>
+            <h1 id="news-archive-title" class="news-title">
+                {t.news.archiveTitle}
+            </h1>
         </div>
 
         {
@@ -138,9 +135,20 @@ const cards = hydratedArticles.map((entry) => {
             ) : null
         }
     </div>
+
+    <p class="archive-summary">
+        {t.news.pageSummary}
+        {currentPage} / {totalPages}
+    </p>
 </section>
 
 <style>
+    .news-title {
+        text-align: center;
+        margin-block: 3rem;
+        color: #dbeafe;
+    }
+
     .news-archive {
         padding-block: 3rem 4rem;
         background: linear-gradient(180deg, #034485 0%, #02315f 100%);
@@ -155,11 +163,6 @@ const cards = hydratedArticles.map((entry) => {
     .archive-header {
         display: grid;
         gap: 0.35rem;
-    }
-
-    .archive-header h1 {
-        margin: 0;
-        color: #fff;
     }
 
     .archive-summary {

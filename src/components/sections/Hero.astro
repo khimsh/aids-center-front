@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { useTranslations } from "../../i18n/utils";
 
 const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
@@ -29,7 +30,13 @@ import ClinicPhoto from "../../assets/images/clinic.webp";
     </div>
 
     <div>
-      <img src={ClinicPhoto.src} alt="New Clinic" class="hero-image" />
+      <figure class="hero-image">
+        <img src={ClinicPhoto.src} alt="New Clinic" class="hero-image" />
+        <figcaption class="hero-image-pin">
+          {(<Icon name="heroicons:map-pin" />)}
+          {t.hero.address}
+        </figcaption>
+      </figure>
     </div>
   </div>
   <!-- .hero-content -->
@@ -107,6 +114,35 @@ import ClinicPhoto from "../../assets/images/clinic.webp";
     &:hover {
       background-color: #034485;
       color: #fff;
+    }
+  }
+
+  .hero-image {
+    position: relative;
+
+    img {
+      display: block;
+    }
+  }
+
+  .hero-image-pin {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fff;
+    color: oklch(0 0 0 / 0.86);
+    padding: 0.6rem;
+    border-radius: 4px;
+    max-width: 36ch;
+
+    svg {
+      flex-shrink: 0;
+      width: 1.5em;
+      height: 1.5em;
     }
   }
 </style>

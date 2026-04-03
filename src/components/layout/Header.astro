@@ -11,11 +11,12 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 <!-- site header -->
 <header class="header content-grid">
   <div>
-    <!-- Logo -->
-    <div class="logo">
-      <a href={homeUrl} aria-label="AIDS Center Logo" class="logo-link">
-        <img src={Logo.src} alt="AIDS Center Logo" class="logo" />
-        <!-- <svg
+    <div class="header-top">
+      <!-- Logo -->
+      <div class="logo">
+        <a href={homeUrl} aria-label="AIDS Center Logo" class="logo-link">
+          <img src={Logo.src} alt="AIDS Center Logo" class="logo" />
+          <!-- <svg
           width="31"
           height="40"
           viewBox="0 0 31 40"
@@ -35,9 +36,13 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
             d="M0.5 0.5V33.5C1.14833 34.48 1.59679 34.8562 2.72222 34.8636H12.7222C12.8246 35.4547 15.6295 37.793 14.9444 37.0455C14.2594 36.2979 15.2222 38.1364 15.2222 38.1364L15.5 37.0455C16.6612 36.1004 17.0344 35.6587 17.7222 34.8636H28.8333C29.8883 34.3789 30.2416 33.891 30.5 32.6818V0.5H0.5Z"
             stroke="#FF0000"></path>
         </svg> -->
-      </a>
+        </a>
+      </div>
+      <!-- Language Selector -->
+      <LanguageSwitcher />
     </div>
   </div>
+
   <div class="header-wrap">
     <!-- Menu Toggle Button for small screens -->
     <button class="menu-toggle">
@@ -46,9 +51,6 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
 
     <!-- Main Navigation -->
     <Nav />
-
-    <!-- Language Selector -->
-    <LanguageSwitcher />
   </div>
 </header>
 
@@ -75,5 +77,11 @@ const homeUrl = lang === "ka" ? "/" : `/${lang}`;
   .logo {
     max-width: 40vw;
     height: auto;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
