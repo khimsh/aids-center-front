@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../auth/use-auth';
+import { Button } from '../../components/ui/button';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
 import {
   canViewDeletedEntry,
@@ -125,29 +126,29 @@ export function DeletedArticlesPage() {
               <p className="hint">Will be permanently deleted in {getDaysLeft(item.delete_after)} day(s).</p>
 
               <div className="post-actions">
-                <button
+                <Button
                   type="button"
                   onClick={() => void restoreArticle(item.id)}
                   disabled={busyArticleId === item.id}
                 >
                   Restore
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className="button-secondary"
+                  variant="secondary"
                   onClick={() => moveToDrafts(item.id)}
                   disabled={busyArticleId === item.id}
                 >
                   Move to Drafts
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className="button-secondary"
+                  variant="secondary"
                   onClick={() => setItemToPermanentlyDeleteId(item.id)}
                   disabled={busyArticleId === item.id}
                 >
                   Delete Permanently
-                </button>
+                </Button>
               </div>
             </article>
           ))

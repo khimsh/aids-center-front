@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../auth/use-auth';
+import { Button, ButtonLink } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Select } from '../../components/ui/select';
 import { extractApiErrorMessage } from '../../lib/api-errors';
 import { isAdminRole } from '../../lib/permissions';
 import { queryKeys } from '../../lib/query-keys';
@@ -75,14 +77,14 @@ export function UsersCreatePage() {
           <h1>Register User</h1>
           <p className="hint">Create a new editor or admin account.</p>
         </div>
-        <Link to="/users/list" className="button-secondary">View Users List</Link>
+        <ButtonLink to="/users/list" variant="secondary">View Users List</ButtonLink>
       </div>
 
       <form className="posts-editor" onSubmit={onCreateUser}>
         <div className="field-row">
           <label>
             Email
-            <input
+            <Input
               type="email"
               name="email"
               required
@@ -94,7 +96,7 @@ export function UsersCreatePage() {
 
           <label>
             Full Name
-            <input
+            <Input
               type="text"
               name="full_name"
               required
@@ -108,20 +110,20 @@ export function UsersCreatePage() {
         <div className="field-row">
           <label>
             Role
-            <select
+            <Select
               name="role"
               value={role}
               onChange={(event) => setRole(event.target.value as CreateUserRole)}
             >
               <option value="editor">editor</option>
               <option value="admin">admin</option>
-            </select>
+            </Select>
           </label>
         </div>
 
         <label>
           Password
-          <input
+          <Input
             type="password"
             name="password"
             required
@@ -132,9 +134,9 @@ export function UsersCreatePage() {
         </label>
 
         <div className="posts-actions">
-          <button type="submit" disabled={creating}>
+          <Button type="submit" disabled={creating}>
             {creating ? 'Creating...' : 'Create User'}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

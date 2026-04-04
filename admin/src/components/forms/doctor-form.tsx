@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 import {
   createDoctorTranslation,
   createDoctor,
@@ -274,36 +276,36 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           სახელი
-          <input value={state.name} onChange={(event) => updateField('name', event.target.value)} required />
+          <Input value={state.name} onChange={(event) => updateField('name', event.target.value)} required />
         </label>
 
         <label>
           სპეციალიზაცია
-          <input value={state.specialty} onChange={(event) => updateField('specialty', event.target.value)} />
+          <Input value={state.specialty} onChange={(event) => updateField('specialty', event.target.value)} />
         </label>
       </div>
 
       <div className="field-row">
         <label>
           ხარისხი
-          <input value={state.degree} onChange={(event) => updateField('degree', event.target.value)} />
+          <Input value={state.degree} onChange={(event) => updateField('degree', event.target.value)} />
         </label>
 
         <label>
           დეპარტამენტი
-          <input value={state.department} onChange={(event) => updateField('department', event.target.value)} />
+          <Input value={state.department} onChange={(event) => updateField('department', event.target.value)} />
         </label>
       </div>
 
       <div className="field-row">
         <label>
           სურათის URL
-          <input value={state.picture} onChange={(event) => updateField('picture', event.target.value)} />
+          <Input value={state.picture} onChange={(event) => updateField('picture', event.target.value)} />
         </label>
 
         <label>
           პროფილის URL
-          <input value={state.profile_url} onChange={(event) => updateField('profile_url', event.target.value)} />
+          <Input value={state.profile_url} onChange={(event) => updateField('profile_url', event.target.value)} />
         </label>
       </div>
 
@@ -374,12 +376,12 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           Name (EN)
-          <input value={state.name_en} onChange={(event) => updateField('name_en', event.target.value)} />
+          <Input value={state.name_en} onChange={(event) => updateField('name_en', event.target.value)} />
         </label>
 
         <label>
           Specialty (EN)
-          <input
+          <Input
             value={state.specialty_en}
             onChange={(event) => updateField('specialty_en', event.target.value)}
           />
@@ -389,12 +391,12 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           Degree (EN)
-          <input value={state.degree_en} onChange={(event) => updateField('degree_en', event.target.value)} />
+          <Input value={state.degree_en} onChange={(event) => updateField('degree_en', event.target.value)} />
         </label>
 
         <label>
           Department (EN)
-          <input
+          <Input
             value={state.department_en}
             onChange={(event) => updateField('department_en', event.target.value)}
           />
@@ -464,9 +466,9 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       {error ? <p className="error">{error}</p> : null}
 
       <div className="posts-actions">
-        <button type="button" onClick={() => void saveDoctor()} disabled={saving}>
+        <Button type="button" onClick={() => void saveDoctor()} disabled={saving}>
           {doctorId ? 'ცვლილებების შენახვა' : 'ექიმის დამატება'}
-        </button>
+        </Button>
       </div>
     </div>
   );

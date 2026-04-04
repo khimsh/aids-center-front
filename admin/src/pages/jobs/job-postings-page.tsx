@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Button, ButtonLink } from '../../components/ui/button';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { Input } from '../../components/ui/input';
 import {
   deleteJobPosting,
   fetchJobPostingById,
@@ -164,12 +165,10 @@ export function JobPostingsPage() {
         <h1>ვაკანსიები</h1>
         <p className="hint">ყველა ვაკანსიის სია. რედაქტირებისთვის გამოიყენეთ Edit ღილაკი.</p>
         <div className="jobs-actions">
-          <Link to="/job-postings/new">
-            <button type="button">ახალი ვაკანსიის დამატება</button>
-          </Link>
-          <button type="button" className="button-secondary" onClick={() => void loadJobs()}>
+          <ButtonLink to="/job-postings/new">ახალი ვაკანსიის დამატება</ButtonLink>
+          <Button type="button" variant="secondary" onClick={() => void loadJobs()}>
             განახლება
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -182,24 +181,24 @@ export function JobPostingsPage() {
           <div className="field-row">
             <label>
               სათაური (KA)
-              <input value={titleKa} onChange={(event) => setTitleKa(event.target.value)} required />
+              <Input value={titleKa} onChange={(event) => setTitleKa(event.target.value)} required />
             </label>
 
             <label>
               სათაური (EN)
-              <input value={titleEn} onChange={(event) => setTitleEn(event.target.value)} />
+              <Input value={titleEn} onChange={(event) => setTitleEn(event.target.value)} />
             </label>
           </div>
 
           <div className="field-row">
             <label>
               დეპარტამენტი (KA)
-              <input value={departmentKa} onChange={(event) => setDepartmentKa(event.target.value)} />
+              <Input value={departmentKa} onChange={(event) => setDepartmentKa(event.target.value)} />
             </label>
 
             <label>
               დეპარტამენტი (EN)
-              <input value={departmentEn} onChange={(event) => setDepartmentEn(event.target.value)} />
+              <Input value={departmentEn} onChange={(event) => setDepartmentEn(event.target.value)} />
             </label>
           </div>
 
@@ -217,29 +216,29 @@ export function JobPostingsPage() {
 
           <label className="field-single">
             ვადა
-            <input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
+            <Input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
           </label>
 
           {error ? <p className="error">{error}</p> : null}
 
           <div className="jobs-actions">
             {editingStatus === 'published' ? (
-              <button type="button" onClick={() => void saveEdit('published')} disabled={saving}>
+              <Button type="button" onClick={() => void saveEdit('published')} disabled={saving}>
                 ცვლილებების შენახვა
-              </button>
+              </Button>
             ) : (
               <>
-                <button type="button" className="button-secondary" onClick={() => void saveEdit('draft')} disabled={saving}>
+                <Button type="button" variant="secondary" onClick={() => void saveEdit('draft')} disabled={saving}>
                   დრაფტად შენახვა
-                </button>
-                <button type="button" onClick={() => void saveEdit('published')} disabled={saving}>
+                </Button>
+                <Button type="button" onClick={() => void saveEdit('published')} disabled={saving}>
                   გამოქვეყნება
-                </button>
+                </Button>
               </>
             )}
-            <button type="button" className="button-secondary" onClick={clearForm} disabled={saving}>
+            <Button type="button" variant="secondary" onClick={clearForm} disabled={saving}>
               რედაქტირების გაუქმება
-            </button>
+            </Button>
           </div>
         </div>
       ) : null}
@@ -264,17 +263,17 @@ export function JobPostingsPage() {
               {job.description ? <p>{job.description}</p> : null}
 
               <div className="job-actions">
-                <button type="button" onClick={() => void startEdit(job.id)} disabled={busyJobId === job.id}>
+                <Button type="button" onClick={() => void startEdit(job.id)} disabled={busyJobId === job.id}>
                   რედაქტირება
-                </button>
+                </Button>
                 {job.status === 'draft' ? (
-                  <button type="button" onClick={() => void publishDraft(job.id)} disabled={busyJobId === job.id}>
+                  <Button type="button" onClick={() => void publishDraft(job.id)} disabled={busyJobId === job.id}>
                     დრაფტის გამოქვეყნება
-                  </button>
+                  </Button>
                 ) : null}
-                <button type="button" className="button-secondary" onClick={() => setJobToDeleteId(job.id)} disabled={busyJobId === job.id}>
+                <Button type="button" variant="secondary" onClick={() => setJobToDeleteId(job.id)} disabled={busyJobId === job.id}>
                   წაშლა
-                </button>
+                </Button>
               </div>
             </article>
           ))

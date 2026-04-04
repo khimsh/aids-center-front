@@ -3,6 +3,9 @@ import Quill from 'quill';
 import { toast } from 'react-toastify';
 import type { AxiosError } from 'axios';
 import 'quill/dist/quill.snow.css';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Select } from '../ui/select';
 import { articleIsPublished, fetchArticles, type ArticleRecord } from '../../lib/articles';
 import { api } from '../../lib/api';
 
@@ -521,7 +524,7 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       <div className="field-row">
         <label>
           Title (KA)
-          <input
+          <Input
             type="text"
             value={titleKa}
             onChange={(event) => setTitleKa(event.target.value)}
@@ -532,7 +535,7 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
 
         <label>
           Title (EN)
-          <input
+          <Input
             type="text"
             value={titleEn}
             onChange={(event) => setTitleEn(event.target.value)}
@@ -545,15 +548,15 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       <div className="field-row">
         <label>
           Category
-          <select value={category} onChange={(event) => setCategory(event.target.value as ArticleCategory)}>
+          <Select value={category} onChange={(event) => setCategory(event.target.value as ArticleCategory)}>
             <option value="news">news</option>
             <option value="announcements">announcements</option>
-          </select>
+          </Select>
         </label>
 
         <label>
           Upload Image
-          <input
+          <Input
             ref={imageInputRef}
             type="file"
             accept="image/*"
@@ -598,28 +601,28 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       <div className="posts-actions">
         {articleId ? (
           <>
-            <button
+            <Button
               type="button"
-              className="button-secondary"
+              variant="secondary"
               onClick={() => void saveArticle(existingPublished ? 'published' : 'draft')}
               disabled={saving}
             >
               Save Changes
-            </button>
+            </Button>
             {!existingPublished ? (
-              <button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
+              <Button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
                 Publish Draft
-              </button>
+              </Button>
             ) : null}
           </>
         ) : (
           <>
-            <button type="button" className="button-secondary" onClick={() => void saveArticle('draft')} disabled={saving}>
+            <Button type="button" variant="secondary" onClick={() => void saveArticle('draft')} disabled={saving}>
               Save Draft
-            </button>
-            <button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
+            </Button>
+            <Button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
               Publish Article
-            </button>
+            </Button>
           </>
         )}
       </div>

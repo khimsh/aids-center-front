@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { ButtonLink } from '../../components/ui/button';
 import { DoctorForm } from '../../components/forms/doctor-form';
 import { fetchDoctors } from '../../lib/doctors';
 import { queryKeys } from '../../lib/query-keys';
@@ -35,7 +35,7 @@ export function DoctorsCreatePage() {
           <p className="hint">შეავსეთ ექიმის ინფორმაცია და შეინახეთ. რიგითობა დაემატება ავტომატურად.</p>
         </div>
 
-        <Link to="/doctors/list" className="button-secondary">ექიმების სია</Link>
+        <ButtonLink to="/doctors/list" variant="secondary">ექიმების სია</ButtonLink>
       </div>
 
       <DoctorForm

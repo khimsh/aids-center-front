@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { Button, ButtonLink } from '../../components/ui/button';
 import {
   deleteDoctor,
   fetchDoctors,
@@ -101,10 +101,10 @@ export function DoctorsListPage() {
         </div>
 
         <div className="posts-actions">
-          <Link to="/doctors/new" className="button-secondary">ახალი ექიმის დამატება</Link>
-          <button type="button" className="button-secondary" onClick={() => void refreshDoctors()}>
+          <ButtonLink to="/doctors/new" variant="secondary">ახალი ექიმის დამატება</ButtonLink>
+          <Button type="button" variant="secondary" onClick={() => void refreshDoctors()}>
             განახლება
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -165,13 +165,11 @@ export function DoctorsListPage() {
                     <p>{doctor.specialty ?? doctor.department ?? 'სპეციალიზაცია მითითებული არ არის'}</p>
 
                     <div className="post-actions">
-                    <Link to={`/doctors/${doctor.id}/edit`}>
-                        <button type="button" className="button-secondary" disabled={isBusy}>რედაქტირება</button>
-                    </Link>
+                    <ButtonLink to={`/doctors/${doctor.id}/edit`} variant="secondary" aria-disabled={isBusy}>რედაქტირება</ButtonLink>
 
-                    <button type="button" disabled={isBusy} onClick={() => setDoctorToDelete(doctor)}>
+                    <Button type="button" disabled={isBusy} onClick={() => setDoctorToDelete(doctor)}>
                         წაშლა
-                    </button>
+                    </Button>
                     </div>
                 </article>
                 );

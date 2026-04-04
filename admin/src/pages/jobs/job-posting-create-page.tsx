@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Button, ButtonLink } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 import { api } from '../../lib/api';
 import './job-postings-page.scss';
 
@@ -67,9 +68,7 @@ export function JobPostingCreatePage() {
         <h1>ახალი ვაკანსიის დამატება</h1>
         <p className="hint">შეავსეთ ფორმა და შეინახეთ დრაფტად ან გამოაქვეყნეთ.</p>
         <div className="jobs-actions">
-          <Link to="/job-postings/list">
-            <button type="button" className="button-secondary">ვაკანსიების სია</button>
-          </Link>
+          <ButtonLink to="/job-postings/list" variant="secondary">ვაკანსიების სია</ButtonLink>
         </div>
       </div>
 
@@ -77,24 +76,24 @@ export function JobPostingCreatePage() {
         <div className="field-row">
           <label>
             სათაური (KA)
-            <input value={titleKa} onChange={(event) => setTitleKa(event.target.value)} required />
+            <Input value={titleKa} onChange={(event) => setTitleKa(event.target.value)} required />
           </label>
 
           <label>
             სათაური (EN)
-            <input value={titleEn} onChange={(event) => setTitleEn(event.target.value)} />
+            <Input value={titleEn} onChange={(event) => setTitleEn(event.target.value)} />
           </label>
         </div>
 
         <div className="field-row">
           <label>
             დეპარტამენტი (KA)
-            <input value={departmentKa} onChange={(event) => setDepartmentKa(event.target.value)} />
+            <Input value={departmentKa} onChange={(event) => setDepartmentKa(event.target.value)} />
           </label>
 
           <label>
             დეპარტამენტი (EN)
-            <input value={departmentEn} onChange={(event) => setDepartmentEn(event.target.value)} />
+            <Input value={departmentEn} onChange={(event) => setDepartmentEn(event.target.value)} />
           </label>
         </div>
 
@@ -112,18 +111,18 @@ export function JobPostingCreatePage() {
 
         <label className="field-single">
           ვადა
-          <input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
+          <Input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
         </label>
 
         {error ? <p className="error">{error}</p> : null}
 
         <div className="jobs-actions">
-          <button type="button" className="button-secondary" onClick={() => void createJob('draft')} disabled={saving}>
+          <Button type="button" variant="secondary" onClick={() => void createJob('draft')} disabled={saving}>
             დრაფტად შენახვა
-          </button>
-          <button type="button" onClick={() => void createJob('published')} disabled={saving}>
+          </Button>
+          <Button type="button" onClick={() => void createJob('published')} disabled={saving}>
             გამოქვეყნება
-          </button>
+          </Button>
         </div>
       </div>
     </div>

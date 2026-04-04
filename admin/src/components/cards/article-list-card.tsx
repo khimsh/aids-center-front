@@ -1,4 +1,5 @@
 import { articleIsPublished, type ArticleRecord } from '../../lib/articles';
+import { Button, ButtonAnchor } from '../ui/button';
 
 type ArticleListCardProps = {
   article: ArticleRecord;
@@ -44,25 +45,25 @@ export function ArticleListCard({
       <p className="hint">{showCategoryPrefix ? `Category: ${article.category ?? 'uncategorized'}` : (article.category ?? 'uncategorized')}</p>
 
       <div className="post-actions">
-        <button type="button" className="button-secondary" onClick={onEdit} disabled={busy}>
+        <Button type="button" variant="secondary" onClick={onEdit} disabled={busy}>
           {editLabel}
-        </button>
+        </Button>
 
         {isPublished && viewPublishedUrl ? (
-          <a className="button-secondary" href={viewPublishedUrl}>
+          <ButtonAnchor variant="secondary" href={viewPublishedUrl}>
             View Published
-          </a>
+          </ButtonAnchor>
         ) : null}
 
         {!isPublished && onPublishDraft ? (
-          <button type="button" onClick={onPublishDraft} disabled={busy}>
+          <Button type="button" onClick={onPublishDraft} disabled={busy}>
             Publish Draft
-          </button>
+          </Button>
         ) : null}
 
-        <button type="button" className="button-secondary" onClick={onDelete} disabled={busy}>
+        <Button type="button" variant="secondary" onClick={onDelete} disabled={busy}>
           Delete
-        </button>
+        </Button>
       </div>
     </article>
   );

@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router-dom';
+import { Button } from '../../components/ui/button';
 
 export function RouteErrorPage() {
   const error = useRouteError();
@@ -20,12 +21,12 @@ export function RouteErrorPage() {
         <h1>{title}</h1>
         <p className="hint">{details}</p>
         <div style={{ display: 'flex', gap: '0.6rem', marginTop: '0.8rem', flexWrap: 'wrap' }}>
-          <button type="button" onClick={() => window.location.reload()}>
+          <Button type="button" onClick={() => window.location.reload()}>
             Reload Page
-          </button>
-          <button type="button" className="button-secondary" onClick={() => navigate('/', { replace: true })}>
+          </Button>
+          <Button type="button" variant="secondary" onClick={() => navigate('/', { replace: true })}>
             Go Dashboard
-          </button>
+          </Button>
         </div>
       </div>
     </div>

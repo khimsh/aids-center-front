@@ -1,6 +1,8 @@
 import { useActionState, useEffect } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/use-auth';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 
 type FormState = { error: string | null; success: boolean };
 
@@ -48,7 +50,7 @@ export function LoginPage() {
 
         <label>
           მომხმარებლის სახელი ან ელ.ფოსტა
-          <input
+          <Input
             type="text"
             name="username"
             required
@@ -58,7 +60,7 @@ export function LoginPage() {
 
         <label>
           პაროლი
-          <input
+          <Input
             type="password"
             name="password"
             required
@@ -68,9 +70,9 @@ export function LoginPage() {
 
         {state.error ? <p className="error">{state.error}</p> : null}
 
-        <button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending}>
           {isPending ? 'შესვლა...' : 'შესვლა'}
-        </button>
+        </Button>
       </form>
     </div>
   );

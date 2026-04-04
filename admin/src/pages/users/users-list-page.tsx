@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../auth/use-auth';
+import { Button, ButtonLink } from '../../components/ui/button';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { Input } from '../../components/ui/input';
 import { extractApiErrorMessage } from '../../lib/api-errors';
 import { isAdminRole, isEditorRole } from '../../lib/permissions';
 import { queryKeys } from '../../lib/query-keys';
@@ -141,7 +142,7 @@ export function UsersListPage() {
           <h1>Users List</h1>
           <p className="hint">Manage registered editors and their credentials.</p>
         </div>
-        <Link to="/users/new" className="button-secondary">Register User</Link>
+        <ButtonLink to="/users/new" variant="secondary">Register User</ButtonLink>
       </div>
 
       <div className="posts-list">
@@ -168,7 +169,7 @@ export function UsersListPage() {
                 <h3>{editor.full_name || 'Unnamed editor'}</h3>
 
                 <div className="post-actions">
-                  <button
+                  <Button
                     type="button"
                     onClick={() => {
                       setEditorToChangePassword(editor);
@@ -177,15 +178,15 @@ export function UsersListPage() {
                     disabled={isBusy}
                   >
                     Change Password
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
-                    className="button-secondary"
+                    variant="secondary"
                     onClick={() => setEditorToDelete(editor)}
                     disabled={isBusy}
                   >
                     Delete Editor
-                  </button>
+                  </Button>
                 </div>
               </article>
             );
@@ -215,7 +216,7 @@ export function UsersListPage() {
             <p className="hint">Set a new password for {editorToChangePassword.email ?? 'this editor'}.</p>
             <label>
               New Password
-              <input
+              <Input
                 type="password"
                 autoFocus
                 value={passwordInput}
@@ -225,9 +226,9 @@ export function UsersListPage() {
               />
             </label>
             <div className="modal-actions">
-              <button
+              <Button
                 type="button"
-                className="button-secondary"
+                variant="secondary"
                 onClick={() => {
                   setEditorToChangePassword(null);
                   setPasswordInput('');
@@ -235,10 +236,10 @@ export function UsersListPage() {
                 disabled={updatingPassword}
               >
                 Cancel
-              </button>
-              <button type="button" onClick={onChangePassword} disabled={updatingPassword}>
+              </Button>
+              <Button type="button" onClick={onChangePassword} disabled={updatingPassword}>
                 {updatingPassword ? 'Working...' : 'Update Password'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

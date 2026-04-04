@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Button } from './button';
 
 type ConfirmModalProps = {
   open: boolean;
@@ -56,17 +57,17 @@ export function ConfirmModal({
         <h3>{title}</h3>
         <p className="hint">{message}</p>
         <div className="modal-actions">
-          <button type="button" className="button-secondary" onClick={onCancel} disabled={busy}>
+          <Button type="button" variant="secondary" onClick={onCancel} disabled={busy}>
             {cancelLabel}
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            className={destructive ? 'button-danger' : undefined}
+            variant={destructive ? 'danger' : 'primary'}
             onClick={onConfirm}
             disabled={busy}
           >
             {busy ? 'Working...' : confirmLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

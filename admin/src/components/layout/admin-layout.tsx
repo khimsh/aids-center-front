@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/use-auth';
+import { Button } from '../ui/button';
 import styles from './admin-layout.module.scss';
 
 export function AdminLayout() {
@@ -47,7 +48,7 @@ export function AdminLayout() {
             <p className="caption">თქვენ შესული ხართ როგორც</p>
             <strong>{user?.email ?? user?.full_name}</strong>
           </div>
-          <button type="button" onClick={onLogout}>გამოსვლა</button>
+          <Button type="button" onClick={onLogout}>გამოსვლა</Button>
         </header>
 
         <section className="panel">
