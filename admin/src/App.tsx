@@ -5,14 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './auth/auth-context';
 import { ProtectedRoute } from './auth/protected-route';
 import { AdminLayout } from './components/layout/admin-layout';
-import { DashboardPage } from './pages/dashboard-page';
-import { DoctorsCreatePage } from './pages/doctors-create-page';
-import { JobPostingCreatePage } from './pages/job-posting-create-page';
-import { LoginPage } from './pages/login-page';
-import { PlaceholderPage } from './pages/placeholder-page';
-import { RouteErrorPage } from './pages/route-error-page';
-import { UsersCreatePage } from './pages/users-create-page';
-import { UsersListPage } from './pages/users-list-page';
+import { DashboardPage } from './pages/system/dashboard-page';
+import { DoctorsCreatePage } from './pages/doctors/doctors-create-page';
+import { JobPostingCreatePage } from './pages/jobs/job-posting-create-page';
+import { LoginPage } from './pages/system/login-page';
+import { PlaceholderPage } from './pages/system/placeholder-page';
+import { RouteErrorPage } from './pages/system/route-error-page';
+import { UsersCreatePage } from './pages/users/users-create-page';
+import { UsersListPage } from './pages/users/users-list-page';
 
 const queryClient = new QueryClient();
 
@@ -30,35 +30,35 @@ const router = createBrowserRouter([
           {
             path: 'posts',
             lazy: async () => {
-              const { PostsPage } = await import('./pages/posts-page');
+              const { PostsPage } = await import('./pages/articles/posts-page');
               return { Component: PostsPage };
             },
           },
           {
             path: 'articles/drafts',
             lazy: async () => {
-              const { ArticleDraftsPage } = await import('./pages/article-drafts-page');
+              const { ArticleDraftsPage } = await import('./pages/articles/article-drafts-page');
               return { Component: ArticleDraftsPage };
             },
           },
           {
             path: 'articles/drafts/:articleId/edit',
             lazy: async () => {
-              const { ArticleEditPage } = await import('./pages/article-edit-page');
+              const { ArticleEditPage } = await import('./pages/articles/article-edit-page');
               return { Component: ArticleEditPage };
             },
           },
           {
             path: 'articles/:articleId/edit',
             lazy: async () => {
-              const { ArticleEditPage } = await import('./pages/article-edit-page');
+              const { ArticleEditPage } = await import('./pages/articles/article-edit-page');
               return { Component: ArticleEditPage };
             },
           },
           {
             path: 'articles/mine',
             lazy: async () => {
-              const { MyArticlesPage } = await import('./pages/my-articles-page');
+              const { MyArticlesPage } = await import('./pages/articles/my-articles-page');
               return { Component: MyArticlesPage };
             },
           },
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
           {
             path: 'articles/deleted',
             lazy: async () => {
-              const { DeletedArticlesPage } = await import('./pages/deleted-articles-page');
+              const { DeletedArticlesPage } = await import('./pages/articles/deleted-articles-page');
               return { Component: DeletedArticlesPage };
             },
           },
@@ -77,21 +77,21 @@ const router = createBrowserRouter([
           {
             path: 'doctors/list',
             lazy: async () => {
-              const { DoctorsListPage } = await import('./pages/doctors-list-page');
+              const { DoctorsListPage } = await import('./pages/doctors/doctors-list-page');
               return { Component: DoctorsListPage };
             },
           },
           {
             path: 'doctors/:doctorId/edit',
             lazy: async () => {
-              const { DoctorsEditPage } = await import('./pages/doctors-edit-page');
+              const { DoctorsEditPage } = await import('./pages/doctors/doctors-edit-page');
               return { Component: DoctorsEditPage };
             },
           },
           {
             path: 'job-postings/list',
             lazy: async () => {
-              const { JobPostingsPage } = await import('./pages/job-postings-page');
+              const { JobPostingsPage } = await import('./pages/jobs/job-postings-page');
               return { Component: JobPostingsPage };
             },
           },

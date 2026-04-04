@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/use-auth';
-import { ConfirmModal } from '../components/ui/confirm-modal';
+import { useAuth } from '../../auth/use-auth';
+import { ConfirmModal } from '../../components/ui/confirm-modal';
 import {
   canViewDeletedEntry,
   listDeletedArticles,
@@ -10,11 +10,11 @@ import {
   permanentlyDeleteArticle,
   restoreDeletedArticle,
   type DeletedArticleEntry
-} from '../lib/deleted-articles';
-import { articleIsPublished } from '../lib/articles';
-import { isAdminRole } from '../lib/permissions';
-import { queryKeys } from '../lib/query-keys';
-import './posts-page.css';
+} from '../../lib/deleted-articles';
+import { articleIsPublished } from '../../lib/articles';
+import { isAdminRole } from '../../lib/permissions';
+import { queryKeys } from '../../lib/query-keys';
+import '../shared/content-page.scss';
 
 function getDaysLeft(deleteAfterIso: string) {
   const msLeft = new Date(deleteAfterIso).getTime() - Date.now();

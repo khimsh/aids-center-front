@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ArticleForm } from '../components/forms/article-form';
-import type { ArticleRecord } from '../lib/articles';
-import './posts-page.css';
+import { ArticleForm } from '../../components/forms/article-form';
+import type { ArticleRecord } from '../../lib/articles';
+import '../shared/content-page.scss';
 
 export function ArticleEditPage() {
   const navigate = useNavigate();

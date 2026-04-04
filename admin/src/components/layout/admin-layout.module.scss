@@ -1,0 +1,29 @@
+.menu {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.menuLink {
+  display: block;
+  text-decoration: none;
+  padding: var(--space-5) var(--space-8);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+
+.menuLinkActive {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.sectionTitle {
+  margin: var(--space-10) 0 var(--space-1);
+  font-size: 0.78rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}

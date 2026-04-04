@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/use-auth';
-import { extractApiErrorMessage } from '../lib/api-errors';
-import { isAdminRole } from '../lib/permissions';
-import { queryKeys } from '../lib/query-keys';
-import { createEditorUser } from '../lib/users';
-import './posts-page.css';
+import { useAuth } from '../../auth/use-auth';
+import { extractApiErrorMessage } from '../../lib/api-errors';
+import { isAdminRole } from '../../lib/permissions';
+import { queryKeys } from '../../lib/query-keys';
+import { createEditorUser } from '../../lib/users';
+import '../shared/content-page.scss';
 
 type CreateUserRole = 'editor' | 'admin';
 

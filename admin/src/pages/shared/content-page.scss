@@ -1,39 +1,39 @@
 .posts-page {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-13);
 }
 
 .posts-editor {
   display: grid;
-  gap: 0.9rem;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1rem;
+  gap: var(--space-12);
+  background: var(--color-bg-card-soft);
+  border: var(--border-width) solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-13);
 }
 
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.9rem;
+  gap: var(--space-12);
 }
 
 .editor-label {
-  margin: 0 0 0.4rem;
+  margin: 0 0 var(--space-3);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }
 
 .editor-shell {
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background: #fff;
+  background: var(--color-bg-card);
 }
 
 .quill-host .ql-toolbar.ql-snow {
   border: 0;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: var(--border-width) solid var(--color-border-soft);
 }
 
 .quill-host .ql-container.ql-snow {
@@ -43,69 +43,69 @@
 
 .posts-actions {
   display: flex;
-  gap: 0.7rem;
+  gap: var(--space-8);
   flex-wrap: wrap;
 }
 
 .featured-checkbox {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
+  gap: var(--space-4);
+  font-weight: var(--font-weight-semibold);
   width: fit-content;
 }
 
 .featured-note {
-  margin-top: -0.25rem;
+  margin-top: calc(-1 * var(--space-1));
 }
 
 .posts-editor .hint {
   display: inline-block;
-  margin-top: 0.35rem;
+  margin-top: var(--space-2);
 }
 
 .button-secondary {
-  background: #334155;
+  background: var(--color-secondary-button);
 }
 
 .posts-list {
   display: grid;
-  gap: 0.8rem;
+  gap: var(--space-10);
 }
 
 .post-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 0.9rem;
-  background: #fff;
+  border: var(--border-width) solid var(--color-border-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-12);
+  background: var(--color-bg-card);
 }
 
 .post-card h3 {
-  margin: 0.35rem 0;
+  margin: var(--space-2) 0;
 }
 
 .post-card p {
-  margin: 0.25rem 0;
+  margin: var(--space-1) 0;
 }
 
 .post-actions {
-  margin-top: 0.7rem;
+  margin-top: var(--space-8);
   display: flex;
-  gap: 0.6rem;
+  gap: var(--space-6);
   flex-wrap: wrap;
 }
 
 .post-meta {
   display: flex;
   justify-content: space-between;
-  gap: 0.6rem;
-  font-size: 0.85rem;
-  color: #6b7280;
+  gap: var(--space-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-soft);
 }
 
 .post-badges {
   display: inline-flex;
-  gap: 0.45rem;
+  gap: var(--space-3);
   align-items: center;
   flex-wrap: wrap;
 }
@@ -113,9 +113,9 @@
 .status-pill {
   display: inline-flex;
   align-items: center;
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem var(--space-4);
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: var(--font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -136,9 +136,9 @@
 }
 
 .post-preview {
-  margin-top: 0.5rem;
-  border-top: 1px dashed #e5e7eb;
-  padding-top: 0.5rem;
+  margin-top: var(--space-4);
+  border-top: var(--border-width) dashed var(--color-border-soft);
+  padding-top: var(--space-4);
 }
 
 @media (max-width: 860px) {

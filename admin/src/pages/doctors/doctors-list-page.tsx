@@ -1,15 +1,15 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ConfirmModal } from '../components/ui/confirm-modal';
+import { ConfirmModal } from '../../components/ui/confirm-modal';
 import {
   deleteDoctor,
   fetchDoctors,
   reorderDoctorsByIds,
   type DoctorRecord
-} from '../lib/doctors';
-import { queryKeys } from '../lib/query-keys';
-import './posts-page.css';
+} from '../../lib/doctors';
+import { queryKeys } from '../../lib/query-keys';
+import '../shared/content-page.scss';
 import { useMemo, useState } from 'react';
 
 function getDisplayTime(value?: string) {

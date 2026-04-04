@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/use-auth';
-import { ArticleListCard } from '../components/cards/article-list-card';
-import { ConfirmModal } from '../components/ui/confirm-modal';
+import { useAuth } from '../../auth/use-auth';
+import { ArticleListCard } from '../../components/cards/article-list-card';
+import { ConfirmModal } from '../../components/ui/confirm-modal';
 import {
   articleIsPublished,
   deleteArticleById,
@@ -13,10 +13,10 @@ import {
   getVisibleArticles,
   publishArticleDraft,
   type ArticleRecord
-} from '../lib/articles';
-import { isAdminRole } from '../lib/permissions';
-import { queryKeys } from '../lib/query-keys';
-import './posts-page.css';
+} from '../../lib/articles';
+import { isAdminRole } from '../../lib/permissions';
+import { queryKeys } from '../../lib/query-keys';
+import '../shared/content-page.scss';
 
 function isNoDraftsResponse(error: unknown): boolean {
   const response = (error as { response?: { status?: number; data?: unknown } }).response;

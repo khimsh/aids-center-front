@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DoctorForm } from '../components/forms/doctor-form';
-import './posts-page.css';
+import { DoctorForm } from '../../components/forms/doctor-form';
+import '../shared/content-page.scss';
 
 export function DoctorsEditPage() {
   const navigate = useNavigate();

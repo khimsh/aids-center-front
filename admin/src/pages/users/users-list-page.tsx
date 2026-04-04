@@ -2,19 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/use-auth';
-import { ConfirmModal } from '../components/ui/confirm-modal';
-import { extractApiErrorMessage } from '../lib/api-errors';
-import { isAdminRole, isEditorRole } from '../lib/permissions';
-import { queryKeys } from '../lib/query-keys';
+import { useAuth } from '../../auth/use-auth';
+import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { extractApiErrorMessage } from '../../lib/api-errors';
+import { isAdminRole, isEditorRole } from '../../lib/permissions';
+import { queryKeys } from '../../lib/query-keys';
 import {
   changeEditorPassword,
   deleteEditorUser,
   fetchUsers,
   getUserId,
   type UserRecord
-} from '../lib/users';
-import './posts-page.css';
+} from '../../lib/users';
+import '../shared/content-page.scss';
 
 export function UsersListPage() {
   const { user } = useAuth();

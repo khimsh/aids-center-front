@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { DoctorForm } from '../components/forms/doctor-form';
-import { fetchDoctors } from '../lib/doctors';
-import { queryKeys } from '../lib/query-keys';
-import './posts-page.css';
+import { DoctorForm } from '../../components/forms/doctor-form';
+import { fetchDoctors } from '../../lib/doctors';
+import { queryKeys } from '../../lib/query-keys';
+import '../shared/content-page.scss';
 
 export function DoctorsCreatePage() {
   const doctorsQuery = useQuery({

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { api } from '../lib/api';
-import './job-postings-page.css';
+import { api } from '../../lib/api';
+import './job-postings-page.scss';
 
 export function JobPostingCreatePage() {
   const [titleKa, setTitleKa] = useState('');

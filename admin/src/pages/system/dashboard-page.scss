@@ -1,31 +1,31 @@
 .dashboard-page {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-13);
 }
 
 .dashboard-section {
   display: grid;
-  gap: 0.8rem;
+  gap: var(--space-10);
 }
 
 .dashboard-section h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: var(--font-size-lg);
 }
 
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 0.9rem;
+  gap: var(--space-12);
 }
 
 .dashboard-card {
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  padding: 1rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-13);
   text-decoration: none;
   background: linear-gradient(160deg, #f8fffe 0%, #eefcf7 100%);
-  color: #0f172a;
+  color: var(--color-text);
   transition: transform 140ms ease, box-shadow 140ms ease;
 }
 
@@ -36,19 +36,19 @@
 
 .card-kicker {
   margin: 0;
-  color: #0f766e;
+  color: var(--color-accent);
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .card-value {
-  margin: 0.25rem 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 2rem;
   line-height: 1.1;
 }
 
 .card-note {
-  margin: 0.5rem 0 0;
-  color: #64748b;
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-soft);
 }

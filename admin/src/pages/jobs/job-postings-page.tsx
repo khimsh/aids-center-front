@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ConfirmModal } from '../components/ui/confirm-modal';
+import { ConfirmModal } from '../../components/ui/confirm-modal';
 import {
   deleteJobPosting,
   fetchJobPostingById,
@@ -11,9 +11,9 @@ import {
   type JobCard,
   type JobMutationInput,
   updateJobPosting
-} from '../lib/job-postings';
-import { queryKeys } from '../lib/query-keys';
-import './job-postings-page.css';
+} from '../../lib/job-postings';
+import { queryKeys } from '../../lib/query-keys';
+import './job-postings-page.scss';
 
 export function JobPostingsPage() {
   const queryClient = useQueryClient();

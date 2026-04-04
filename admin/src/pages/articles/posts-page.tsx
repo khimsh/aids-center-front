@@ -1,5 +1,5 @@
-import './posts-page.css';
-import { ArticleForm } from '../components/forms/article-form';
+import '../shared/content-page.scss';
+import { ArticleForm } from '../../components/forms/article-form';
 
 export function PostsPage() {
 

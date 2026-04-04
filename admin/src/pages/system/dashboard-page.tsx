@@ -2,13 +2,13 @@ import { useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useAuth } from '../auth/use-auth';
-import { api } from '../lib/api';
-import { fetchArticles, filterArticlesByUser } from '../lib/articles';
-import { isAdminRole, isEditorRole } from '../lib/permissions';
-import { queryKeys } from '../lib/query-keys';
-import { fetchUsers } from '../lib/users';
-import './dashboard-page.css';
+import { useAuth } from '../../auth/use-auth';
+import { api } from '../../lib/api';
+import { fetchArticles, filterArticlesByUser } from '../../lib/articles';
+import { isAdminRole, isEditorRole } from '../../lib/permissions';
+import { queryKeys } from '../../lib/query-keys';
+import { fetchUsers } from '../../lib/users';
+import './dashboard-page.scss';
 
 export function DashboardPage() {
   const { user } = useAuth();

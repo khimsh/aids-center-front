@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/use-auth';
-import styles from './admin-layout.module.css';
+import styles from './admin-layout.module.scss';
 
 export function AdminLayout() {
   const { user, logout } = useAuth();
