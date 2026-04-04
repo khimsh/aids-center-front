@@ -4,26 +4,135 @@
 }
 
 .menuLink {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: block;
   text-decoration: none;
   padding: var(--space-5) var(--space-8);
   border-radius: var(--radius-sm);
-  color: var(--color-text-secondary);
+  border: var(--border-width) solid transparent;
+  color: var(--color-text-inverse);
   cursor: pointer;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  transform: translateY(0);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 220ms ease,
+    color 180ms ease,
+    transform 220ms ease;
+}
+
+.menuLink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08));
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  transition: transform 280ms cubic-bezier(.2, .8, .2, 1), opacity 220ms ease;
+  z-index: -1;
+}
+
+.menuLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-50%);
+  transition: height 280ms cubic-bezier(.2, .8, .2, 1), opacity 180ms ease;
+  opacity: 0;
+}
+
+.menuLink:hover {
+  background: color-mix(in srgb, var(--color-text-inverse) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-text-inverse) 22%, transparent);
+  transform: translateY(-1px);
+}
+
+.menuLink:hover::before {
+  transform: scaleX(1);
+  opacity: 0.9;
 }
 
 .menuLinkActive {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-text-inverse) 22%, transparent);
+  border: var(--border-width) solid color-mix(in srgb, var(--color-text-inverse) 38%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+  color: var(--color-text-inverse);
   font-weight: var(--font-weight-semibold);
+  backdrop-filter: blur(10px) saturate(130%);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  transform: translateY(-1px);
+  animation: tabActivate 280ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.menuLinkActive::before {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.menuLinkActive::after {
+  height: 68%;
+  opacity: 1;
 }
 
 .sectionTitle {
   margin: var(--space-10) 0 var(--space-1);
-  font-size: 0.78rem;
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-text-soft);
+  color: var(--color-text-inverse);
+}
+
+.pageTransition {
+  animation: pageEnter 280ms cubic-bezier(.2, .8, .2, 1);
+  transform-origin: top center;
+}
+
+@keyframes tabActivate {
+  from {
+    transform: translateY(0) scale(0.985);
+    box-shadow: 0 0 0 rgba(15, 23, 42, 0);
+  }
+
+  to {
+    transform: translateY(-1px) scale(1);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+  }
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+    filter: blur(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menuLink,
+  .menuLink::before,
+  .menuLink::after,
+  .menuLinkActive,
+  .pageTransition {
+    transition: none;
+    animation: none;
+  }
 }

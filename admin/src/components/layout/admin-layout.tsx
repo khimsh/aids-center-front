@@ -51,7 +51,9 @@ export function AdminLayout() {
         </header>
 
         <section className="panel">
-          <Outlet />
+          <div key={location.pathname} className={styles.pageTransition}>
+            <Outlet />
+          </div>
         </section>
       </main>
     </div>

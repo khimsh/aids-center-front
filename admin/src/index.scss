@@ -27,10 +27,10 @@
   --space-14: 1.2rem;
   --space-15: 1.5rem;
 
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 14px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
   --radius-2xl: 16px;
 
   --border-width: 1px;
@@ -41,10 +41,10 @@
   --color-text-secondary: #374151;
   --color-text-inverse: #ffffff;
 
-  --color-bg-app: #f3f4f6;
-  --color-bg-card: #ffffff;
-  --color-bg-card-soft: #f9fafb;
-  --color-bg-sidebar: #ffffffd9;
+  --color-bg-app: oklch(97% 0.003 264);
+  --color-bg-card: oklch(100% 0.00011 271.152);
+  --color-bg-card-soft: oklch(98% 0.1 245);
+  --color-bg-sidebar: oklch(52.371% 0.12598 262.988);
 
   --color-accent: #0f766e;
   --color-accent-soft: #e6fffb;
@@ -188,9 +188,7 @@ label {
 
 .sidebar {
   padding: var(--space-13);
-  border-right: var(--border-width) solid var(--color-border);
-  background: var(--color-bg-sidebar);
-  backdrop-filter: blur(5px);
+  background: linear-gradient(to right, var(--color-bg-sidebar) 0%, var(--color-bg-sidebar) 100%);
 }
 
 .brand {
