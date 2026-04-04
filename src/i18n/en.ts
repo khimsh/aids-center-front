@@ -41,7 +41,8 @@ export const en = {
   },
 
   hero: {
-    title: 'T. Tsertsvadze Scientific-Practical Center for Infectious Diseases, AIDS and Clinical Immunology',
+    title:
+      'T. Tsertsvadze Scientific-Practical Center for Infectious Diseases, AIDS and Clinical Immunology',
     description: 'Our center offers modern medical services and support for managing Hepatitis B.',
     address: 'Address: 70 Lubliana Street, Tbilisi, Georgia',
     contactUs: 'Contact Us',
@@ -80,9 +81,11 @@ export const en = {
 
   aboutUs: {
     title: 'About the Center',
-    heading: 'Georgia\'s national center for infectious diseases',
-    description: 'The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia\'s primary institution for the diagnosis, treatment, and research of infectious diseases. We deliver nine state healthcare programs and serve patients from across the country and region.',  
-    highlight: 'The only center in the Caucasus region equipped with the Mindray Resona R9 — an AI-powered expert-class diagnostic ultrasound system.',
+    heading: "Georgia's national center for infectious diseases",
+    description:
+      "The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia's primary institution for the diagnosis, treatment, and research of infectious diseases. We deliver nine state healthcare programs and serve patients from across the country and region.",
+    highlight:
+      'The only center in the Caucasus region equipped with the Mindray Resona R9 — an AI-powered expert-class diagnostic ultrasound system.',
     linkText: 'Learn more about our center',
   },
 
@@ -99,15 +102,18 @@ export const en = {
     linkText: 'All Programs',
     hivAids: 'HIV / AIDS',
     hivAidsTitle: 'Free Anonymous HIV Testing & Consultation',
-    hivAidsDescription: 'Confidential testing for HIV infection with same-day results. Available to anyone regardless of risk level. No referral needed.',
+    hivAidsDescription:
+      'Confidential testing for HIV infection with same-day results. Available to anyone regardless of risk level. No referral needed.',
     hivAidsCta: 'Learn more & book',
     hepatitisB: 'Hepatitis B',
     hepatitisBTitle: 'Free Hepatitis B Diagnosis & Treatment Program',
-    hepatitisBDescription: 'State-funded diagnosis and treatment for Hepatitis B, available to all Georgian citizens. Includes full diagnostic workup.',
+    hepatitisBDescription:
+      'State-funded diagnosis and treatment for Hepatitis B, available to all Georgian citizens. Includes full diagnostic workup.',
     hepatitisBCta: 'Check eligibility',
     prevention: 'Prevention',
     preventionTitle: 'PrEP Prophylaxis — HIV Prevention Program',
-    preventionDescription: 'Pre-exposure prophylaxis for individuals at high risk of HIV infection. Provided free of charge through the state healthcare program.',
+    preventionDescription:
+      'Pre-exposure prophylaxis for individuals at high risk of HIV infection. Provided free of charge through the state healthcare program.',
     preventionCta: 'Find out more',
   },
 
@@ -136,4 +142,4 @@ export const en = {
     emergency: 'Emergency: (+995) 595 395 566',
     email: 'Email: aids@aidscenter.ge',
   },
-}
+};

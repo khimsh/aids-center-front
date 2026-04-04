@@ -27,11 +27,11 @@ export function LoginPage() {
           error: isInvalidCredentials
             ? 'Invalid credentials. Please try again.'
             : 'Login failed. Please try again.',
-          success: false
+          success: false,
         };
       }
     },
-    { error: null, success: false }
+    { error: null, success: false },
   );
 
   useEffect(() => {
@@ -50,22 +50,12 @@ export function LoginPage() {
 
         <label>
           მომხმარებლის სახელი ან ელ.ფოსტა
-          <Input
-            type="text"
-            name="username"
-            required
-            autoComplete="username"
-          />
+          <Input type="text" name="username" required autoComplete="username" />
         </label>
 
         <label>
           პაროლი
-          <Input
-            type="password"
-            name="password"
-            required
-            autoComplete="current-password"
-          />
+          <Input type="password" name="password" required autoComplete="current-password" />
         </label>
 
         {state.error ? <p className="error">{state.error}</p> : null}

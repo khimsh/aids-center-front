@@ -1,10 +1,7 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import ArticlesArchive from "../../../components/content/ArticlesArchive.astro";
-import {
-    fetchPublishedArticlesPage,
-    getArticlesApiBase,
-} from "../../../lib/articles-api";
+import Layout from '../../../layouts/Layout.astro';
+import ArticlesArchive from '../../../components/content/ArticlesArchive.astro';
+import { fetchPublishedArticlesPage, getArticlesApiBase } from '../../../lib/articles-api';
 
 const apiBase = getArticlesApiBase();
 const perPage = 9;
@@ -13,11 +10,11 @@ const totalPages = Math.max(1, Math.ceil(result.total / perPage));
 ---
 
 <Layout>
-    <ArticlesArchive
-        lang="en"
-        apiBase={apiBase}
-        articles={result.items}
-        currentPage={1}
-        totalPages={totalPages}
-    />
+  <ArticlesArchive
+    lang="en"
+    apiBase={apiBase}
+    articles={result.items}
+    currentPage={1}
+    totalPages={totalPages}
+  />
 </Layout>

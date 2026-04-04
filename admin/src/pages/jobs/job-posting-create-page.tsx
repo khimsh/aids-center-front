@@ -46,12 +46,14 @@ export function JobPostingCreatePage() {
         department_en: departmentEn.trim() || null,
         deadline: deadline ? new Date(deadline).toISOString() : null,
         published: status === 'published',
-        published_at: status === 'published' ? new Date().toISOString() : null
+        published_at: status === 'published' ? new Date().toISOString() : null,
       };
 
       await api.post('/api/job-postings', payload);
       setError(null);
-      toast.success(status === 'published' ? 'ვაკანსია წარმატებით გამოქვეყნდა.' : 'ვაკანსია დრაფტად შეინახა.');
+      toast.success(
+        status === 'published' ? 'ვაკანსია წარმატებით გამოქვეყნდა.' : 'ვაკანსია დრაფტად შეინახა.',
+      );
       clearForm();
     } catch {
       const message = 'ვაკანსიის შენახვა ვერ მოხერხდა. შეამოწმეთ ველები და ავტორიზაცია.';
@@ -68,7 +70,9 @@ export function JobPostingCreatePage() {
         <h1>ახალი ვაკანსიის დამატება</h1>
         <p className="hint">შეავსეთ ფორმა და შეინახეთ დრაფტად ან გამოაქვეყნეთ.</p>
         <div className="jobs-actions">
-          <ButtonLink to="/job-postings/list" variant="secondary">ვაკანსიების სია</ButtonLink>
+          <ButtonLink to="/job-postings/list" variant="secondary">
+            ვაკანსიების სია
+          </ButtonLink>
         </div>
       </div>
 
@@ -100,24 +104,41 @@ export function JobPostingCreatePage() {
         <div className="field-row">
           <label>
             აღწერა (KA)
-            <textarea value={descriptionKa} onChange={(event) => setDescriptionKa(event.target.value)} rows={4} />
+            <textarea
+              value={descriptionKa}
+              onChange={(event) => setDescriptionKa(event.target.value)}
+              rows={4}
+            />
           </label>
 
           <label>
             აღწერა (EN)
-            <textarea value={descriptionEn} onChange={(event) => setDescriptionEn(event.target.value)} rows={4} />
+            <textarea
+              value={descriptionEn}
+              onChange={(event) => setDescriptionEn(event.target.value)}
+              rows={4}
+            />
           </label>
         </div>
 
         <label className="field-single">
           ვადა
-          <Input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
+          <Input
+            type="date"
+            value={deadline}
+            onChange={(event) => setDeadline(event.target.value)}
+          />
         </label>
 
         {error ? <p className="error">{error}</p> : null}
 
         <div className="jobs-actions">
-          <Button type="button" variant="secondary" onClick={() => void createJob('draft')} disabled={saving}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => void createJob('draft')}
+            disabled={saving}
+          >
             დრაფტად შენახვა
           </Button>
           <Button type="button" onClick={() => void createJob('published')} disabled={saving}>

@@ -11,6 +11,8 @@
     "build": "astro build",
     "test": "vitest",
     "test:run": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs",
     "astro": "astro"
@@ -22,6 +24,8 @@
     "astro-icon": "^1.1.5"
   },
   "devDependencies": {
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.98.0",
     "vitest": "^4.1.2"
   }

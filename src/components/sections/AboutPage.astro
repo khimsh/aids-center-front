@@ -1,409 +1,407 @@
 ---
-type Lang = "ka" | "en";
+type Lang = 'ka' | 'en';
 
 interface TimelineItem {
-    year: string;
-    title: string;
+  year: string;
+  title: string;
 }
 
-const lang = (Astro.currentLocale ?? "ka") as Lang;
-const newsUrl = lang === "ka" ? "/news" : "/en/news";
-const doctorsUrl = lang === "ka" ? "/doctors" : "/en/doctors";
+const lang = (Astro.currentLocale ?? 'ka') as Lang;
+const newsUrl = lang === 'ka' ? '/news' : '/en/news';
+const doctorsUrl = lang === 'ka' ? '/doctors' : '/en/doctors';
 
 const content = {
-    en: {
-        heroTitle:
-            "Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center",
-        heroSubtitle:
-            "Georgia's national center for infectious diseases since 1989",
-        pageTitle: "About the Center",
-        missionTitle: "Mission",
-        missionText:
-            "The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia's national reference institution for the diagnosis, treatment, and research of infectious diseases. Affiliated with the Department of Public Health of the Ministry of Labour, Health and Social Affairs of Georgia, the Center serves the entire population through its main facility in Tbilisi and branch offices across Georgia's regions and districts. The Center delivers nine state-funded healthcare programs, providing free diagnosis and treatment for HIV/AIDS, Hepatitis B and C, and infectious diseases to eligible Georgian citizens. It is the primary institution responsible for coordinating Georgia's national response to the HIV/AIDS epidemic and played a leading role in launching the world's first national Hepatitis C elimination program in 2015.",
-        inMemoriamTitle: "In memoriam: Professor Tengiz Tsertsvadze",
-        inMemoriamText:
-            "The Center bears the name of its founder and long-serving director, Professor Tengiz Tsertsvadze, who passed away on August 1, 2024, at the age of 76. A renowned Georgian immunologist and founder of Georgia's HIV/AIDS service, he led the Center from its establishment for more than 35 years and made major contributions to HIV/AIDS and viral hepatitis care and research. He served as a full professor at Tbilisi State University and was a member of leading international scientific societies, including IDSA, ESCMID, EASL, and the New York Academy of Sciences. His honors include the Georgian National Award in Medicine, the US CRDF award, the Queen Victoria commemorative medal, and the Ivane Javakhishvili Medal. Under his leadership, the Center received the WHO Dr Lee Jong-wook Memorial Prize in 2009. The Center continues his work and mission with the same commitment to public health.",
-        historyTitle: "History Timeline",
-        keyFactsTitle: "Key Facts",
-        facts: [
-            "Founded in 1989",
-            "35+ years of service",
-            "Ministry affiliated",
-            "National reference center",
-        ],
-        fieldsTitle: "Conditions Treated",
-        fields: [
-            "HIV/AIDS",
-            "Viral Hepatitis B & C",
-            "Herpes Infections",
-            "Infectious Diseases in Immunocompromised Patients",
-            "Congenital Infections",
-            "Pathologies in Pregnancy",
-            "Immunodeficiencies",
-            "Autoimmune Diseases",
-        ],
-        branchesTitle: "Branch Offices",
-        branchesText:
-            "In addition to its main campus in Tbilisi, the Center operates through district and regional branch offices to ensure broader access to diagnostics, treatment, and long-term follow-up services across Georgia. Specific branch location details can be published here once confirmed by the Center.",
-        sectionNavTitle: "In This Section",
-        sectionLinks: [
-            { label: "Our Doctors", href: doctorsUrl },
-            { label: "Vacancies", href: "#" },
-            { label: "News & Announcements", href: newsUrl },
-        ],
-        timeline: [
-            {
-                year: "1989",
-                title: "Center established at the Hospital of Infectious Diseases, Tbilisi",
-            },
-            { year: "1995", title: "PCR diagnostic capability" },
-            { year: "1999", title: "HIV and HCV genotyping" },
-            { year: "2004", title: "HIV genotypic resistance testing" },
-            { year: "2009", title: "WHO Dr Lee Jong-wook Memorial Prize" },
-            {
-                year: "2015",
-                title: "World's first national Hepatitis C elimination program launched",
-            },
-            {
-                year: "2024",
-                title: "Center renamed in honor of Professor Tengiz Tsertsvadze",
-            },
-            {
-                year: "2025",
-                title: "Mindray Resona R9 acquired - only AI-powered expert ultrasound in the Caucasus",
-            },
-        ] as TimelineItem[],
-    },
-    ka: {
-        heroTitle:
-            "თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრი",
-        heroSubtitle:
-            "საქართველოს ეროვნული ინფექციური დაავადებების ცენტრი 1989 წლიდან",
-        pageTitle: "ცენტრის შესახებ",
-        missionTitle: "მისია",
-        missionText:
-            "თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრი საქართველოს ეროვნული რეფერენს დაწესებულებაა ინფექციური დაავადებების დიაგნოსტიკის, მკურნალობისა და კვლევის მიმართულებით. ცენტრი არის საქართველოს შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს საზოგადოებრივი ჯანმრთელობის დეპარტამენტთან აფილირებული და მომსახურებას აწვდის ქვეყნის მთელ მოსახლეობას თბილისის მთავარ ბაზასა და რეგიონულ თუ რაიონულ ფილიალებში. ცენტრი ახორციელებს ცხრა სახელმწიფო დაფინანსებულ პროგრამას და უზრუნველყოფს აივ/შიდსის, B და C ჰეპატიტის და სხვა ინფექციური დაავადებების უფასო დიაგნოსტიკასა და მკურნალობას შესაბამისი ბენეფიციარებისთვის. ცენტრი წარმოადგენს აივ/შიდსის ეპიდემიაზე საქართველოს ეროვნული პასუხის კოორდინაციის მთავარ დაწესებულებას და წამყვანი როლი ითამაშა მსოფლიოში პირველი ეროვნული C ჰეპატიტის ელიმინაციის პროგრამის დაწყებაში 2015 წელს.",
-        inMemoriamTitle: "ხსოვნისადმი: პროფესორი თენგიზ ცერცვაძე",
-        inMemoriamText:
-            "ცენტრს მისი დამფუძნებლისა და მრავალი წლის დირექტორის, პროფესორ თენგიზ ცერცვაძის სახელი ჰქვია. იგი 2024 წლის 1 აგვისტოს, 76 წლის ასაკში გარდაიცვალა. პროფესორი ცერცვაძე იყო ცნობილი ქართველი იმუნოლოგი, აივ/შიდსის ეროვნული სამსახურის დამფუძნებელი და ვირუსული ჰეპატიტების წინააღმდეგ ბრძოლის ერთ-ერთი მთავარი ლიდერი საქართველოში. მან ცენტრს დაარსებიდან 35 წელზე მეტი ხნის განმავლობაში უხელმძღვანელა. იგი იყო თბილისის სახელმწიფო უნივერსიტეტის პროფესორი და მრავალი საერთაშორისო სამეცნიერო ასოციაციის წევრი, მათ შორის IDSA, ESCMID, EASL და ნიუ-იორკის მეცნიერებათა აკადემია. მიღებული ჰქონდა არაერთი მაღალი ჯილდო, ხოლო მისი ხელმძღვანელობით ცენტრმა 2009 წელს მიიღო ჯანმოს Dr Lee Jong-wook Memorial Prize. ცენტრი დღესაც აგრძელებს მის საქმეს და მის მიერ დაწყებულ ეროვნულ მისიას.",
-        historyTitle: "ისტორიული ქრონოლოგია",
-        keyFactsTitle: "მთავარი ფაქტები",
-        facts: [
-            "დაარსდა 1989 წელს",
-            "35+ წლიანი გამოცდილება",
-            "სამინისტროსთან აფილირებული",
-            "ეროვნული რეფერენს ცენტრი",
-        ],
-        fieldsTitle: "მკურნალობის მიმართულებები",
-        fields: [
-            "აივ/შიდსი",
-            "ვირუსული ჰეპატიტი B და C",
-            "ჰერპესული ინფექციები",
-            "ინფექციური დაავადებები იმუნოკომპრომეტირებულ პაციენტებში",
-            "თანდაყოლილი ინფექციები",
-            "ორსულობის პათოლოგიები",
-            "იმუნოდეფიციტური მდგომარეობები",
-            "აუტოიმუნური დაავადებები",
-        ],
-        branchesTitle: "ფილიალები",
-        branchesText:
-            "თბილისის მთავარი ცენტრის გარდა, დაწესებულება მუშაობს რაიონულ და რეგიონულ ფილიალებთან ერთად, რათა მოსახლეობას საქართველოს მასშტაბით მისაწვდომი ჰქონდეს დიაგნოსტიკა, მკურნალობა და ხანგრძლივი მეთვალყურეობა. დეტალური მისამართები გამოქვეყნდება ცენტრთან საბოლოო დაზუსტების შემდეგ.",
-        sectionNavTitle: "ამ სექციაში",
-        sectionLinks: [
-            { label: "ჩვენი ექიმები", href: doctorsUrl },
-            { label: "ვაკანსიები", href: "#" },
-            { label: "სიახლეები და განცხადებები", href: newsUrl },
-        ],
-        timeline: [
-            {
-                year: "1989",
-                title: "ცენტრი დაფუძნდა თბილისის ინფექციური საავადმყოფოს ბაზაზე",
-            },
-            { year: "1995", title: "PCR დიაგნოსტიკური შესაძლებლობა" },
-            { year: "1999", title: "აივ და HCV გენოტიპირება" },
-            {
-                year: "2004",
-                title: "აივ-ის გენოტიპური რეზისტენტობის ტესტირება",
-            },
-            { year: "2009", title: "ჯანმოს Dr Lee Jong-wook Memorial Prize" },
-            {
-                year: "2015",
-                title: "მსოფლიოში პირველი ეროვნული C ჰეპატიტის ელიმინაციის პროგრამა",
-            },
-            {
-                year: "2024",
-                title: "ცენტრს პროფესორ თენგიზ ცერცვაძის სახელი მიენიჭა",
-            },
-            {
-                year: "2025",
-                title: "შეძენილია Mindray Resona R9 - კავკასიაში ერთადერთი AI ექსპერტ-კლასის ულტრაბგერა",
-            },
-        ] as TimelineItem[],
-    },
+  en: {
+    heroTitle:
+      'Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center',
+    heroSubtitle: "Georgia's national center for infectious diseases since 1989",
+    pageTitle: 'About the Center',
+    missionTitle: 'Mission',
+    missionText:
+      "The Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is Georgia's national reference institution for the diagnosis, treatment, and research of infectious diseases. Affiliated with the Department of Public Health of the Ministry of Labour, Health and Social Affairs of Georgia, the Center serves the entire population through its main facility in Tbilisi and branch offices across Georgia's regions and districts. The Center delivers nine state-funded healthcare programs, providing free diagnosis and treatment for HIV/AIDS, Hepatitis B and C, and infectious diseases to eligible Georgian citizens. It is the primary institution responsible for coordinating Georgia's national response to the HIV/AIDS epidemic and played a leading role in launching the world's first national Hepatitis C elimination program in 2015.",
+    inMemoriamTitle: 'In memoriam: Professor Tengiz Tsertsvadze',
+    inMemoriamText:
+      "The Center bears the name of its founder and long-serving director, Professor Tengiz Tsertsvadze, who passed away on August 1, 2024, at the age of 76. A renowned Georgian immunologist and founder of Georgia's HIV/AIDS service, he led the Center from its establishment for more than 35 years and made major contributions to HIV/AIDS and viral hepatitis care and research. He served as a full professor at Tbilisi State University and was a member of leading international scientific societies, including IDSA, ESCMID, EASL, and the New York Academy of Sciences. His honors include the Georgian National Award in Medicine, the US CRDF award, the Queen Victoria commemorative medal, and the Ivane Javakhishvili Medal. Under his leadership, the Center received the WHO Dr Lee Jong-wook Memorial Prize in 2009. The Center continues his work and mission with the same commitment to public health.",
+    historyTitle: 'History Timeline',
+    keyFactsTitle: 'Key Facts',
+    facts: [
+      'Founded in 1989',
+      '35+ years of service',
+      'Ministry affiliated',
+      'National reference center',
+    ],
+    fieldsTitle: 'Conditions Treated',
+    fields: [
+      'HIV/AIDS',
+      'Viral Hepatitis B & C',
+      'Herpes Infections',
+      'Infectious Diseases in Immunocompromised Patients',
+      'Congenital Infections',
+      'Pathologies in Pregnancy',
+      'Immunodeficiencies',
+      'Autoimmune Diseases',
+    ],
+    branchesTitle: 'Branch Offices',
+    branchesText:
+      'In addition to its main campus in Tbilisi, the Center operates through district and regional branch offices to ensure broader access to diagnostics, treatment, and long-term follow-up services across Georgia. Specific branch location details can be published here once confirmed by the Center.',
+    sectionNavTitle: 'In This Section',
+    sectionLinks: [
+      { label: 'Our Doctors', href: doctorsUrl },
+      { label: 'Vacancies', href: '#' },
+      { label: 'News & Announcements', href: newsUrl },
+    ],
+    timeline: [
+      {
+        year: '1989',
+        title: 'Center established at the Hospital of Infectious Diseases, Tbilisi',
+      },
+      { year: '1995', title: 'PCR diagnostic capability' },
+      { year: '1999', title: 'HIV and HCV genotyping' },
+      { year: '2004', title: 'HIV genotypic resistance testing' },
+      { year: '2009', title: 'WHO Dr Lee Jong-wook Memorial Prize' },
+      {
+        year: '2015',
+        title: "World's first national Hepatitis C elimination program launched",
+      },
+      {
+        year: '2024',
+        title: 'Center renamed in honor of Professor Tengiz Tsertsvadze',
+      },
+      {
+        year: '2025',
+        title: 'Mindray Resona R9 acquired - only AI-powered expert ultrasound in the Caucasus',
+      },
+    ] as TimelineItem[],
+  },
+  ka: {
+    heroTitle:
+      'თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრი',
+    heroSubtitle: 'საქართველოს ეროვნული ინფექციური დაავადებების ცენტრი 1989 წლიდან',
+    pageTitle: 'ცენტრის შესახებ',
+    missionTitle: 'მისია',
+    missionText:
+      'თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრი საქართველოს ეროვნული რეფერენს დაწესებულებაა ინფექციური დაავადებების დიაგნოსტიკის, მკურნალობისა და კვლევის მიმართულებით. ცენტრი არის საქართველოს შრომის, ჯანმრთელობისა და სოციალური დაცვის სამინისტროს საზოგადოებრივი ჯანმრთელობის დეპარტამენტთან აფილირებული და მომსახურებას აწვდის ქვეყნის მთელ მოსახლეობას თბილისის მთავარ ბაზასა და რეგიონულ თუ რაიონულ ფილიალებში. ცენტრი ახორციელებს ცხრა სახელმწიფო დაფინანსებულ პროგრამას და უზრუნველყოფს აივ/შიდსის, B და C ჰეპატიტის და სხვა ინფექციური დაავადებების უფასო დიაგნოსტიკასა და მკურნალობას შესაბამისი ბენეფიციარებისთვის. ცენტრი წარმოადგენს აივ/შიდსის ეპიდემიაზე საქართველოს ეროვნული პასუხის კოორდინაციის მთავარ დაწესებულებას და წამყვანი როლი ითამაშა მსოფლიოში პირველი ეროვნული C ჰეპატიტის ელიმინაციის პროგრამის დაწყებაში 2015 წელს.',
+    inMemoriamTitle: 'ხსოვნისადმი: პროფესორი თენგიზ ცერცვაძე',
+    inMemoriamText:
+      'ცენტრს მისი დამფუძნებლისა და მრავალი წლის დირექტორის, პროფესორ თენგიზ ცერცვაძის სახელი ჰქვია. იგი 2024 წლის 1 აგვისტოს, 76 წლის ასაკში გარდაიცვალა. პროფესორი ცერცვაძე იყო ცნობილი ქართველი იმუნოლოგი, აივ/შიდსის ეროვნული სამსახურის დამფუძნებელი და ვირუსული ჰეპატიტების წინააღმდეგ ბრძოლის ერთ-ერთი მთავარი ლიდერი საქართველოში. მან ცენტრს დაარსებიდან 35 წელზე მეტი ხნის განმავლობაში უხელმძღვანელა. იგი იყო თბილისის სახელმწიფო უნივერსიტეტის პროფესორი და მრავალი საერთაშორისო სამეცნიერო ასოციაციის წევრი, მათ შორის IDSA, ESCMID, EASL და ნიუ-იორკის მეცნიერებათა აკადემია. მიღებული ჰქონდა არაერთი მაღალი ჯილდო, ხოლო მისი ხელმძღვანელობით ცენტრმა 2009 წელს მიიღო ჯანმოს Dr Lee Jong-wook Memorial Prize. ცენტრი დღესაც აგრძელებს მის საქმეს და მის მიერ დაწყებულ ეროვნულ მისიას.',
+    historyTitle: 'ისტორიული ქრონოლოგია',
+    keyFactsTitle: 'მთავარი ფაქტები',
+    facts: [
+      'დაარსდა 1989 წელს',
+      '35+ წლიანი გამოცდილება',
+      'სამინისტროსთან აფილირებული',
+      'ეროვნული რეფერენს ცენტრი',
+    ],
+    fieldsTitle: 'მკურნალობის მიმართულებები',
+    fields: [
+      'აივ/შიდსი',
+      'ვირუსული ჰეპატიტი B და C',
+      'ჰერპესული ინფექციები',
+      'ინფექციური დაავადებები იმუნოკომპრომეტირებულ პაციენტებში',
+      'თანდაყოლილი ინფექციები',
+      'ორსულობის პათოლოგიები',
+      'იმუნოდეფიციტური მდგომარეობები',
+      'აუტოიმუნური დაავადებები',
+    ],
+    branchesTitle: 'ფილიალები',
+    branchesText:
+      'თბილისის მთავარი ცენტრის გარდა, დაწესებულება მუშაობს რაიონულ და რეგიონულ ფილიალებთან ერთად, რათა მოსახლეობას საქართველოს მასშტაბით მისაწვდომი ჰქონდეს დიაგნოსტიკა, მკურნალობა და ხანგრძლივი მეთვალყურეობა. დეტალური მისამართები გამოქვეყნდება ცენტრთან საბოლოო დაზუსტების შემდეგ.',
+    sectionNavTitle: 'ამ სექციაში',
+    sectionLinks: [
+      { label: 'ჩვენი ექიმები', href: doctorsUrl },
+      { label: 'ვაკანსიები', href: '#' },
+      { label: 'სიახლეები და განცხადებები', href: newsUrl },
+    ],
+    timeline: [
+      {
+        year: '1989',
+        title: 'ცენტრი დაფუძნდა თბილისის ინფექციური საავადმყოფოს ბაზაზე',
+      },
+      { year: '1995', title: 'PCR დიაგნოსტიკური შესაძლებლობა' },
+      { year: '1999', title: 'აივ და HCV გენოტიპირება' },
+      {
+        year: '2004',
+        title: 'აივ-ის გენოტიპური რეზისტენტობის ტესტირება',
+      },
+      { year: '2009', title: 'ჯანმოს Dr Lee Jong-wook Memorial Prize' },
+      {
+        year: '2015',
+        title: 'მსოფლიოში პირველი ეროვნული C ჰეპატიტის ელიმინაციის პროგრამა',
+      },
+      {
+        year: '2024',
+        title: 'ცენტრს პროფესორ თენგიზ ცერცვაძის სახელი მიენიჭა',
+      },
+      {
+        year: '2025',
+        title: 'შეძენილია Mindray Resona R9 - კავკასიაში ერთადერთი AI ექსპერტ-კლასის ულტრაბგერა',
+      },
+    ] as TimelineItem[],
+  },
 } as const;
 
 const c = content[lang];
 ---
 
 <section class="about-page content-grid">
-    <div class="hero">
-        <p class="section-label">{c.pageTitle}</p>
-        <h1>{c.heroTitle}</h1>
-        <p class="hero-subtitle">{c.heroSubtitle}</p>
-    </div>
+  <div class="hero">
+    <p class="section-label">{c.pageTitle}</p>
+    <h1>{c.heroTitle}</h1>
+    <p class="hero-subtitle">{c.heroSubtitle}</p>
+  </div>
 
-    <div class="surface mission">
-        <h2>{c.missionTitle}</h2>
-        <p>{c.missionText}</p>
-    </div>
+  <div class="surface mission">
+    <h2>{c.missionTitle}</h2>
+    <p>{c.missionText}</p>
+  </div>
 
-    <div class="facts-strip" role="list" aria-label={c.keyFactsTitle}>
+  <div class="facts-strip" role="list" aria-label={c.keyFactsTitle}>
+    {
+      c.facts.map((fact) => (
+        <div class="fact-item" role="listitem">
+          {fact}
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="surface">
+    <h2>{c.historyTitle}</h2>
+    <div class="timeline" role="list" aria-label={c.historyTitle}>
+      {
+        c.timeline.map((item) => (
+          <article class="timeline-item" role="listitem">
+            <div class="year">{item.year}</div>
+            <p>{item.title}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="surface">
+    <h2>{c.fieldsTitle}</h2>
+    <div class="conditions-grid">
+      {c.fields.map((field) => <div class="condition-card">{field}</div>)}
+    </div>
+  </div>
+
+  <div class="surface two-col">
+    <div>
+      <h2>{c.branchesTitle}</h2>
+      <p>{c.branchesText}</p>
+    </div>
+    <aside class="in-section">
+      <h3>{c.sectionNavTitle}</h3>
+      <ul>
         {
-            c.facts.map((fact) => (
-                <div class="fact-item" role="listitem">
-                    {fact}
-                </div>
-            ))
+          c.sectionLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
         }
-    </div>
+      </ul>
+    </aside>
+  </div>
 
-    <div class="surface">
-        <h2>{c.historyTitle}</h2>
-        <div class="timeline" role="list" aria-label={c.historyTitle}>
-            {
-                c.timeline.map((item) => (
-                    <article class="timeline-item" role="listitem">
-                        <div class="year">{item.year}</div>
-                        <p>{item.title}</p>
-                    </article>
-                ))
-            }
-        </div>
-    </div>
-
-    <div class="surface">
-        <h2>{c.fieldsTitle}</h2>
-        <div class="conditions-grid">
-            {c.fields.map((field) => <div class="condition-card">{field}</div>)}
-        </div>
-    </div>
-
-    <div class="surface two-col">
-        <div>
-            <h2>{c.branchesTitle}</h2>
-            <p>{c.branchesText}</p>
-        </div>
-        <aside class="in-section">
-            <h3>{c.sectionNavTitle}</h3>
-            <ul>
-                {
-                    c.sectionLinks.map((link) => (
-                        <li>
-                            <a href={link.href}>{link.label}</a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </aside>
-    </div>
-
-    <div class="surface memorial">
-        <h2>{c.inMemoriamTitle}</h2>
-        <p>{c.inMemoriamText}</p>
-    </div>
+  <div class="surface memorial">
+    <h2>{c.inMemoriamTitle}</h2>
+    <p>{c.inMemoriamText}</p>
+  </div>
 </section>
 
 <style>
-    .about-page {
-        padding-block: 4rem 5rem;
-        display: grid;
-        gap: 1.5rem;
+  .about-page {
+    padding-block: 4rem 5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #002f66 0%, #0452a3 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    color: #f3f7ff;
+
+    h1 {
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .hero-subtitle {
+    color: #d8e6ff;
+    font-size: 1.05rem;
+  }
+
+  .surface {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 24px rgba(3, 68, 133, 0.08);
+
+    h2 {
+      margin-bottom: 0.85rem;
+      font-size: 1.35rem;
+      color: #02386f;
     }
 
-    .hero {
-        background: linear-gradient(135deg, #002f66 0%, #0452a3 100%);
-        border-radius: 16px;
-        padding: 2rem;
-        color: #f3f7ff;
+    p {
+      line-height: 1.7;
+      color: #223549;
+    }
+  }
 
-        h1 {
-            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
-            line-height: 1.25;
-            margin-bottom: 0.75rem;
-        }
+  .facts-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .fact-item {
+    background: #0a3f79;
+    color: #eef4ff;
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .timeline {
+    display: grid;
+    gap: 0.75rem;
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 4.45rem;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    width: 2px;
+    background: #c7dbf3;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+
+    p {
+      margin-top: 0.2rem;
+    }
+  }
+
+  .year {
+    background: #0b4d95;
+    color: #fff;
+    border-radius: 999px;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.35rem 0.75rem;
+    width: fit-content;
+    min-width: 4.5rem;
+    z-index: 1;
+  }
+
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .condition-card {
+    border: 1px solid #d8e4f2;
+    border-radius: 10px;
+    padding: 0.85rem;
+    background: #f9fbff;
+    font-weight: 500;
+    color: #123a63;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .in-section {
+    background: #f3f8ff;
+    border: 1px solid #d6e4f5;
+    border-radius: 12px;
+    padding: 1rem;
+
+    h3 {
+      margin-bottom: 0.65rem;
+      color: #034485;
     }
 
-    .hero-subtitle {
-        color: #d8e6ff;
-        font-size: 1.05rem;
+    ul {
+      display: grid;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0;
     }
 
-    .surface {
-        background: #fff;
-        border-radius: 14px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 24px rgba(3, 68, 133, 0.08);
-
-        h2 {
-            margin-bottom: 0.85rem;
-            font-size: 1.35rem;
-            color: #02386f;
-        }
-
-        p {
-            line-height: 1.7;
-            color: #223549;
-        }
+    a {
+      color: #034485;
+      font-weight: 600;
     }
 
-    .facts-strip {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 0.75rem;
+    a:hover {
+      text-decoration: underline;
     }
+  }
 
-    .fact-item {
-        background: #0a3f79;
-        color: #eef4ff;
-        border-radius: 10px;
-        padding: 0.8rem;
-        text-align: center;
-        font-weight: 600;
-        font-size: 0.92rem;
-    }
+  .memorial {
+    border-left: 5px solid #034485;
+  }
 
-    .timeline {
-        display: grid;
-        gap: 0.75rem;
-        position: relative;
-    }
-
-    .timeline::before {
-        content: "";
-        position: absolute;
-        left: 4.45rem;
-        top: 0.25rem;
-        bottom: 0.25rem;
-        width: 2px;
-        background: #c7dbf3;
-    }
-
-    .timeline-item {
-        display: grid;
-        grid-template-columns: 7rem 1fr;
-        align-items: start;
-        gap: 1rem;
-        position: relative;
-
-        p {
-            margin-top: 0.2rem;
-        }
-    }
-
-    .year {
-        background: #0b4d95;
-        color: #fff;
-        border-radius: 999px;
-        font-weight: 700;
-        text-align: center;
-        padding: 0.35rem 0.75rem;
-        width: fit-content;
-        min-width: 4.5rem;
-        z-index: 1;
-    }
-
+  @media (max-width: 960px) {
+    .facts-strip,
     .conditions-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 0.75rem;
-    }
-
-    .condition-card {
-        border: 1px solid #d8e4f2;
-        border-radius: 10px;
-        padding: 0.85rem;
-        background: #f9fbff;
-        font-weight: 500;
-        color: #123a63;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .two-col {
-        display: grid;
-        grid-template-columns: 1.6fr 1fr;
-        gap: 1.25rem;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .about-page {
+      padding-block: 2.5rem 4rem;
     }
 
-    .in-section {
-        background: #f3f8ff;
-        border: 1px solid #d6e4f5;
-        border-radius: 12px;
-        padding: 1rem;
-
-        h3 {
-            margin-bottom: 0.65rem;
-            color: #034485;
-        }
-
-        ul {
-            display: grid;
-            gap: 0.5rem;
-            margin: 0;
-            padding: 0;
-        }
-
-        a {
-            color: #034485;
-            font-weight: 600;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
+    .hero,
+    .surface {
+      padding: 1.1rem;
     }
 
-    .memorial {
-        border-left: 5px solid #034485;
+    .facts-strip,
+    .conditions-grid {
+      grid-template-columns: 1fr;
     }
 
-    @media (max-width: 960px) {
-        .facts-strip,
-        .conditions-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .two-col {
-            grid-template-columns: 1fr;
-        }
+    .timeline::before {
+      left: 2.6rem;
     }
 
-    @media (max-width: 680px) {
-        .about-page {
-            padding-block: 2.5rem 4rem;
-        }
-
-        .hero,
-        .surface {
-            padding: 1.1rem;
-        }
-
-        .facts-strip,
-        .conditions-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .timeline::before {
-            left: 2.6rem;
-        }
-
-        .timeline-item {
-            grid-template-columns: 4.5rem 1fr;
-            gap: 0.75rem;
-        }
-
-        .year {
-            min-width: 4rem;
-            font-size: 0.8rem;
-            padding: 0.3rem 0.5rem;
-        }
+    .timeline-item {
+      grid-template-columns: 4.5rem 1fr;
+      gap: 0.75rem;
     }
+
+    .year {
+      min-width: 4rem;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.5rem;
+    }
+  }
 </style>

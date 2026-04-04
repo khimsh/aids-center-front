@@ -1,416 +1,410 @@
 ---
-type Lang = "ka" | "en";
+type Lang = 'ka' | 'en';
 
-const lang = (Astro.currentLocale ?? "ka") as Lang;
-const homeUrl = lang === "ka" ? "/" : `/${lang}`;
-const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const lang = (Astro.currentLocale ?? 'ka') as Lang;
+const homeUrl = lang === 'ka' ? '/' : `/${lang}`;
+const hivAidsUrl = lang === 'ka' ? '/hiv-aids' : `/${lang}/hiv-aids`;
 const breadcrumb =
-    lang === "ka"
-        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
-        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
+  lang === 'ka'
+    ? { home: 'მთავარი', hivAids: 'აივ / შიდსი', aria: 'პურის ნამცეცები' }
+    : { home: 'Home', hivAids: 'HIV / AIDS', aria: 'Breadcrumb' };
 
 const content = {
-    en: {
-        sectionLabel: "HIV / AIDS",
-        heroTitle: "Clinical Spectrum",
-        introParagraphs: [
-            "HIV infection can generally be broken down into distinct stages.",
+  en: {
+    sectionLabel: 'HIV / AIDS',
+    heroTitle: 'Clinical Spectrum',
+    introParagraphs: ['HIV infection can generally be broken down into distinct stages.'],
+    stagesTitle: 'Stages',
+    stages: [
+      {
+        stage: 'Entry of HIV into the human body',
+        duration: '2-3 weeks',
+      },
+      { stage: 'Acute retroviral syndrome', duration: '2-3 weeks' },
+      {
+        stage: 'Clinical improvement and seroconversion',
+        duration: '2-4 weeks',
+      },
+      {
+        stage: 'Asymptomatic chronic HIV infection',
+        duration: '8 years',
+      },
+      { stage: 'Symptomatic HIV infection', duration: '1,3 year' },
+      { stage: 'Death', duration: '-' },
+    ],
+    acuteTitle: 'Acute Retroviral Syndrome',
+    acuteParagraphs: [
+      'Acute retroviral syndrome is the first stage of HIV infection, which is related with decrease of CD4+ count. There is a high viral load in the blood.',
+      'The clinical manifestation of the syndrome is wide. The most frequent clinical picture is an influenza-like illness.',
+      'The signs and reported symptoms are fever, lymphadenopathy, faringytis, rash, myalgias and arthralgias. Also, oral candidiasis, mucocutaneous ulcerations and loss of weight can occur.',
+      'The RNA concentration of HIV increases during the acute infection and then decreases, which is related to the immune response and seroconversion.',
+      'Symptomatic HIV infection is mainly caused by the emergence of opportunistic infections and cancers that the immune system would normally prevent.',
+      'As the immune system becomes more and more damaged the illnesses that present become more and more severe leading eventually to an AIDS diagnosis.',
+    ],
+    detailedTitle: 'Clinical Spectrum of HIV/AIDS',
+    detailedStages: [
+      {
+        name: 'STAGE 1: Primary HIV Infection',
+        items: [
+          'This stage of infection lasts for a few weeks and is often accompanied by a short flu-like illness.',
+          'During this stage there is a large amount of HIV in peripheral blood and the immune system begins to respond by producing HIV antibodies and cytotoxic lymphocytes (seroconversion).',
         ],
-        stagesTitle: "Stages",
-        stages: [
-            {
-                stage: "Entry of HIV into the human body",
-                duration: "2-3 weeks",
-            },
-            { stage: "Acute retroviral syndrome", duration: "2-3 weeks" },
-            {
-                stage: "Clinical improvement and seroconversion",
-                duration: "2-4 weeks",
-            },
-            {
-                stage: "Asymptomatic chronic HIV infection",
-                duration: "8 years",
-            },
-            { stage: "Symptomatic HIV infection", duration: "1,3 year" },
-            { stage: "Death", duration: "-" },
+      },
+      {
+        name: 'STAGE 2: Clinically Asymptomatic Stage',
+        items: [
+          'This stage lasts for an average of ten years and is free from major symptoms, although swollen glands may occur.',
+          'People remain infectious and HIV antibodies are detectable in blood.',
+          'HIV remains active in lymph nodes; viral load testing (HIV RNA) is important for treatment decisions.',
         ],
-        acuteTitle: "Acute Retroviral Syndrome",
-        acuteParagraphs: [
-            "Acute retroviral syndrome is the first stage of HIV infection, which is related with decrease of CD4+ count. There is a high viral load in the blood.",
-            "The clinical manifestation of the syndrome is wide. The most frequent clinical picture is an influenza-like illness.",
-            "The signs and reported symptoms are fever, lymphadenopathy, faringytis, rash, myalgias and arthralgias. Also, oral candidiasis, mucocutaneous ulcerations and loss of weight can occur.",
-            "The RNA concentration of HIV increases during the acute infection and then decreases, which is related to the immune response and seroconversion.",
-            "Symptomatic HIV infection is mainly caused by the emergence of opportunistic infections and cancers that the immune system would normally prevent.",
-            "As the immune system becomes more and more damaged the illnesses that present become more and more severe leading eventually to an AIDS diagnosis.",
+      },
+      {
+        name: 'STAGE 3: Symptomatic HIV Infection',
+        items: [
+          'Over time the immune system loses the struggle to contain HIV.',
+          'Lymph nodes and tissues become damaged, HIV mutates, and the body fails to replace lost T helper cells fast enough.',
+          'Initially many symptoms are mild, then worsen as immune suppression progresses.',
         ],
-        detailedTitle: "Clinical Spectrum of HIV/AIDS",
-        detailedStages: [
-            {
-                name: "STAGE 1: Primary HIV Infection",
-                items: [
-                    "This stage of infection lasts for a few weeks and is often accompanied by a short flu-like illness.",
-                    "During this stage there is a large amount of HIV in peripheral blood and the immune system begins to respond by producing HIV antibodies and cytotoxic lymphocytes (seroconversion).",
-                ],
-            },
-            {
-                name: "STAGE 2: Clinically Asymptomatic Stage",
-                items: [
-                    "This stage lasts for an average of ten years and is free from major symptoms, although swollen glands may occur.",
-                    "People remain infectious and HIV antibodies are detectable in blood.",
-                    "HIV remains active in lymph nodes; viral load testing (HIV RNA) is important for treatment decisions.",
-                ],
-            },
-            {
-                name: "STAGE 3: Symptomatic HIV Infection",
-                items: [
-                    "Over time the immune system loses the struggle to contain HIV.",
-                    "Lymph nodes and tissues become damaged, HIV mutates, and the body fails to replace lost T helper cells fast enough.",
-                    "Initially many symptoms are mild, then worsen as immune suppression progresses.",
-                ],
-            },
-            {
-                name: "STAGE 4: Progression from HIV to AIDS",
-                items: [
-                    "As the immune system is increasingly damaged, severe illnesses appear and eventually lead to an AIDS diagnosis.",
-                    "AIDS is confirmed when a person with HIV develops one or more severe opportunistic infections or cancers.",
-                ],
-            },
+      },
+      {
+        name: 'STAGE 4: Progression from HIV to AIDS',
+        items: [
+          'As the immune system is increasingly damaged, severe illnesses appear and eventually lead to an AIDS diagnosis.',
+          'AIDS is confirmed when a person with HIV develops one or more severe opportunistic infections or cancers.',
         ],
-        whoTitle:
-            "WHO Disease Staging System for HIV Infection and Disease in Adults and Adolescents",
-        whoStages: [
-            {
-                name: "Clinical Stage I",
-                items: [
-                    "Asymptomatic",
-                    "Generalized lymphadenopathy",
-                    "Performance scale 1: asymptomatic, normal activity",
-                ],
-            },
-            {
-                name: "Clinical Stage II",
-                items: [
-                    "Weight loss",
-                    "Minor mucocutaneous manifestations",
-                    "Herpes zoster within the last five years",
-                    "Recurrent upper respiratory tract infections",
-                    "Performance scale 2: symptomatic, normal activity",
-                ],
-            },
-            {
-                name: "Clinical Stage III",
-                items: [
-                    "Weight loss >10% of body weight",
-                    "Unexplained chronic diarrhoea >1 month",
-                    "Unexplained prolonged fever >1 month",
-                    "Oral candidiasis (thrush)",
-                    "Oral hairy leucoplakia",
-                    "Pulmonary tuberculosis",
-                    "Severe bacterial infections",
-                    "Performance scale 3: bedridden",
-                ],
-            },
-            {
-                name: "Clinical Stage IV",
-                items: [
-                    "HIV wasting syndrome",
-                    "Pneumocystic carinii pneumonia",
-                    "Toxoplasmosis of the brain",
-                    "Cryptococcosis, extrapulmonary",
-                    "Cytomegalovirus disease",
-                    "Progressive multifocal leucoencephalopathy",
-                    "Candidiasis of esophagus, trachea, bronchi",
-                    "Lymphoma",
-                    "Kaposi's sarcoma",
-                    "HIV encephalopathy",
-                ],
-            },
+      },
+    ],
+    whoTitle: 'WHO Disease Staging System for HIV Infection and Disease in Adults and Adolescents',
+    whoStages: [
+      {
+        name: 'Clinical Stage I',
+        items: [
+          'Asymptomatic',
+          'Generalized lymphadenopathy',
+          'Performance scale 1: asymptomatic, normal activity',
         ],
-    },
-    ka: {
-        sectionLabel: "აივ / შიდსი",
-        heroTitle: "კლინიკური სპექტრი",
-        introParagraphs: [
-            "მართალია, აივ ინფექციას პათოგნომური კლინიკური ნიშნები არ გააჩნია, მაგრამ მაინც შეიძლება გამოიყოს სიმპტომებისა და დაავადებების ჯგუფი, რომელთა დროს პირველ რიგში ეჭვი უნდა იქნას მიტანილი აივ ინფექცია/შიდსზე.",
+      },
+      {
+        name: 'Clinical Stage II',
+        items: [
+          'Weight loss',
+          'Minor mucocutaneous manifestations',
+          'Herpes zoster within the last five years',
+          'Recurrent upper respiratory tract infections',
+          'Performance scale 2: symptomatic, normal activity',
         ],
-        stagesTitle: "დაავადების კლინიკური მიმდინარეობა",
-        stages: [
-            {
-                stage: "ვირუსის ორგანიზმში შეჭრიდან ასიმპტომურ პერიოდამდე",
-                duration: "2-3 კვირა",
-            },
-            { stage: "მწვავე რეტროვირუსული სინდრომი", duration: "2-3 კვირა" },
-            {
-                stage: "კლინიკური გაუმჯობესება და სეროკონვერსია",
-                duration: "2-4 კვირა",
-            },
-            {
-                stage: "ასიმპტომური ქრონიკული აივ ინფექცია",
-                duration: "საშუალოდ 8 წელი",
-            },
-            {
-                stage: "სიმპტომური აივ ინფექცია/შიდსი",
-                duration: "საშუალოდ 1,3 წელი",
-            },
-            { stage: "სიკვდილი", duration: "-" },
+      },
+      {
+        name: 'Clinical Stage III',
+        items: [
+          'Weight loss >10% of body weight',
+          'Unexplained chronic diarrhoea >1 month',
+          'Unexplained prolonged fever >1 month',
+          'Oral candidiasis (thrush)',
+          'Oral hairy leucoplakia',
+          'Pulmonary tuberculosis',
+          'Severe bacterial infections',
+          'Performance scale 3: bedridden',
         ],
-        acuteTitle: "შიდსის სიმპტომები",
-        acuteParagraphs: [
-            "არამოტივირებული ცხელება; ძლიერი საერთო სისუსტე; წონაში კლება სხეულის მასის 10%-ით და მეტად; ოფლიანობა; ლიმფური კვანძების გადიდება; ფაღარათი; სხვადასხვა სახის გამონაყარი კანსა და ლორწოვან გარსებზე; თეთრი ფერის ნადები ენაზე; გახანგრძლივებული ფილტვების ანთება, რომელიც ცუდად ექვემდებარება ჩვეულებრივ ანტიბაქტერიულ თერაპიას; ნერვული სისტემის სხვადასხვა სახის დაზიანება (დემენცია, მენინგიტი, ენცეფალიტი, მიელოპათია, პერიფერიული ნეიროპათია) და სხვა.",
-            "აუცილებლად უნდა იქნეს გათვალისწინებული ეპიდემიოლოგიური მონაცემები (მაღალი რისკის ჯგუფი, აივ ინფიცირებულთან კონტაქტი და სხვა).",
-            "აივ ინფექციის პირველადი გამოვლინებაა მწვავე რეტროვირუსული სინდრომი, რომელსაც თან ახლავს CD4+ ლიმფოციტების რიცხვის მკვეთრი დაქვეითება და პლაზმაში ვირუსის მაღალი კონცენტრაცია.",
-            "შემდეგი ფაზაა კლინიკური გაუმჯობესება, ხოლო შემდეგ - ასიმპტომური ქრონიკული აივ ინფექცია.",
-            "დაავადების გვიან სტადიაზე CD4+ მაჩვენებელი <200 უჯრედი/მმ3 ხდება და იზრდება ოპორტუნისტული ინფექციებისა და სიმსივნეების რისკი.",
+      },
+      {
+        name: 'Clinical Stage IV',
+        items: [
+          'HIV wasting syndrome',
+          'Pneumocystic carinii pneumonia',
+          'Toxoplasmosis of the brain',
+          'Cryptococcosis, extrapulmonary',
+          'Cytomegalovirus disease',
+          'Progressive multifocal leucoencephalopathy',
+          'Candidiasis of esophagus, trachea, bronchi',
+          'Lymphoma',
+          "Kaposi's sarcoma",
+          'HIV encephalopathy',
         ],
-        detailedTitle: "აივ ინფექციის კლინიკური სპექტრი",
-        detailedStages: [
-            {
-                name: "ოპორტუნისტული ინფექციები",
-                items: [
-                    "ღრმა იმუნოდეფიციტის ფონზე შეიძლება განვითარდეს პრაქტიკულად ნებისმიერი ინფექცია და სიმსივნე.",
-                    "ყველაზე ხშირად გვხვდება ოპორტუნისტული ინფექციები და ვირუსებთან ასოცირებული სიმსივნეები.",
-                    "დაავადების პროგრესირების საუკეთესო სუროგატი მარკერებია ვირუსული დატვირთვა და CD4+ ლიმფოციტების აბსოლუტური რიცხვი.",
-                ],
-            },
-            {
-                name: "CD4+ და პროგრესირება",
-                items: [
-                    "ვირუსული დატვირთვის მატებას, როგორც წესი, თან სდევს CD4+ ლიმფოციტების აბსოლუტური რიცხვის შემცირება.",
-                    "CD4+ პირდაპირ კავშირშია ოპორტუნისტული დაავადებების განვითარების რისკთან.",
-                ],
-            },
+      },
+    ],
+  },
+  ka: {
+    sectionLabel: 'აივ / შიდსი',
+    heroTitle: 'კლინიკური სპექტრი',
+    introParagraphs: [
+      'მართალია, აივ ინფექციას პათოგნომური კლინიკური ნიშნები არ გააჩნია, მაგრამ მაინც შეიძლება გამოიყოს სიმპტომებისა და დაავადებების ჯგუფი, რომელთა დროს პირველ რიგში ეჭვი უნდა იქნას მიტანილი აივ ინფექცია/შიდსზე.',
+    ],
+    stagesTitle: 'დაავადების კლინიკური მიმდინარეობა',
+    stages: [
+      {
+        stage: 'ვირუსის ორგანიზმში შეჭრიდან ასიმპტომურ პერიოდამდე',
+        duration: '2-3 კვირა',
+      },
+      { stage: 'მწვავე რეტროვირუსული სინდრომი', duration: '2-3 კვირა' },
+      {
+        stage: 'კლინიკური გაუმჯობესება და სეროკონვერსია',
+        duration: '2-4 კვირა',
+      },
+      {
+        stage: 'ასიმპტომური ქრონიკული აივ ინფექცია',
+        duration: 'საშუალოდ 8 წელი',
+      },
+      {
+        stage: 'სიმპტომური აივ ინფექცია/შიდსი',
+        duration: 'საშუალოდ 1,3 წელი',
+      },
+      { stage: 'სიკვდილი', duration: '-' },
+    ],
+    acuteTitle: 'შიდსის სიმპტომები',
+    acuteParagraphs: [
+      'არამოტივირებული ცხელება; ძლიერი საერთო სისუსტე; წონაში კლება სხეულის მასის 10%-ით და მეტად; ოფლიანობა; ლიმფური კვანძების გადიდება; ფაღარათი; სხვადასხვა სახის გამონაყარი კანსა და ლორწოვან გარსებზე; თეთრი ფერის ნადები ენაზე; გახანგრძლივებული ფილტვების ანთება, რომელიც ცუდად ექვემდებარება ჩვეულებრივ ანტიბაქტერიულ თერაპიას; ნერვული სისტემის სხვადასხვა სახის დაზიანება (დემენცია, მენინგიტი, ენცეფალიტი, მიელოპათია, პერიფერიული ნეიროპათია) და სხვა.',
+      'აუცილებლად უნდა იქნეს გათვალისწინებული ეპიდემიოლოგიური მონაცემები (მაღალი რისკის ჯგუფი, აივ ინფიცირებულთან კონტაქტი და სხვა).',
+      'აივ ინფექციის პირველადი გამოვლინებაა მწვავე რეტროვირუსული სინდრომი, რომელსაც თან ახლავს CD4+ ლიმფოციტების რიცხვის მკვეთრი დაქვეითება და პლაზმაში ვირუსის მაღალი კონცენტრაცია.',
+      'შემდეგი ფაზაა კლინიკური გაუმჯობესება, ხოლო შემდეგ - ასიმპტომური ქრონიკული აივ ინფექცია.',
+      'დაავადების გვიან სტადიაზე CD4+ მაჩვენებელი <200 უჯრედი/მმ3 ხდება და იზრდება ოპორტუნისტული ინფექციებისა და სიმსივნეების რისკი.',
+    ],
+    detailedTitle: 'აივ ინფექციის კლინიკური სპექტრი',
+    detailedStages: [
+      {
+        name: 'ოპორტუნისტული ინფექციები',
+        items: [
+          'ღრმა იმუნოდეფიციტის ფონზე შეიძლება განვითარდეს პრაქტიკულად ნებისმიერი ინფექცია და სიმსივნე.',
+          'ყველაზე ხშირად გვხვდება ოპორტუნისტული ინფექციები და ვირუსებთან ასოცირებული სიმსივნეები.',
+          'დაავადების პროგრესირების საუკეთესო სუროგატი მარკერებია ვირუსული დატვირთვა და CD4+ ლიმფოციტების აბსოლუტური რიცხვი.',
         ],
-        whoTitle: "ჯანდაცვის მსოფლიო ორგანიზაციის კლინიკური კლასიფიკაცია",
-        whoStages: [
-            {
-                name: "I კლინიკური სტადია",
-                items: [
-                    "ასიმპტომური მიმდინარეობა",
-                    "გენერალიზებული ლიმფადენოპათია",
-                ],
-            },
-            {
-                name: "II კლინიკური სტადია",
-                items: [
-                    "წონაში კლება: საწყისი წონის 10%-ზე ნაკლები",
-                    "კანისა და ლორწოვანის მსუბუქი დაზიანებები",
-                    "სარტყლისებული ლიქენი ბოლო 5 წლის მანძილზე",
-                    "ზემო სასუნთქი გზების მორეციდივე ინფექციები",
-                ],
-            },
-            {
-                name: "III კლინიკური სტადია",
-                items: [
-                    "წონაში კლება: საწყისი წონის 10%-ზე მეტი",
-                    "უცნობი ეტიოლოგიის დიარეა 1 თვეზე მეტი",
-                    "უცნობი ეტიოლოგიის ცხელება 1 თვეზე მეტი",
-                    "პირის ღრუს კანდიდოზი",
-                    "ფილტვის ტუბერკულოზი",
-                    "მძიმე ბაქტერიული ინფექციები",
-                ],
-            },
-            {
-                name: "IV კლინიკური სტადია",
-                items: [
-                    "აივ კახექსია",
-                    "პნევმოცისტური პნევმონია",
-                    "ცერებრული ტოქსოპლაზმოზი",
-                    "ფილტვგარეშე კრიპტოკოკოზი",
-                    "ციტომეგალოვირუსული ინფექცია",
-                    "პროგრესირებადი მულტიფოკალური ლეიკოენცეფალოპათია",
-                    "ლიმფომა",
-                    "კაპოშის სარკომა",
-                    "აივ ენცეფალოპათია",
-                ],
-            },
+      },
+      {
+        name: 'CD4+ და პროგრესირება',
+        items: [
+          'ვირუსული დატვირთვის მატებას, როგორც წესი, თან სდევს CD4+ ლიმფოციტების აბსოლუტური რიცხვის შემცირება.',
+          'CD4+ პირდაპირ კავშირშია ოპორტუნისტული დაავადებების განვითარების რისკთან.',
         ],
-    },
+      },
+    ],
+    whoTitle: 'ჯანდაცვის მსოფლიო ორგანიზაციის კლინიკური კლასიფიკაცია',
+    whoStages: [
+      {
+        name: 'I კლინიკური სტადია',
+        items: ['ასიმპტომური მიმდინარეობა', 'გენერალიზებული ლიმფადენოპათია'],
+      },
+      {
+        name: 'II კლინიკური სტადია',
+        items: [
+          'წონაში კლება: საწყისი წონის 10%-ზე ნაკლები',
+          'კანისა და ლორწოვანის მსუბუქი დაზიანებები',
+          'სარტყლისებული ლიქენი ბოლო 5 წლის მანძილზე',
+          'ზემო სასუნთქი გზების მორეციდივე ინფექციები',
+        ],
+      },
+      {
+        name: 'III კლინიკური სტადია',
+        items: [
+          'წონაში კლება: საწყისი წონის 10%-ზე მეტი',
+          'უცნობი ეტიოლოგიის დიარეა 1 თვეზე მეტი',
+          'უცნობი ეტიოლოგიის ცხელება 1 თვეზე მეტი',
+          'პირის ღრუს კანდიდოზი',
+          'ფილტვის ტუბერკულოზი',
+          'მძიმე ბაქტერიული ინფექციები',
+        ],
+      },
+      {
+        name: 'IV კლინიკური სტადია',
+        items: [
+          'აივ კახექსია',
+          'პნევმოცისტური პნევმონია',
+          'ცერებრული ტოქსოპლაზმოზი',
+          'ფილტვგარეშე კრიპტოკოკოზი',
+          'ციტომეგალოვირუსული ინფექცია',
+          'პროგრესირებადი მულტიფოკალური ლეიკოენცეფალოპათია',
+          'ლიმფომა',
+          'კაპოშის სარკომა',
+          'აივ ენცეფალოპათია',
+        ],
+      },
+    ],
+  },
 } as const;
 
 const c = content[lang];
 ---
 
 <section class="spectrum-page content-grid">
-    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
-        <a href={homeUrl}>{breadcrumb.home}</a>
-        <span>/</span>
-        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
-        <span>/</span>
-        <span aria-current="page">{c.heroTitle}</span>
-    </nav>
+  <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+    <a href={homeUrl}>{breadcrumb.home}</a>
+    <span>/</span>
+    <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+    <span>/</span>
+    <span aria-current="page">{c.heroTitle}</span>
+  </nav>
 
-    <div class="hero">
-        <p class="section-label">{c.sectionLabel}</p>
-        <h1>{c.heroTitle}</h1>
-    </div>
+  <div class="hero">
+    <p class="section-label">{c.sectionLabel}</p>
+    <h1>{c.heroTitle}</h1>
+  </div>
 
-    <div class="surface">
-        {c.introParagraphs.map((text) => <p>{text}</p>)}
-    </div>
+  <div class="surface">
+    {c.introParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.stagesTitle}</h2>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>{lang === "en" ? "Stage" : "სტადია"}</th>
-                        <th>{lang === "en" ? "Duration" : "ხანგრძლივობა"}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        c.stages.map((row) => (
-                            <tr>
-                                <td>{row.stage}</td>
-                                <td>{row.duration}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+  <div class="surface">
+    <h2>{c.stagesTitle}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>{lang === 'en' ? 'Stage' : 'სტადია'}</th>
+            <th>{lang === 'en' ? 'Duration' : 'ხანგრძლივობა'}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            c.stages.map((row) => (
+              <tr>
+                <td>{row.stage}</td>
+                <td>{row.duration}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <div class="surface">
-        <h2>{c.acuteTitle}</h2>
-        {c.acuteParagraphs.map((text) => <p>{text}</p>)}
-    </div>
+  <div class="surface">
+    <h2>{c.acuteTitle}</h2>
+    {c.acuteParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.detailedTitle}</h2>
-        <div class="grid">
-            {
-                c.detailedStages.map((stage) => (
-                    <article class="card">
-                        <h3>{stage.name}</h3>
-                        <ul class="list">
-                            {stage.items.map((item) => (
-                                <li>{item}</li>
-                            ))}
-                        </ul>
-                    </article>
-                ))
-            }
-        </div>
+  <div class="surface">
+    <h2>{c.detailedTitle}</h2>
+    <div class="grid">
+      {
+        c.detailedStages.map((stage) => (
+          <article class="card">
+            <h3>{stage.name}</h3>
+            <ul class="list">
+              {stage.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
     </div>
+  </div>
 
-    <div class="surface">
-        <h2>{c.whoTitle}</h2>
-        <div class="grid">
-            {
-                c.whoStages.map((stage) => (
-                    <article class="card">
-                        <h3>{stage.name}</h3>
-                        <ul class="list">
-                            {stage.items.map((item) => (
-                                <li>{item}</li>
-                            ))}
-                        </ul>
-                    </article>
-                ))
-            }
-        </div>
+  <div class="surface">
+    <h2>{c.whoTitle}</h2>
+    <div class="grid">
+      {
+        c.whoStages.map((stage) => (
+          <article class="card">
+            <h3>{stage.name}</h3>
+            <ul class="list">
+              {stage.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
     </div>
+  </div>
 </section>
 
 <style>
-    .spectrum-page {
-        padding-block: 4rem 5rem;
-        display: grid;
-        gap: 1.5rem;
-    }
+  .spectrum-page {
+    padding-block: 4rem 5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
 
-    .breadcrumbs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        font-size: 0.9rem;
-        color: #64748b;
-    }
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #64748b;
+  }
 
-    .breadcrumbs a {
-        color: #0f172a;
-        text-decoration: none;
-    }
+  .breadcrumbs a {
+    color: #0f172a;
+    text-decoration: none;
+  }
 
-    .breadcrumbs a:hover {
-        text-decoration: underline;
-    }
+  .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
 
-    .hero {
-        text-align: center;
-        max-width: 760px;
-        margin-inline: auto;
-    }
+  .hero {
+    text-align: center;
+    max-width: 760px;
+    margin-inline: auto;
+  }
 
-    .hero h1 {
-        font-size: clamp(1.9rem, 4vw, 2.9rem);
-        margin-bottom: 0.65rem;
-    }
+  .hero h1 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    margin-bottom: 0.65rem;
+  }
 
-    .surface {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 1.25rem;
-    }
+  .surface {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
 
-    .surface h2 {
-        margin-bottom: 0.8rem;
-    }
+  .surface h2 {
+    margin-bottom: 0.8rem;
+  }
 
-    .surface p {
-        color: #0f172a;
-        line-height: 1.7;
-        margin-bottom: 0.8rem;
-    }
+  .surface p {
+    color: #0f172a;
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
 
-    .surface p:last-child {
-        margin-bottom: 0;
-    }
+  .surface p:last-child {
+    margin-bottom: 0;
+  }
 
-    .list {
-        margin: 0;
-        padding-left: 1.2rem;
-        display: grid;
-        gap: 0.45rem;
-        line-height: 1.6;
-        color: #0f172a;
-    }
+  .list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.45rem;
+    line-height: 1.6;
+    color: #0f172a;
+  }
 
-    .table-wrap {
-        overflow-x: auto;
-    }
+  .table-wrap {
+    overflow-x: auto;
+  }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
-    th,
-    td {
-        text-align: left;
-        padding: 0.7rem;
-        border-bottom: 1px solid #e2e8f0;
-        vertical-align: top;
-    }
+  th,
+  td {
+    text-align: left;
+    padding: 0.7rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
 
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1rem;
-    }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
 
-    .card {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 1rem;
-    }
+  .card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem;
+  }
 
-    .card h3 {
-        margin-bottom: 0.7rem;
-        font-size: 1.05rem;
-    }
+  .card h3 {
+    margin-bottom: 0.7rem;
+    font-size: 1.05rem;
+  }
 </style>

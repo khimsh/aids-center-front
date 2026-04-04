@@ -4,16 +4,16 @@ const { apiGetMock, apiPutMock, apiDeleteMock, getErrorStatusMock } = vi.hoisted
   apiGetMock: vi.fn(),
   apiPutMock: vi.fn(),
   apiDeleteMock: vi.fn(),
-  getErrorStatusMock: vi.fn()
+  getErrorStatusMock: vi.fn(),
 }));
 
 vi.mock('../api', () => ({
   api: {
     get: apiGetMock,
     put: apiPutMock,
-    delete: apiDeleteMock
+    delete: apiDeleteMock,
   },
-  getErrorStatus: getErrorStatusMock
+  getErrorStatus: getErrorStatusMock,
 }));
 
 import {
@@ -24,7 +24,7 @@ import {
   getArticleOwnerId,
   getVisibleArticles,
   publishArticleDraft,
-  type ArticleRecord
+  type ArticleRecord,
 } from '../articles';
 
 describe('articles service', () => {
@@ -43,7 +43,7 @@ describe('articles service', () => {
   it('filters articles by user id', () => {
     const items: ArticleRecord[] = [
       { id: 1, title_ka: 'a', author_id: 1 },
-      { id: 2, title_ka: 'b', user_id: 2 }
+      { id: 2, title_ka: 'b', user_id: 2 },
     ];
 
     expect(filterArticlesByUser(items, 1)).toEqual([items[0]]);
@@ -57,14 +57,19 @@ describe('articles service', () => {
   it('detects publish state from boolean and published_at fallback', () => {
     expect(articleIsPublished({ id: 1, title_ka: 'a', published: true })).toBe(true);
     expect(articleIsPublished({ id: 1, title_ka: 'a', published: false })).toBe(false);
-    expect(articleIsPublished({ id: 1, title_ka: 'a', published_at: '2026-01-01T00:00:00Z' })).toBe(true);
+    expect(articleIsPublished({ id: 1, title_ka: 'a', published_at: '2026-01-01T00:00:00Z' })).toBe(
+      true,
+    );
   });
 
   it('publishes a draft and reports persisted publish state', async () => {
     apiPutMock.mockResolvedValue({ data: { id: 1, title_ka: 'x', published: true } });
 
     await expect(publishArticleDraft(1)).resolves.toBe(true);
-    expect(apiPutMock).toHaveBeenCalledWith('/api/articles/1', expect.objectContaining({ published: true }));
+    expect(apiPutMock).toHaveBeenCalledWith(
+      '/api/articles/1',
+      expect.objectContaining({ published: true }),
+    );
   });
 
   it('deletes article by id', async () => {
@@ -78,7 +83,7 @@ describe('articles service', () => {
 
     await expect(fetchArticles()).resolves.toEqual({
       items: [{ id: 1, title_ka: 'one' }],
-      total: 1
+      total: 1,
     });
   });
 
@@ -90,12 +95,12 @@ describe('articles service', () => {
 
     await expect(fetchArticles({ include_drafts: true, page: 1 })).resolves.toEqual({
       items: [{ id: 3, title_ka: 'x' }],
-      total: 1
+      total: 1,
     });
 
     expect(apiGetMock).toHaveBeenCalledTimes(2);
     expect(apiGetMock).toHaveBeenNthCalledWith(2, '/api/articles', {
-      params: { page: 1 }
+      params: { page: 1 },
     });
   });
 
@@ -107,12 +112,12 @@ describe('articles service', () => {
 
     await expect(fetchArticles({ include_drafts: true, page: 2 })).resolves.toEqual({
       items: [{ id: 8, title_ka: 'y' }],
-      total: 1
+      total: 1,
     });
 
     expect(apiGetMock).toHaveBeenCalledTimes(2);
     expect(apiGetMock).toHaveBeenNthCalledWith(2, '/api/articles', {
-      params: { page: 2 }
+      params: { page: 2 },
     });
   });
 });

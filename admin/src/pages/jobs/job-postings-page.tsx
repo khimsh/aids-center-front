@@ -11,7 +11,7 @@ import {
   publishJobPostingDraft,
   type JobCard,
   type JobMutationInput,
-  updateJobPosting
+  updateJobPosting,
 } from '../../lib/job-postings';
 import { queryKeys } from '../../lib/query-keys';
 import './job-postings-page.scss';
@@ -34,7 +34,7 @@ export function JobPostingsPage() {
 
   const jobsQuery = useQuery({
     queryKey: queryKeys.jobPostings,
-    queryFn: fetchJobPostings
+    queryFn: fetchJobPostings,
   });
 
   const loadJobs = async () => {
@@ -80,7 +80,7 @@ export function JobPostingsPage() {
       descriptionKa,
       descriptionEn,
       deadline,
-      status
+      status,
     };
 
     try {
@@ -104,7 +104,7 @@ export function JobPostingsPage() {
     try {
       const job = await queryClient.fetchQuery({
         queryKey: queryKeys.jobPosting(jobId),
-        queryFn: () => fetchJobPostingById(jobId)
+        queryFn: () => fetchJobPostingById(jobId),
       });
 
       setEditingJobId(job.id);
@@ -181,7 +181,11 @@ export function JobPostingsPage() {
           <div className="field-row">
             <label>
               სათაური (KA)
-              <Input value={titleKa} onChange={(event) => setTitleKa(event.target.value)} required />
+              <Input
+                value={titleKa}
+                onChange={(event) => setTitleKa(event.target.value)}
+                required
+              />
             </label>
 
             <label>
@@ -193,30 +197,48 @@ export function JobPostingsPage() {
           <div className="field-row">
             <label>
               დეპარტამენტი (KA)
-              <Input value={departmentKa} onChange={(event) => setDepartmentKa(event.target.value)} />
+              <Input
+                value={departmentKa}
+                onChange={(event) => setDepartmentKa(event.target.value)}
+              />
             </label>
 
             <label>
               დეპარტამენტი (EN)
-              <Input value={departmentEn} onChange={(event) => setDepartmentEn(event.target.value)} />
+              <Input
+                value={departmentEn}
+                onChange={(event) => setDepartmentEn(event.target.value)}
+              />
             </label>
           </div>
 
           <div className="field-row">
             <label>
               აღწერა (KA)
-              <textarea value={descriptionKa} onChange={(event) => setDescriptionKa(event.target.value)} rows={4} />
+              <textarea
+                value={descriptionKa}
+                onChange={(event) => setDescriptionKa(event.target.value)}
+                rows={4}
+              />
             </label>
 
             <label>
               აღწერა (EN)
-              <textarea value={descriptionEn} onChange={(event) => setDescriptionEn(event.target.value)} rows={4} />
+              <textarea
+                value={descriptionEn}
+                onChange={(event) => setDescriptionEn(event.target.value)}
+                rows={4}
+              />
             </label>
           </div>
 
           <label className="field-single">
             ვადა
-            <Input type="date" value={deadline} onChange={(event) => setDeadline(event.target.value)} />
+            <Input
+              type="date"
+              value={deadline}
+              onChange={(event) => setDeadline(event.target.value)}
+            />
           </label>
 
           {error ? <p className="error">{error}</p> : null}
@@ -228,7 +250,12 @@ export function JobPostingsPage() {
               </Button>
             ) : (
               <>
-                <Button type="button" variant="secondary" onClick={() => void saveEdit('draft')} disabled={saving}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => void saveEdit('draft')}
+                  disabled={saving}
+                >
                   დრაფტად შენახვა
                 </Button>
                 <Button type="button" onClick={() => void saveEdit('published')} disabled={saving}>
@@ -258,20 +285,39 @@ export function JobPostingsPage() {
                 <span>{job.updatedAt}</span>
               </div>
               <h3>{job.title}</h3>
-              {job.department ? <p><strong>დეპარტამენტი:</strong> {job.department}</p> : null}
-              <p><strong>ვადა:</strong> {job.deadline}</p>
+              {job.department ? (
+                <p>
+                  <strong>დეპარტამენტი:</strong> {job.department}
+                </p>
+              ) : null}
+              <p>
+                <strong>ვადა:</strong> {job.deadline}
+              </p>
               {job.description ? <p>{job.description}</p> : null}
 
               <div className="job-actions">
-                <Button type="button" onClick={() => void startEdit(job.id)} disabled={busyJobId === job.id}>
+                <Button
+                  type="button"
+                  onClick={() => void startEdit(job.id)}
+                  disabled={busyJobId === job.id}
+                >
                   რედაქტირება
                 </Button>
                 {job.status === 'draft' ? (
-                  <Button type="button" onClick={() => void publishDraft(job.id)} disabled={busyJobId === job.id}>
+                  <Button
+                    type="button"
+                    onClick={() => void publishDraft(job.id)}
+                    disabled={busyJobId === job.id}
+                  >
                     დრაფტის გამოქვეყნება
                   </Button>
                 ) : null}
-                <Button type="button" variant="secondary" onClick={() => setJobToDeleteId(job.id)} disabled={busyJobId === job.id}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setJobToDeleteId(job.id)}
+                  disabled={busyJobId === job.id}
+                >
                   წაშლა
                 </Button>
               </div>

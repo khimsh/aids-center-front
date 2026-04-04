@@ -68,7 +68,8 @@ const router = createBrowserRouter([
           {
             path: 'articles/deleted',
             lazy: async () => {
-              const { DeletedArticlesPage } = await import('./pages/articles/deleted-articles-page');
+              const { DeletedArticlesPage } =
+                await import('./pages/articles/deleted-articles-page');
               return { Component: DeletedArticlesPage };
             },
           },
@@ -113,10 +114,15 @@ function App() {
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-      <ToastContainer position="bottom-right" autoClose={4000} newestOnTop closeOnClick pauseOnFocusLoss={false} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        newestOnTop
+        closeOnClick
+        pauseOnFocusLoss={false}
+      />
     </QueryClientProvider>
   );
 }
 
 export default App;
-

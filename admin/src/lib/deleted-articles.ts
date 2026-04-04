@@ -53,7 +53,7 @@ async function pruneExpiredDeletedArticles(items: DeletedArticleEntry[]) {
         } catch {
           // Ignore purge errors; entry is removed from recycle bin regardless.
         }
-      })
+      }),
     );
   }
 
@@ -88,7 +88,7 @@ export function moveArticleToDeleted(article: ArticleRecord) {
     updated_at: article.updated_at,
     owner_id: getArticleOwnerId(article) || undefined,
     deleted_at: nowIso,
-    delete_after: deleteAfterIso
+    delete_after: deleteAfterIso,
   };
 
   const withoutCurrent = current.filter((item) => item.id !== article.id);
@@ -109,13 +109,17 @@ export function restoreDeletedArticle(articleId: number) {
 export async function moveDeletedArticleToDraft(articleId: number) {
   await api.put(`/api/articles/${articleId}`, {
     published: false,
-    published_at: null
+    published_at: null,
   });
 
   restoreDeletedArticle(articleId);
 }
 
-export function canViewDeletedEntry(entry: DeletedArticleEntry, isAdmin: boolean, userId?: string | number) {
+export function canViewDeletedEntry(
+  entry: DeletedArticleEntry,
+  isAdmin: boolean,
+  userId?: string | number,
+) {
   if (isAdmin) {
     return true;
   }

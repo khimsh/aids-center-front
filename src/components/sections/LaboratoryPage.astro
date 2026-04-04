@@ -1,427 +1,425 @@
 ---
-type Lang = "ka" | "en";
+type Lang = 'ka' | 'en';
 
 interface Lab {
-    name: string;
-    since?: string;
-    description: string;
-    highlights: string[];
+  name: string;
+  since?: string;
+  description: string;
+  highlights: string[];
 }
 
-const lang = (Astro.currentLocale ?? "ka") as Lang;
+const lang = (Astro.currentLocale ?? 'ka') as Lang;
 
 const content = {
-    en: {
-        pageTitle: "Laboratory Services",
-        heroTitle: "Laboratory Service",
-        heroSubtitle:
-            "One of the best laboratory services in Eastern Europe, equipped with cutting-edge technology and staffed by internationally trained specialists.",
-        overviewTitle: "Overview",
-        overviewText:
-            "The laboratory service of the Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is consistently rated among the best in Eastern European countries. All major laboratory staff have received long- and short-term training in leading institutions in the United States and Europe. Work at the Center's laboratory is based on international standards, ensuring high quality and reliability of testing. The laboratory service holds ISO 9001:2008 certification and the National Quality Award. It actively participates in the external quality control program organized by the Australian National Reference Laboratory — a WHO Collaborating Center for HIV/AIDS and blood-borne infection diagnostics — achieving an annual score above 99%. Many diagnostic methods implemented here are unique not only for Georgia but for the entire Eastern European region.",
-        credentialsTitle: "Accreditations & Recognition",
-        credentials: [
-            "ISO 9001:2008 certified",
-            "National Quality Award",
-            "WHO external QC programme — 99%+ annual score",
-            "Unique South Caucasus diagnostic capabilities",
+  en: {
+    pageTitle: 'Laboratory Services',
+    heroTitle: 'Laboratory Service',
+    heroSubtitle:
+      'One of the best laboratory services in Eastern Europe, equipped with cutting-edge technology and staffed by internationally trained specialists.',
+    overviewTitle: 'Overview',
+    overviewText:
+      "The laboratory service of the Tengiz Tsertsvadze Infectious Diseases, AIDS and Clinical Immunology Research Center is consistently rated among the best in Eastern European countries. All major laboratory staff have received long- and short-term training in leading institutions in the United States and Europe. Work at the Center's laboratory is based on international standards, ensuring high quality and reliability of testing. The laboratory service holds ISO 9001:2008 certification and the National Quality Award. It actively participates in the external quality control program organized by the Australian National Reference Laboratory — a WHO Collaborating Center for HIV/AIDS and blood-borne infection diagnostics — achieving an annual score above 99%. Many diagnostic methods implemented here are unique not only for Georgia but for the entire Eastern European region.",
+    credentialsTitle: 'Accreditations & Recognition',
+    credentials: [
+      'ISO 9001:2008 certified',
+      'National Quality Award',
+      'WHO external QC programme — 99%+ annual score',
+      'Unique South Caucasus diagnostic capabilities',
+    ],
+    labsTitle: 'Our Laboratories',
+    labs: [
+      {
+        name: 'Clinical Diagnostics & Biochemistry',
+        description:
+          'A full-service clinical diagnostic laboratory using modern methods for comprehensive biochemical testing of blood, serous fluids (CSF, pleural, ascitic), and urine. Laboratory personnel maintain high professional competence to ensure superior test quality.',
+        highlights: [
+          'COBAS INTEGRA 400+ — 60+ biochemical indicators',
+          'ABL 80 — blood gases & electrolytes',
+          'HIMACLOT DUO — high-accuracy hemostasis',
+          'SISMEX KX-21N — hematology analysis',
         ],
-        labsTitle: "Our Laboratories",
-        labs: [
-            {
-                name: "Clinical Diagnostics & Biochemistry",
-                description:
-                    "A full-service clinical diagnostic laboratory using modern methods for comprehensive biochemical testing of blood, serous fluids (CSF, pleural, ascitic), and urine. Laboratory personnel maintain high professional competence to ensure superior test quality.",
-                highlights: [
-                    "COBAS INTEGRA 400+ — 60+ biochemical indicators",
-                    "ABL 80 — blood gases & electrolytes",
-                    "HIMACLOT DUO — high-accuracy hemostasis",
-                    "SISMEX KX-21N — hematology analysis",
-                ],
-            },
-            {
-                name: "Clinical Immunology",
-                description:
-                    "A state-of-the-art, fully equipped immunology laboratory offering a comprehensive range of immunological diagnostic services including immunophenotyping, HIV/AIDS and other immunodeficiency testing, and infectious, autoimmune, oncology, and endocrinology diagnostics.",
-                highlights: [
-                    "FACSCalibur flow cytometer (Becton Dickinson, USA)",
-                    "Elecsys 2010 immunochemiluminescence analyzer (Roche, Switzerland)",
-                    "ELISPOT READER SYSTEM",
-                    "Only lab in Georgia for latent TB — T-Spot-TB (ELISPOT) method",
-                ],
-            },
-            {
-                name: "Clinical Bacteriology",
-                description:
-                    "Provides comprehensive microbiological, automatic, and manual diagnostic services for accurate and reliable testing of all types of clinical specimens, including fungal culture isolation, morphological and biochemical identification.",
-                highlights: [
-                    "Bact/Alert automatic blood culture system (BioMéreieux, USA–France)",
-                    "VITEK 2 — simultaneous microbial ID + antimicrobial susceptibility",
-                    "Light, phase-contrast, and fluorescent microscopes",
-                    "Fungal culture isolation and identification",
-                ],
-            },
-            {
-                name: "HIV Diagnostic Laboratory",
-                since: "Operational since 1984",
-                description:
-                    "The first laboratory in Georgia to run HIV/AIDS antibody detection tests. Since the first confirmed HIV case in Georgia in 1989, this laboratory has identified more than 4,000 patients and has initiated and launched more than 70 HIV/AIDS diagnostic laboratory services across the country.",
-                highlights: [
-                    "ELISA — antibody detection",
-                    "Western Blot — confirmatory testing",
-                    "4,000+ patients identified",
-                    "70+ diagnostic labs launched nationwide",
-                ],
-            },
-            {
-                name: "Clinical Virology & Molecular Medicine",
-                description:
-                    "Meets the requirements of the best international standards. Staffed by highly qualified specialists trained in leading US and European centers. Provides a wide range of serological, virological, and molecular diagnostics using high-tech real-time PCR methods.",
-                highlights: [
-                    "Real-time PCR — HIV, hepatitis, TB, and other pathogens",
-                    "Genotyping & subtyping — HIV, viral hepatitis, papillomavirus",
-                    "Multiplex PCR (CSF) — viral meningitis & encephalitis",
-                    "Xpert/MTB RIF — rapid TB incl. drug-resistant strains",
-                    "IL28B genotyping",
-                ],
-            },
-        ] as Lab[],
-        sectionNavTitle: "In This Section",
-        sectionLinks: [
-            { label: "Ambulatory Services", href: "#" },
-            { label: "Stationary Services", href: "#" },
-            { label: "Instrumental Diagnostics", href: "#" },
+      },
+      {
+        name: 'Clinical Immunology',
+        description:
+          'A state-of-the-art, fully equipped immunology laboratory offering a comprehensive range of immunological diagnostic services including immunophenotyping, HIV/AIDS and other immunodeficiency testing, and infectious, autoimmune, oncology, and endocrinology diagnostics.',
+        highlights: [
+          'FACSCalibur flow cytometer (Becton Dickinson, USA)',
+          'Elecsys 2010 immunochemiluminescence analyzer (Roche, Switzerland)',
+          'ELISPOT READER SYSTEM',
+          'Only lab in Georgia for latent TB — T-Spot-TB (ELISPOT) method',
         ],
-    },
-    ka: {
-        pageTitle: "ლაბორატორიული სამსახური",
-        heroTitle: "ლაბორატორიული სამსახური",
-        heroSubtitle:
-            "აღმოსავლეთ ევროპის ერთ-ერთი საუკეთესო ლაბორატორიული სამსახური, აღჭურვილი თანამედროვე ტექნოლოგიებით და მომზადებული საერთაშორისო გამოცდილების მქონე სპეციალისტებით.",
-        overviewTitle: "ზოგადი მიმოხილვა",
-        overviewText:
-            "თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრის ლაბორატორიული სამსახური განიხილება, როგორც აღმოსავლეთ ევროპის ქვეყნებში საუკეთესოთა შორის ერთ-ერთი. ლაბორატორიის პერსონალი გამოვჩი გრძელვადიანი და მოკლევადიანი სტაჟიდან შეერთებულ შტატებსა და ევროპის წამყვან ინსტიტუტებში. ცენტრის ლაბორატორიის საქმიანობა ემყარება საერთაშორისო სტანდარტებს, რაც უზრუნველყოფს ტესტების მაღალ ხარისხსა და სანდოობას. ლაბორატორიულ სამსახურს გააჩნია ISO 9001:2008 სერტიფიკატი და ეროვნული ხარისხის ჯილდო. ლაბორატორია მონაწილეობს ავსტრალიის ეროვნული რეფერენს ლაბორატორიის გარე ხარისხის კონტროლის პროგრამაში — ჯანმოს თანამშრომელ ცენტრში — და ყოველწლიური შეფასება 99%-ს აღემატება.",
-        credentialsTitle: "აკრედიტაცია და აღიარება",
-        credentials: [
-            "ISO 9001:2008 სერტიფიცირებული",
-            "ეროვნული ხარისხის ჯილდო",
-            "ჯანმოს გარე ხარისხის კონტროლი — 99%+ წლიური შეფასება",
-            "სამხრეთ კავკასიაში უნიკალური დიაგნოსტიკური შესაძლებლობები",
+      },
+      {
+        name: 'Clinical Bacteriology',
+        description:
+          'Provides comprehensive microbiological, automatic, and manual diagnostic services for accurate and reliable testing of all types of clinical specimens, including fungal culture isolation, morphological and biochemical identification.',
+        highlights: [
+          'Bact/Alert automatic blood culture system (BioMéreieux, USA–France)',
+          'VITEK 2 — simultaneous microbial ID + antimicrobial susceptibility',
+          'Light, phase-contrast, and fluorescent microscopes',
+          'Fungal culture isolation and identification',
         ],
-        labsTitle: "ჩვენი ლაბორატორიები",
-        labs: [
-            {
-                name: "კლინიკური დიაგნოსტიკისა და ბიოქიმიის ლაბორატორია",
-                description:
-                    "სრული სპექტრის კლინიკური დიაგნოსტიკური ლაბორატორია, რომელიც ახორციელებს სისხლის, სეროზული სითხეების (ცსთ, პლევრული, ასციტური) და შარდის კომპლექსურ კლინიკურ და ბიოქიმიურ ტესტირებას.",
-                highlights: [
-                    "COBAS INTEGRA 400+ — 60-ზე მეტი ბიოქიმიური მაჩვენებელი",
-                    "ABL 80 — სისხლის გაზები და ელექტროლიტები",
-                    "HIMACLOT DUO — ჰემოსტაზი",
-                    "SISMEX KX-21N — ჰემატოლოგიური ანალიზი",
-                ],
-            },
-            {
-                name: "კლინიკური იმუნოლოგიის ლაბორატორია",
-                description:
-                    "თანამედროვე, სრულად აღჭურვილი იმუნოლოგიური ლაბორატორია, რომელიც სთავაზობს სრულ სპექტრს იმუნოლოგიური დიაგნოსტიკური სერვისებისა: იმუნოფენოტიპირება, აივ/შიდსი და სხვა იმუნოდეფიციტები, ინფექციური, აუტოიმუნური, ონკოლოგიური და ენდოკრინოლოგიური დიაგნოსტიკა.",
-                highlights: [
-                    "FACSCalibur ფლოუ ციტომეტრი (Becton Dickinson, USA)",
-                    "Elecsys 2010 ანალიზატორი (Roche, შვეიცარია)",
-                    "ELISPOT READER SYSTEM",
-                    "საქართველოში ერთადერთი — ლატენტური ტუბ. T-Spot-TB (ELISPOT) მეთოდით",
-                ],
-            },
-            {
-                name: "კლინიკური ბაქტერიოლოგიის ლაბორატორია",
-                description:
-                    "კომპლექსური მიკრობიოლოგიური, ავტომატური და მანუალური დიაგნოსტიკური სერვისები ყველა ტიპის კლინიკური მასალის ზუსტი ტესტირებისთვის, სოკოვანი კულტურების იზოლაციისა და იდენტიფიკაციის ჩათვლით.",
-                highlights: [
-                    "Bact/Alert ავტომატური სისხლის კულტურის სისტემა (BioMéreieux)",
-                    "VITEK 2 — მიკრობული იდენტიფიკაცია + ანტიბიოტიკოგრამა",
-                    "სასინათლო, ფაზური კონტრასტისა და ფლუორესცენტული მიკროსკოპები",
-                    "სოკოვანი კულტურების იზოლაცია და მორფო-ბიოქიმიური იდენტიფიკაცია",
-                ],
-            },
-            {
-                name: "აივ-ის დიაგნოსტიკური ლაბორატორია",
-                since: "ოპერირებს 1984 წლიდან",
-                description:
-                    "საქართველოში პირველი ლაბორატორია, სადაც აივ/შიდსის ანტისხეულების გამოვლენა დაიწყო. 1989 წლიდან 4000-ზე მეტი პაციენტი იდენტიფიცირდა. ქვეყნის მასშტაბით 70-ზე მეტი აივ-ის დიაგნოსტიკური ლაბორატორია გაიხსნა.",
-                highlights: [
-                    "ELISA — ანტისხეულების გამოვლენა",
-                    "Western Blot — დამადასტურებელი ტესტი",
-                    "4,000+ იდენტიფიცირებული პაციენტი",
-                    "70+ გახსნილი ლაბორატორია ქვეყნის მასშტაბით",
-                ],
-            },
-            {
-                name: "კლინიკური ვირუსოლოგიისა და მოლეკულური მედიცინის ლაბორატორია",
-                description:
-                    "საერთაშორისო სტანდარტების შესაბამისი ლაბორატორია, რომელიც სთავაზობს სეროლოგიური, ვირუსოლოგიური და მოლეკულური დიაგნოსტიკის სრულ სპექტრს real-time PCR მეთოდოლოგიის გამოყენებით.",
-                highlights: [
-                    "Real-time PCR — აივ, ჰეპატიტი, ტუბ. და სხვა პათოგენები",
-                    "გენოტიპირება და სუბტიპირება — აივ, ვირ. ჰეპატიტი, პაპილომავირუსი",
-                    "მულტიპლექს PCR (ცსთ) — ვირ. მენინგიტი და ენცეფალიტი",
-                    "Xpert/MTB RIF — სწრაფი ტბ, მ.შ. რეზისტენტული შტამები",
-                    "IL28B გენოტიპირება",
-                ],
-            },
-        ] as Lab[],
-        sectionNavTitle: "ამ სექციაში",
-        sectionLinks: [
-            { label: "ამბულატორიული სერვისები", href: "#" },
-            { label: "სტაციონარული სერვისები", href: "#" },
-            { label: "ინსტრუმენტული დიაგნოსტიკა", href: "#" },
+      },
+      {
+        name: 'HIV Diagnostic Laboratory',
+        since: 'Operational since 1984',
+        description:
+          'The first laboratory in Georgia to run HIV/AIDS antibody detection tests. Since the first confirmed HIV case in Georgia in 1989, this laboratory has identified more than 4,000 patients and has initiated and launched more than 70 HIV/AIDS diagnostic laboratory services across the country.',
+        highlights: [
+          'ELISA — antibody detection',
+          'Western Blot — confirmatory testing',
+          '4,000+ patients identified',
+          '70+ diagnostic labs launched nationwide',
         ],
-    },
+      },
+      {
+        name: 'Clinical Virology & Molecular Medicine',
+        description:
+          'Meets the requirements of the best international standards. Staffed by highly qualified specialists trained in leading US and European centers. Provides a wide range of serological, virological, and molecular diagnostics using high-tech real-time PCR methods.',
+        highlights: [
+          'Real-time PCR — HIV, hepatitis, TB, and other pathogens',
+          'Genotyping & subtyping — HIV, viral hepatitis, papillomavirus',
+          'Multiplex PCR (CSF) — viral meningitis & encephalitis',
+          'Xpert/MTB RIF — rapid TB incl. drug-resistant strains',
+          'IL28B genotyping',
+        ],
+      },
+    ] as Lab[],
+    sectionNavTitle: 'In This Section',
+    sectionLinks: [
+      { label: 'Ambulatory Services', href: '#' },
+      { label: 'Stationary Services', href: '#' },
+      { label: 'Instrumental Diagnostics', href: '#' },
+    ],
+  },
+  ka: {
+    pageTitle: 'ლაბორატორიული სამსახური',
+    heroTitle: 'ლაბორატორიული სამსახური',
+    heroSubtitle:
+      'აღმოსავლეთ ევროპის ერთ-ერთი საუკეთესო ლაბორატორიული სამსახური, აღჭურვილი თანამედროვე ტექნოლოგიებით და მომზადებული საერთაშორისო გამოცდილების მქონე სპეციალისტებით.',
+    overviewTitle: 'ზოგადი მიმოხილვა',
+    overviewText:
+      'თენგიზ ცერცვაძის სახელობის ინფექციური პათოლოგიის, შიდსისა და კლინიკური იმუნოლოგიის კვლევითი ცენტრის ლაბორატორიული სამსახური განიხილება, როგორც აღმოსავლეთ ევროპის ქვეყნებში საუკეთესოთა შორის ერთ-ერთი. ლაბორატორიის პერსონალი გამოვჩი გრძელვადიანი და მოკლევადიანი სტაჟიდან შეერთებულ შტატებსა და ევროპის წამყვან ინსტიტუტებში. ცენტრის ლაბორატორიის საქმიანობა ემყარება საერთაშორისო სტანდარტებს, რაც უზრუნველყოფს ტესტების მაღალ ხარისხსა და სანდოობას. ლაბორატორიულ სამსახურს გააჩნია ISO 9001:2008 სერტიფიკატი და ეროვნული ხარისხის ჯილდო. ლაბორატორია მონაწილეობს ავსტრალიის ეროვნული რეფერენს ლაბორატორიის გარე ხარისხის კონტროლის პროგრამაში — ჯანმოს თანამშრომელ ცენტრში — და ყოველწლიური შეფასება 99%-ს აღემატება.',
+    credentialsTitle: 'აკრედიტაცია და აღიარება',
+    credentials: [
+      'ISO 9001:2008 სერტიფიცირებული',
+      'ეროვნული ხარისხის ჯილდო',
+      'ჯანმოს გარე ხარისხის კონტროლი — 99%+ წლიური შეფასება',
+      'სამხრეთ კავკასიაში უნიკალური დიაგნოსტიკური შესაძლებლობები',
+    ],
+    labsTitle: 'ჩვენი ლაბორატორიები',
+    labs: [
+      {
+        name: 'კლინიკური დიაგნოსტიკისა და ბიოქიმიის ლაბორატორია',
+        description:
+          'სრული სპექტრის კლინიკური დიაგნოსტიკური ლაბორატორია, რომელიც ახორციელებს სისხლის, სეროზული სითხეების (ცსთ, პლევრული, ასციტური) და შარდის კომპლექსურ კლინიკურ და ბიოქიმიურ ტესტირებას.',
+        highlights: [
+          'COBAS INTEGRA 400+ — 60-ზე მეტი ბიოქიმიური მაჩვენებელი',
+          'ABL 80 — სისხლის გაზები და ელექტროლიტები',
+          'HIMACLOT DUO — ჰემოსტაზი',
+          'SISMEX KX-21N — ჰემატოლოგიური ანალიზი',
+        ],
+      },
+      {
+        name: 'კლინიკური იმუნოლოგიის ლაბორატორია',
+        description:
+          'თანამედროვე, სრულად აღჭურვილი იმუნოლოგიური ლაბორატორია, რომელიც სთავაზობს სრულ სპექტრს იმუნოლოგიური დიაგნოსტიკური სერვისებისა: იმუნოფენოტიპირება, აივ/შიდსი და სხვა იმუნოდეფიციტები, ინფექციური, აუტოიმუნური, ონკოლოგიური და ენდოკრინოლოგიური დიაგნოსტიკა.',
+        highlights: [
+          'FACSCalibur ფლოუ ციტომეტრი (Becton Dickinson, USA)',
+          'Elecsys 2010 ანალიზატორი (Roche, შვეიცარია)',
+          'ELISPOT READER SYSTEM',
+          'საქართველოში ერთადერთი — ლატენტური ტუბ. T-Spot-TB (ELISPOT) მეთოდით',
+        ],
+      },
+      {
+        name: 'კლინიკური ბაქტერიოლოგიის ლაბორატორია',
+        description:
+          'კომპლექსური მიკრობიოლოგიური, ავტომატური და მანუალური დიაგნოსტიკური სერვისები ყველა ტიპის კლინიკური მასალის ზუსტი ტესტირებისთვის, სოკოვანი კულტურების იზოლაციისა და იდენტიფიკაციის ჩათვლით.',
+        highlights: [
+          'Bact/Alert ავტომატური სისხლის კულტურის სისტემა (BioMéreieux)',
+          'VITEK 2 — მიკრობული იდენტიფიკაცია + ანტიბიოტიკოგრამა',
+          'სასინათლო, ფაზური კონტრასტისა და ფლუორესცენტული მიკროსკოპები',
+          'სოკოვანი კულტურების იზოლაცია და მორფო-ბიოქიმიური იდენტიფიკაცია',
+        ],
+      },
+      {
+        name: 'აივ-ის დიაგნოსტიკური ლაბორატორია',
+        since: 'ოპერირებს 1984 წლიდან',
+        description:
+          'საქართველოში პირველი ლაბორატორია, სადაც აივ/შიდსის ანტისხეულების გამოვლენა დაიწყო. 1989 წლიდან 4000-ზე მეტი პაციენტი იდენტიფიცირდა. ქვეყნის მასშტაბით 70-ზე მეტი აივ-ის დიაგნოსტიკური ლაბორატორია გაიხსნა.',
+        highlights: [
+          'ELISA — ანტისხეულების გამოვლენა',
+          'Western Blot — დამადასტურებელი ტესტი',
+          '4,000+ იდენტიფიცირებული პაციენტი',
+          '70+ გახსნილი ლაბორატორია ქვეყნის მასშტაბით',
+        ],
+      },
+      {
+        name: 'კლინიკური ვირუსოლოგიისა და მოლეკულური მედიცინის ლაბორატორია',
+        description:
+          'საერთაშორისო სტანდარტების შესაბამისი ლაბორატორია, რომელიც სთავაზობს სეროლოგიური, ვირუსოლოგიური და მოლეკულური დიაგნოსტიკის სრულ სპექტრს real-time PCR მეთოდოლოგიის გამოყენებით.',
+        highlights: [
+          'Real-time PCR — აივ, ჰეპატიტი, ტუბ. და სხვა პათოგენები',
+          'გენოტიპირება და სუბტიპირება — აივ, ვირ. ჰეპატიტი, პაპილომავირუსი',
+          'მულტიპლექს PCR (ცსთ) — ვირ. მენინგიტი და ენცეფალიტი',
+          'Xpert/MTB RIF — სწრაფი ტბ, მ.შ. რეზისტენტული შტამები',
+          'IL28B გენოტიპირება',
+        ],
+      },
+    ] as Lab[],
+    sectionNavTitle: 'ამ სექციაში',
+    sectionLinks: [
+      { label: 'ამბულატორიული სერვისები', href: '#' },
+      { label: 'სტაციონარული სერვისები', href: '#' },
+      { label: 'ინსტრუმენტული დიაგნოსტიკა', href: '#' },
+    ],
+  },
 } as const;
 
 const c = content[lang];
 ---
 
 <section class="lab-page content-grid">
-    <div class="hero">
-        <p class="section-label">{c.pageTitle}</p>
-        <h1>{c.heroTitle}</h1>
-        <p class="hero-subtitle">{c.heroSubtitle}</p>
-    </div>
+  <div class="hero">
+    <p class="section-label">{c.pageTitle}</p>
+    <h1>{c.heroTitle}</h1>
+    <p class="hero-subtitle">{c.heroSubtitle}</p>
+  </div>
 
-    <div class="surface overview">
-        <h2>{c.overviewTitle}</h2>
-        <p>{c.overviewText}</p>
-    </div>
+  <div class="surface overview">
+    <h2>{c.overviewTitle}</h2>
+    <p>{c.overviewText}</p>
+  </div>
 
-    <div class="credentials-strip" role="list" aria-label={c.credentialsTitle}>
-        {
-            c.credentials.map((cred) => (
-                <div class="cred-item" role="listitem">
-                    {cred}
-                </div>
-            ))
-        }
-    </div>
-
-    <div class="surface labs-section">
-        <h2>{c.labsTitle}</h2>
-        <div class="labs-grid">
-            {
-                c.labs.map((lab) => (
-                    <article class="lab-card">
-                        <div class="lab-card-header">
-                            <h3>{lab.name}</h3>
-                            {lab.since && (
-                                <span class="lab-since">{lab.since}</span>
-                            )}
-                        </div>
-                        <p class="lab-desc">{lab.description}</p>
-                        <ul class="lab-highlights">
-                            {lab.highlights.map((h) => (
-                                <li>{h}</li>
-                            ))}
-                        </ul>
-                    </article>
-                ))
-            }
+  <div class="credentials-strip" role="list" aria-label={c.credentialsTitle}>
+    {
+      c.credentials.map((cred) => (
+        <div class="cred-item" role="listitem">
+          {cred}
         </div>
-    </div>
+      ))
+    }
+  </div>
 
-    <aside class="surface in-section">
-        <h3>{c.sectionNavTitle}</h3>
-        <ul>
-            {
-                c.sectionLinks.map((link) => (
-                    <li>
-                        <a href={link.href}>{link.label}</a>
-                    </li>
-                ))
-            }
-        </ul>
-    </aside>
+  <div class="surface labs-section">
+    <h2>{c.labsTitle}</h2>
+    <div class="labs-grid">
+      {
+        c.labs.map((lab) => (
+          <article class="lab-card">
+            <div class="lab-card-header">
+              <h3>{lab.name}</h3>
+              {lab.since && <span class="lab-since">{lab.since}</span>}
+            </div>
+            <p class="lab-desc">{lab.description}</p>
+            <ul class="lab-highlights">
+              {lab.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+
+  <aside class="surface in-section">
+    <h3>{c.sectionNavTitle}</h3>
+    <ul>
+      {
+        c.sectionLinks.map((link) => (
+          <li>
+            <a href={link.href}>{link.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </aside>
 </section>
 
 <style>
-    .lab-page {
-        padding-block: 4rem 5rem;
-        display: grid;
-        gap: 1.5rem;
+  .lab-page {
+    padding-block: 4rem 5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #002f66 0%, #0452a3 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    color: #f3f7ff;
+
+    h1 {
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .hero-subtitle {
+    color: #d8e6ff;
+    font-size: 1.05rem;
+  }
+
+  .surface {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 24px rgba(3, 68, 133, 0.08);
+
+    h2 {
+      margin-bottom: 0.85rem;
+      font-size: 1.35rem;
+      color: #02386f;
     }
 
-    .hero {
-        background: linear-gradient(135deg, #002f66 0%, #0452a3 100%);
-        border-radius: 16px;
-        padding: 2rem;
-        color: #f3f7ff;
+    p {
+      line-height: 1.7;
+      color: #223549;
+    }
+  }
 
-        h1 {
-            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
-            line-height: 1.25;
-            margin-bottom: 0.75rem;
-        }
+  .credentials-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .cred-item {
+    background: #0a3f79;
+    color: #eef4ff;
+    border-radius: 10px;
+    padding: 0.8rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .labs-section h2 {
+    margin-bottom: 1.25rem;
+  }
+
+  .labs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .lab-card {
+    border: 1px solid #d8e4f2;
+    border-radius: 12px;
+    padding: 1.1rem;
+    background: #f9fbff;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .lab-card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #023472;
+    }
+  }
+
+  .lab-since {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fff;
+    background: #0b4d95;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .lab-desc {
+    font-size: 0.88rem;
+    color: #354960;
+    line-height: 1.65;
+  }
+
+  .lab-highlights {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+
+    li {
+      font-size: 0.83rem;
+      color: #1a3a55;
+      padding-left: 1rem;
+      position: relative;
+
+      &::before {
+        content: '–';
+        position: absolute;
+        left: 0;
+        color: #0b4d95;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .in-section {
+    h3 {
+      margin-bottom: 0.65rem;
+      color: #034485;
     }
 
-    .hero-subtitle {
-        color: #d8e6ff;
-        font-size: 1.05rem;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
-    .surface {
-        background: #fff;
-        border-radius: 14px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 24px rgba(3, 68, 133, 0.08);
+    a {
+      color: #034485;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.35rem 0.75rem;
+      border: 1.5px solid #c2d9f5;
+      border-radius: 999px;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
 
-        h2 {
-            margin-bottom: 0.85rem;
-            font-size: 1.35rem;
-            color: #02386f;
-        }
-
-        p {
-            line-height: 1.7;
-            color: #223549;
-        }
-    }
-
-    .credentials-strip {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 0.75rem;
-    }
-
-    .cred-item {
-        background: #0a3f79;
-        color: #eef4ff;
-        border-radius: 10px;
-        padding: 0.8rem;
-        text-align: center;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    .labs-section h2 {
-        margin-bottom: 1.25rem;
-    }
-
-    .labs-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-    }
-
-    .lab-card {
-        border: 1px solid #d8e4f2;
-        border-radius: 12px;
-        padding: 1.1rem;
-        background: #f9fbff;
-        display: grid;
-        gap: 0.65rem;
-    }
-
-    .lab-card-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        gap: 0.5rem;
-
-        h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #023472;
-        }
-    }
-
-    .lab-since {
-        font-size: 0.78rem;
-        font-weight: 600;
+      &:hover {
+        background: #034485;
         color: #fff;
-        background: #0b4d95;
-        border-radius: 999px;
-        padding: 0.2rem 0.6rem;
-        white-space: nowrap;
+      }
+    }
+  }
+
+  @media (max-width: 960px) {
+    .credentials-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .lab-page {
+      padding-block: 2.5rem 4rem;
     }
 
-    .lab-desc {
-        font-size: 0.88rem;
-        color: #354960;
-        line-height: 1.65;
+    .hero,
+    .surface {
+      padding: 1.1rem;
     }
 
-    .lab-highlights {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 0.4rem;
-
-        li {
-            font-size: 0.83rem;
-            color: #1a3a55;
-            padding-left: 1rem;
-            position: relative;
-
-            &::before {
-                content: "–";
-                position: absolute;
-                left: 0;
-                color: #0b4d95;
-                font-weight: 700;
-            }
-        }
+    .credentials-strip,
+    .labs-grid {
+      grid-template-columns: 1fr;
     }
-
-    .in-section {
-        h3 {
-            margin-bottom: 0.65rem;
-            color: #034485;
-        }
-
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.65rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        a {
-            color: #034485;
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.35rem 0.75rem;
-            border: 1.5px solid #c2d9f5;
-            border-radius: 999px;
-            transition:
-                background 0.15s ease,
-                color 0.15s ease;
-
-            &:hover {
-                background: #034485;
-                color: #fff;
-            }
-        }
-    }
-
-    @media (max-width: 960px) {
-        .credentials-strip {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    @media (max-width: 680px) {
-        .lab-page {
-            padding-block: 2.5rem 4rem;
-        }
-
-        .hero,
-        .surface {
-            padding: 1.1rem;
-        }
-
-        .credentials-strip,
-        .labs-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+  }
 </style>

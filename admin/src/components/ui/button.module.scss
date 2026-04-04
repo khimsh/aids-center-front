@@ -9,7 +9,9 @@
   padding: var(--space-6) var(--space-13);
   font: inherit;
   text-decoration: none;
-  transition: filter 160ms ease, transform 160ms ease;
+  transition:
+    filter 160ms ease,
+    transform 160ms ease;
 }
 
 .primary {

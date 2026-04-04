@@ -24,7 +24,7 @@ export function ArticleListCard({
   forceDraftStatus = false,
   onEdit,
   onDelete,
-  onPublishDraft
+  onPublishDraft,
 }: ArticleListCardProps) {
   const isPublished = forceDraftStatus ? false : articleIsPublished(article);
 
@@ -37,12 +37,18 @@ export function ArticleListCard({
           </span>
           {article.featured ? <span className="status-pill featured">featured</span> : null}
         </div>
-        <span>{new Date(article.updated_at ?? article.created_at ?? Date.now()).toLocaleString()}</span>
+        <span>
+          {new Date(article.updated_at ?? article.created_at ?? Date.now()).toLocaleString()}
+        </span>
       </div>
 
       <h3>{article.title_ka}</h3>
       {showEnglishTitle && article.title_en ? <p className="hint">EN: {article.title_en}</p> : null}
-      <p className="hint">{showCategoryPrefix ? `Category: ${article.category ?? 'uncategorized'}` : (article.category ?? 'uncategorized')}</p>
+      <p className="hint">
+        {showCategoryPrefix
+          ? `Category: ${article.category ?? 'uncategorized'}`
+          : (article.category ?? 'uncategorized')}
+      </p>
 
       <div className="post-actions">
         <Button type="button" variant="secondary" onClick={onEdit} disabled={busy}>

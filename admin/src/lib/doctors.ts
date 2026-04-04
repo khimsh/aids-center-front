@@ -89,7 +89,7 @@ function toDoctorPayload(input: DoctorMutationInput) {
     sort_order:
       typeof input.sort_order === 'number' && Number.isFinite(input.sort_order)
         ? input.sort_order
-        : null
+        : null,
   };
 }
 
@@ -105,7 +105,7 @@ function toDoctorTranslationPayload(input: DoctorTranslationMutationInput) {
     pedagogical_experience: asNullable(input.pedagogical_experience),
     memberships: asNullable(input.memberships),
     publications: asNullable(input.publications),
-    expertise: asNullable(input.expertise)
+    expertise: asNullable(input.expertise),
   };
 }
 
@@ -130,7 +130,10 @@ export async function createDoctor(input: DoctorMutationInput): Promise<DoctorRe
   return response.data as DoctorRecord;
 }
 
-export async function updateDoctor(doctorId: number, input: DoctorMutationInput): Promise<DoctorRecord> {
+export async function updateDoctor(
+  doctorId: number,
+  input: DoctorMutationInput,
+): Promise<DoctorRecord> {
   const response = await api.put(`/api/doctors/${doctorId}`, toDoctorPayload(input));
   return response.data as DoctorRecord;
 }
@@ -145,7 +148,9 @@ export async function reorderDoctorsByIds(ids: number[]): Promise<DoctorRecord[]
   return Array.isArray(data) ? (data as DoctorRecord[]) : [];
 }
 
-export async function fetchDoctorTranslations(doctorId: number): Promise<DoctorTranslationRecord[]> {
+export async function fetchDoctorTranslations(
+  doctorId: number,
+): Promise<DoctorTranslationRecord[]> {
   const response = await api.get(`/api/doctors/${doctorId}/translations`);
   const data = response.data as unknown;
   return Array.isArray(data) ? (data as DoctorTranslationRecord[]) : [];
@@ -153,11 +158,11 @@ export async function fetchDoctorTranslations(doctorId: number): Promise<DoctorT
 
 export async function createDoctorTranslation(
   doctorId: number,
-  input: DoctorTranslationMutationInput
+  input: DoctorTranslationMutationInput,
 ): Promise<DoctorTranslationRecord> {
   const response = await api.post(
     `/api/doctors/${doctorId}/translations`,
-    toDoctorTranslationPayload(input)
+    toDoctorTranslationPayload(input),
   );
   return response.data as DoctorTranslationRecord;
 }
@@ -165,20 +170,23 @@ export async function createDoctorTranslation(
 export async function updateDoctorTranslation(
   doctorId: number,
   lang: string,
-  input: Omit<DoctorTranslationMutationInput, 'lang'>
+  input: Omit<DoctorTranslationMutationInput, 'lang'>,
 ): Promise<DoctorTranslationRecord> {
-  const response = await api.put(`/api/doctors/${doctorId}/translations/${encodeURIComponent(lang)}`, {
-    name: input.name.trim(),
-    specialty: asNullable(input.specialty),
-    degree: asNullable(input.degree),
-    department: asNullable(input.department),
-    education: input.education.trim(),
-    experience: input.experience.trim(),
-    pedagogical_experience: asNullable(input.pedagogical_experience),
-    memberships: asNullable(input.memberships),
-    publications: asNullable(input.publications),
-    expertise: asNullable(input.expertise)
-  });
+  const response = await api.put(
+    `/api/doctors/${doctorId}/translations/${encodeURIComponent(lang)}`,
+    {
+      name: input.name.trim(),
+      specialty: asNullable(input.specialty),
+      degree: asNullable(input.degree),
+      department: asNullable(input.department),
+      education: input.education.trim(),
+      experience: input.experience.trim(),
+      pedagogical_experience: asNullable(input.pedagogical_experience),
+      memberships: asNullable(input.memberships),
+      publications: asNullable(input.publications),
+      expertise: asNullable(input.expertise),
+    },
+  );
 
   return response.data as DoctorTranslationRecord;
 }

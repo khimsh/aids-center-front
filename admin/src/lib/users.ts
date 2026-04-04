@@ -54,7 +54,7 @@ export async function changeEditorPassword(userId: string | number, newPassword:
   const payloadVariants: Array<Record<string, unknown>> = [
     { password: newPassword },
     { new_password: newPassword },
-    { password: newPassword, confirm_password: newPassword }
+    { password: newPassword, confirm_password: newPassword },
   ];
 
   let lastError: unknown;

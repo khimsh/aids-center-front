@@ -1,246 +1,246 @@
 ---
-type Lang = "ka" | "en";
+type Lang = 'ka' | 'en';
 
-const lang = (Astro.currentLocale ?? "ka") as Lang;
-const homeUrl = lang === "ka" ? "/" : `/${lang}`;
-const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
+const lang = (Astro.currentLocale ?? 'ka') as Lang;
+const homeUrl = lang === 'ka' ? '/' : `/${lang}`;
+const hivAidsUrl = lang === 'ka' ? '/hiv-aids' : `/${lang}/hiv-aids`;
 const breadcrumb =
-    lang === "ka"
-        ? { home: "მთავარი", hivAids: "აივ / შიდსი", aria: "პურის ნამცეცები" }
-        : { home: "Home", hivAids: "HIV / AIDS", aria: "Breadcrumb" };
+  lang === 'ka'
+    ? { home: 'მთავარი', hivAids: 'აივ / შიდსი', aria: 'პურის ნამცეცები' }
+    : { home: 'Home', hivAids: 'HIV / AIDS', aria: 'Breadcrumb' };
 
 const content = {
-    en: {
-        sectionLabel: "HIV / AIDS",
-        heroTitle: "Important Dates",
-        worldAidsDayTitle: "1 December - World AIDS Day",
-        worldAidsDayParagraphs: [
-            "World AIDS Day, observed December 1 each year, is dedicated to raising awareness of the global AIDS epidemic caused by the spread of HIV infection.",
-            "December 1 was chosen because the first case of AIDS was diagnosed on this day in 1981.",
-            "Since then, AIDS has killed more than 25 million people, making it one of the most destructive epidemics in recorded history.",
-            "The concept of a World AIDS Day originated at the 1988 World Summit of Ministers of Health on Programmes for AIDS Prevention.",
-            "Since then, it has been taken up by governments, international organizations and charities around the world.",
-            "The day, 1 December, quickly became established as one of the world's most successful commemorative days around the globe.",
-            "The World AIDS Campaign 2004 seeks to address the way women's inequality helps fuel the transmission of HIV and increases the impact of AIDS.",
-            "Campaign posters have been developed to give a voice to women facing the challenges of gender inequality in the face of HIV and AIDS.",
-            'The campaign\'s slogan "Have you heard me today?" calls for action against the inequalities that not only put women and girls at risk but whole communities.',
-        ],
-        candlelightTitle: "AIDS Candlelight Memorial",
-        candlelightParagraphs: [
-            "In 1983 global community launched the AIDS Candlelight Memorial day campaigns.",
-            "Traditionally the day is commemorated on the 3rd week of May and by now over 90 countries are joining the global call for action.",
-            "AIDS Candlelight Memorial day is the largest global grassroots AIDS event.",
-            "Georgia has joined the AIDSCandlelight Memorial in 1996.",
-            "The country level partners for HIV/AIDS - government, NGOs, UN and international agencies respond to the global action through press-conferences, street actions, media and social mobilization events in Tbilisi and regional levels.",
-        ],
-        candlelightGoalsTitle: "Core Goals",
-        candlelightGoals: [
-            "honor the memory of those lost to AIDS;",
-            "show support for those living with HIV and AIDS;",
-            "raise awareness and mobilize communities in the fight against HIV/AIDS;",
-            "ensure our contribution and efforts towards eliminating stigma and discrimination related to HIV/AIDS.",
-        ],
-        principlesTitle: "Memorial Principles",
-        principles: [],
-        additionalParagraphs: [],
-        ribbonTitle: "Red Ribbon",
-        ribbonParagraphs: [
-            "Millions of people wear red ribbon in the world.",
-            "The red ribbon quickly became a beautiful symbol of HIV/AIDS.",
-            "Author of red ribbon is Frank Moor - painter.",
-        ],
-        ribbonSymbolismTitle: "What It Represents",
-        ribbonSymbolism: [],
-    },
-    ka: {
-        sectionLabel: "აივ / შიდსი",
-        heroTitle: "მნიშვნელოვანი თარიღები",
-        worldAidsDayTitle: "1 დეკემბერი - შიდსთან ბრძოლის მსოფლიო დღე",
-        worldAidsDayParagraphs: [
-            "საქართველო უკვე რამდენიმე წელია ტრადიციულად უერთდება მსოფლიოს სხვადასხვა ქვეყნებს შიდსთან ბრძოლის მსოფლიო დღის აღნიშვნაში.",
-            "ჯანდაცვის მსოფლიო ორგანიზაციის მოწოდებით 1988 წლიდან, 1 დეკემბერი აღინიშნება შიდსთან ბრძოლის მსოფლიო დღედ.",
-            "ყოველწლიურად ეს დღე გარკვეულ თემას ეძღვნება, რომელშიც ეპიდემიის რომელიმე ასპექტია ხაზგასმული.",
-            "2004 წელს შიდსთან ბრძოლის მსოფლიო დღის თემაა აივ/შიდსის პრობლემა ქალებსა და გოგონებში, რაც იმით არის გამოწვეული, რომ უკანასკნელ წლებში, მრავალ ქვეყანაში შიდსის ეპიდემიამ მაღალი რისკის ჯგუფებიდან გადაინაცვლა მოსახლეობის ფართო ფენებში და განსაკუთრებით მწვავედ გამოიკვეთა შიდსთან ასოცირებული გენდერული პრობლემები.",
-            "მითი იმის შესახებ, რომ შიდსი მოსახლეობის მხოლოდ გარკვეული ჯგუფებისთვის წარმოადგენს რეალურ საფრთხეს, საბოლოოდ განადგურდა.",
-            "საპირველდეკემბრო კამპანიის მიზანია კიდევ ერთხელ მივაპყროთ საზოგადოებისა და ყველა ჩვენგანის ყურადღება ამ სერიოზული პრობლემის ირგვლივ, კიდევ ერთხელ გავაცნობიეროთ შიდსის რეალური საფრთხე.",
-            "საქართველოში შიდსის მოსალოდნელ ეპიდემიასთან ბრძოლა შესაძლებელია მხოლოდ მთავრობის პოლიტიკური ნებისა და სტრატეგიული მხარდაჭერის და მთელი საზოგადოების მობილიზაციის გზით.",
-        ],
-        candlelightTitle: "შიდსით გარდაცვლილთა ხსოვნის საერთაშორისო დღე",
-        candlelightParagraphs: [
-            "1983 წელს მსოფლიო საზოგადოებამ საფუძველი ჩაუყარა შიდსით დაავადებულთა ხსოვნის საერთაშორისო დღის კამპანიას.",
-            "ტრადიციულად ეს დღე მაისის მე-3 კვირაში აღინიშნება და დღეისათვის მსოფლიო მოწოდებას 90-ზე მეტი ქვეყანა უერთდება.",
-            "შიდსით გარდაცვლილთა ხსოვნის საერთაშორისო დღის მიზანია გლობალური საზოგადოების შექმნა აივ/შიდსის წინააღმდეგ, რომელშიც გაერთიანებული იქნება საზოგადოების ყველა ფენა.",
-            "21 მაისს, მსოფლიოს ყველა კუთხიდან ათასობით ადამიანი შეიკრიბება, რათა სოლიდარობა გამოუცხადოს აივ ინფიცირებულ ადამიანებს და ანთებული სანთლებით პატივი მიაგოს შიდსით გარდაცვლილთა ხსოვნას.",
-        ],
-        candlelightGoalsTitle: "ძირითადი მიზნები",
-        candlelightGoals: [
-            "მოვუწოდოთ საზოგადოებას აივ/შიდსის წინააღმდეგ აქტიური ბრძოლისკენ.",
-            "პატივი მივაგოთ შიდსით გარდაცვლილების ხსოვნას.",
-            "გამოვხატოთ მხარდაჭერა აივ/შიდსით დაავადებულთა მიმართ.",
-            "ხელი შევუწყოთ განათლებასა და საზოგადოების მობილიზებას ეპიდემიის წინააღმდეგ.",
-            "წვლილი შევიტანოთ აივ/შიდსთან ასოცირებული სტიგმისა და დისკრიმინაციის აღმოფხვრაში.",
-        ],
-        principlesTitle: "ხსოვნის დღის პრინციპები",
-        principles: [
-            "გვახსოვდეს და პატივი მივაგოთ შიდსით გარდაცვლილ 28 მილიონი ადამიანის ხსოვნას;",
-            "40 მილიონზე მეტი აივ ინფიცირებულის მხარდაჭერას და ზრუნვას;",
-            "იმ ადამიანების დაცვას, რომელთაც შიდსის პრობლემა ჯერ არ შეხებიათ.",
-        ],
-        additionalParagraphs: [
-            "აივ ინფექცია/შიდსის ეპიდემია 40 მილიონზე მეტ ადამიანს შეეხო და მხოლოდ 2005 წელს 3 მილიონი ადამიანის სიცოცხლე იმსხვერპლა.",
-            "შიდსისაგან თავისუფალი თაობების აღზრდა - მსოფლიო საზოგადოების წინაშე მდგარი ურთულესი ამოცანაა, მაშინ როდესაც დაავადება 15 მილიონი ბავშვის ცხოვრებას შეეხო.",
-            "მხოლოდ 2005 წელს შიდსით 3,1 მილიონი ადამიანი გარდაიცვალა, მათ შორის 15 წლამდე ასაკის 570 000 ბავშვი.",
-            "შემთხვევათა რიცხვის მატების მიუხედავად ანტივირუსულმა მკურნალობამ დაბალი და საშუალო შემოსავლების ქვეყნებში ერთ მილიონზე მეტ ადამიანს გაუხანგრძლივა სიცოცხლე.",
-            "ამ მკურნალობის ფართოდ დანერგვით მხოლოდ 2005 წელს 250000-350000 ადამიანს შეუნარჩუნდა სიცოცხლე.",
-            "აივ/შიდსის სამყაროში თანაგრძნობით ცხოვრება, აივ/შიდსით დაავადებული პირების მაქსიმალური მხარდაჭერა, ასევე შიდსით გარდაცვლილთა ხსოვნა, დაავადების წინააღმდეგ ბრძოლისა და შიდსთან ასოცირებული სტიგმისა და დისკრიმინაციისგან თავისუფალი გარემოს შექმნა ყველა ჩვენთაგანის პიროვნული და პროფესიული მოვალეობაა.",
-            "საქართველო შიდსით დაავადებულთა ხსოვნის მსოფლიო დღეს 1996 წელს შეუერთდა.",
-            "ქვეყანაში მომუშავე პარტნიორული ორგანიზაციები - სამთავრობო თუ არასამთავრობო ორგანიზაციები, გაეროსა და საერთაშორისო სააგენტოები გლობალურ აქციას უერთდებიან თბილისისა და რეგიონების მასშტაბით გამართული პრეს-კონფერენციების, ქუჩის აქციების, სატელევიზიციო/რადიო გადაცემებისა და საინფორმაციო-საგანმანათლებლო ღონისძიებებით.",
-            '"შიდსის გლობალური ეპიდემიის სავალალო რეალობის წინააღმდეგ ბრძოლა ყველა თანამედროვე ადამიანის მოვალეობაა. თითოეული ადამიანი უზრუნველყოფილი უნდა იყოს შიდსის შესახებ შესაბამისი ინფორმაციით და ხელმისაწვდომი მოვლითა და მზრუნველობით".',
-            "კოფი ანანი, გაეროს გენერალური მდივანი",
-        ],
-        ribbonTitle: "წითელი ლენტი",
-        ribbonParagraphs: [
-            "მსოფლიოში მილიონობით ადამიანი ატარებს წითელ ლენტს, როგორც აივ ინფექცია/შიდსის პრობლემის გაზიარების სიმბოლოს.",
-            "ეს ლენტი 1991 წელს შექმნა მხატვარმა ფრანკ მურმა.",
-        ],
-        ribbonSymbolismTitle: "რას გამოხატავს",
-        ribbonSymbolism: [
-            "სოლიდარობას აივ ინფექციით მცხოვრებ ადამიანებთან, მათ ოჯახის წევრებსა და მეგობრებთან.",
-            "პროტესტს აივ ინფიცირებულთა მიმართ სტიგმისა და დისკრიმინაციის წინააღმდეგ.",
-            "იმედს, რომ მედიცინა დაიძლევს ვირუსს და გააძლიერებს კაცობრიობის დაცვას.",
-        ],
-    },
+  en: {
+    sectionLabel: 'HIV / AIDS',
+    heroTitle: 'Important Dates',
+    worldAidsDayTitle: '1 December - World AIDS Day',
+    worldAidsDayParagraphs: [
+      'World AIDS Day, observed December 1 each year, is dedicated to raising awareness of the global AIDS epidemic caused by the spread of HIV infection.',
+      'December 1 was chosen because the first case of AIDS was diagnosed on this day in 1981.',
+      'Since then, AIDS has killed more than 25 million people, making it one of the most destructive epidemics in recorded history.',
+      'The concept of a World AIDS Day originated at the 1988 World Summit of Ministers of Health on Programmes for AIDS Prevention.',
+      'Since then, it has been taken up by governments, international organizations and charities around the world.',
+      "The day, 1 December, quickly became established as one of the world's most successful commemorative days around the globe.",
+      "The World AIDS Campaign 2004 seeks to address the way women's inequality helps fuel the transmission of HIV and increases the impact of AIDS.",
+      'Campaign posters have been developed to give a voice to women facing the challenges of gender inequality in the face of HIV and AIDS.',
+      'The campaign\'s slogan "Have you heard me today?" calls for action against the inequalities that not only put women and girls at risk but whole communities.',
+    ],
+    candlelightTitle: 'AIDS Candlelight Memorial',
+    candlelightParagraphs: [
+      'In 1983 global community launched the AIDS Candlelight Memorial day campaigns.',
+      'Traditionally the day is commemorated on the 3rd week of May and by now over 90 countries are joining the global call for action.',
+      'AIDS Candlelight Memorial day is the largest global grassroots AIDS event.',
+      'Georgia has joined the AIDSCandlelight Memorial in 1996.',
+      'The country level partners for HIV/AIDS - government, NGOs, UN and international agencies respond to the global action through press-conferences, street actions, media and social mobilization events in Tbilisi and regional levels.',
+    ],
+    candlelightGoalsTitle: 'Core Goals',
+    candlelightGoals: [
+      'honor the memory of those lost to AIDS;',
+      'show support for those living with HIV and AIDS;',
+      'raise awareness and mobilize communities in the fight against HIV/AIDS;',
+      'ensure our contribution and efforts towards eliminating stigma and discrimination related to HIV/AIDS.',
+    ],
+    principlesTitle: 'Memorial Principles',
+    principles: [],
+    additionalParagraphs: [],
+    ribbonTitle: 'Red Ribbon',
+    ribbonParagraphs: [
+      'Millions of people wear red ribbon in the world.',
+      'The red ribbon quickly became a beautiful symbol of HIV/AIDS.',
+      'Author of red ribbon is Frank Moor - painter.',
+    ],
+    ribbonSymbolismTitle: 'What It Represents',
+    ribbonSymbolism: [],
+  },
+  ka: {
+    sectionLabel: 'აივ / შიდსი',
+    heroTitle: 'მნიშვნელოვანი თარიღები',
+    worldAidsDayTitle: '1 დეკემბერი - შიდსთან ბრძოლის მსოფლიო დღე',
+    worldAidsDayParagraphs: [
+      'საქართველო უკვე რამდენიმე წელია ტრადიციულად უერთდება მსოფლიოს სხვადასხვა ქვეყნებს შიდსთან ბრძოლის მსოფლიო დღის აღნიშვნაში.',
+      'ჯანდაცვის მსოფლიო ორგანიზაციის მოწოდებით 1988 წლიდან, 1 დეკემბერი აღინიშნება შიდსთან ბრძოლის მსოფლიო დღედ.',
+      'ყოველწლიურად ეს დღე გარკვეულ თემას ეძღვნება, რომელშიც ეპიდემიის რომელიმე ასპექტია ხაზგასმული.',
+      '2004 წელს შიდსთან ბრძოლის მსოფლიო დღის თემაა აივ/შიდსის პრობლემა ქალებსა და გოგონებში, რაც იმით არის გამოწვეული, რომ უკანასკნელ წლებში, მრავალ ქვეყანაში შიდსის ეპიდემიამ მაღალი რისკის ჯგუფებიდან გადაინაცვლა მოსახლეობის ფართო ფენებში და განსაკუთრებით მწვავედ გამოიკვეთა შიდსთან ასოცირებული გენდერული პრობლემები.',
+      'მითი იმის შესახებ, რომ შიდსი მოსახლეობის მხოლოდ გარკვეული ჯგუფებისთვის წარმოადგენს რეალურ საფრთხეს, საბოლოოდ განადგურდა.',
+      'საპირველდეკემბრო კამპანიის მიზანია კიდევ ერთხელ მივაპყროთ საზოგადოებისა და ყველა ჩვენგანის ყურადღება ამ სერიოზული პრობლემის ირგვლივ, კიდევ ერთხელ გავაცნობიეროთ შიდსის რეალური საფრთხე.',
+      'საქართველოში შიდსის მოსალოდნელ ეპიდემიასთან ბრძოლა შესაძლებელია მხოლოდ მთავრობის პოლიტიკური ნებისა და სტრატეგიული მხარდაჭერის და მთელი საზოგადოების მობილიზაციის გზით.',
+    ],
+    candlelightTitle: 'შიდსით გარდაცვლილთა ხსოვნის საერთაშორისო დღე',
+    candlelightParagraphs: [
+      '1983 წელს მსოფლიო საზოგადოებამ საფუძველი ჩაუყარა შიდსით დაავადებულთა ხსოვნის საერთაშორისო დღის კამპანიას.',
+      'ტრადიციულად ეს დღე მაისის მე-3 კვირაში აღინიშნება და დღეისათვის მსოფლიო მოწოდებას 90-ზე მეტი ქვეყანა უერთდება.',
+      'შიდსით გარდაცვლილთა ხსოვნის საერთაშორისო დღის მიზანია გლობალური საზოგადოების შექმნა აივ/შიდსის წინააღმდეგ, რომელშიც გაერთიანებული იქნება საზოგადოების ყველა ფენა.',
+      '21 მაისს, მსოფლიოს ყველა კუთხიდან ათასობით ადამიანი შეიკრიბება, რათა სოლიდარობა გამოუცხადოს აივ ინფიცირებულ ადამიანებს და ანთებული სანთლებით პატივი მიაგოს შიდსით გარდაცვლილთა ხსოვნას.',
+    ],
+    candlelightGoalsTitle: 'ძირითადი მიზნები',
+    candlelightGoals: [
+      'მოვუწოდოთ საზოგადოებას აივ/შიდსის წინააღმდეგ აქტიური ბრძოლისკენ.',
+      'პატივი მივაგოთ შიდსით გარდაცვლილების ხსოვნას.',
+      'გამოვხატოთ მხარდაჭერა აივ/შიდსით დაავადებულთა მიმართ.',
+      'ხელი შევუწყოთ განათლებასა და საზოგადოების მობილიზებას ეპიდემიის წინააღმდეგ.',
+      'წვლილი შევიტანოთ აივ/შიდსთან ასოცირებული სტიგმისა და დისკრიმინაციის აღმოფხვრაში.',
+    ],
+    principlesTitle: 'ხსოვნის დღის პრინციპები',
+    principles: [
+      'გვახსოვდეს და პატივი მივაგოთ შიდსით გარდაცვლილ 28 მილიონი ადამიანის ხსოვნას;',
+      '40 მილიონზე მეტი აივ ინფიცირებულის მხარდაჭერას და ზრუნვას;',
+      'იმ ადამიანების დაცვას, რომელთაც შიდსის პრობლემა ჯერ არ შეხებიათ.',
+    ],
+    additionalParagraphs: [
+      'აივ ინფექცია/შიდსის ეპიდემია 40 მილიონზე მეტ ადამიანს შეეხო და მხოლოდ 2005 წელს 3 მილიონი ადამიანის სიცოცხლე იმსხვერპლა.',
+      'შიდსისაგან თავისუფალი თაობების აღზრდა - მსოფლიო საზოგადოების წინაშე მდგარი ურთულესი ამოცანაა, მაშინ როდესაც დაავადება 15 მილიონი ბავშვის ცხოვრებას შეეხო.',
+      'მხოლოდ 2005 წელს შიდსით 3,1 მილიონი ადამიანი გარდაიცვალა, მათ შორის 15 წლამდე ასაკის 570 000 ბავშვი.',
+      'შემთხვევათა რიცხვის მატების მიუხედავად ანტივირუსულმა მკურნალობამ დაბალი და საშუალო შემოსავლების ქვეყნებში ერთ მილიონზე მეტ ადამიანს გაუხანგრძლივა სიცოცხლე.',
+      'ამ მკურნალობის ფართოდ დანერგვით მხოლოდ 2005 წელს 250000-350000 ადამიანს შეუნარჩუნდა სიცოცხლე.',
+      'აივ/შიდსის სამყაროში თანაგრძნობით ცხოვრება, აივ/შიდსით დაავადებული პირების მაქსიმალური მხარდაჭერა, ასევე შიდსით გარდაცვლილთა ხსოვნა, დაავადების წინააღმდეგ ბრძოლისა და შიდსთან ასოცირებული სტიგმისა და დისკრიმინაციისგან თავისუფალი გარემოს შექმნა ყველა ჩვენთაგანის პიროვნული და პროფესიული მოვალეობაა.',
+      'საქართველო შიდსით დაავადებულთა ხსოვნის მსოფლიო დღეს 1996 წელს შეუერთდა.',
+      'ქვეყანაში მომუშავე პარტნიორული ორგანიზაციები - სამთავრობო თუ არასამთავრობო ორგანიზაციები, გაეროსა და საერთაშორისო სააგენტოები გლობალურ აქციას უერთდებიან თბილისისა და რეგიონების მასშტაბით გამართული პრეს-კონფერენციების, ქუჩის აქციების, სატელევიზიციო/რადიო გადაცემებისა და საინფორმაციო-საგანმანათლებლო ღონისძიებებით.',
+      '"შიდსის გლობალური ეპიდემიის სავალალო რეალობის წინააღმდეგ ბრძოლა ყველა თანამედროვე ადამიანის მოვალეობაა. თითოეული ადამიანი უზრუნველყოფილი უნდა იყოს შიდსის შესახებ შესაბამისი ინფორმაციით და ხელმისაწვდომი მოვლითა და მზრუნველობით".',
+      'კოფი ანანი, გაეროს გენერალური მდივანი',
+    ],
+    ribbonTitle: 'წითელი ლენტი',
+    ribbonParagraphs: [
+      'მსოფლიოში მილიონობით ადამიანი ატარებს წითელ ლენტს, როგორც აივ ინფექცია/შიდსის პრობლემის გაზიარების სიმბოლოს.',
+      'ეს ლენტი 1991 წელს შექმნა მხატვარმა ფრანკ მურმა.',
+    ],
+    ribbonSymbolismTitle: 'რას გამოხატავს',
+    ribbonSymbolism: [
+      'სოლიდარობას აივ ინფექციით მცხოვრებ ადამიანებთან, მათ ოჯახის წევრებსა და მეგობრებთან.',
+      'პროტესტს აივ ინფიცირებულთა მიმართ სტიგმისა და დისკრიმინაციის წინააღმდეგ.',
+      'იმედს, რომ მედიცინა დაიძლევს ვირუსს და გააძლიერებს კაცობრიობის დაცვას.',
+    ],
+  },
 } as const;
 
 const c = content[lang];
 ---
 
 <section class="important-dates-page content-grid">
-    <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
-        <a href={homeUrl}>{breadcrumb.home}</a>
-        <span>/</span>
-        <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
-        <span>/</span>
-        <span aria-current="page">{c.heroTitle}</span>
-    </nav>
+  <nav class="breadcrumbs" aria-label={breadcrumb.aria}>
+    <a href={homeUrl}>{breadcrumb.home}</a>
+    <span>/</span>
+    <a href={hivAidsUrl}>{breadcrumb.hivAids}</a>
+    <span>/</span>
+    <span aria-current="page">{c.heroTitle}</span>
+  </nav>
 
-    <div class="hero">
-        <p class="section-label">{c.sectionLabel}</p>
-        <h1>{c.heroTitle}</h1>
-    </div>
+  <div class="hero">
+    <p class="section-label">{c.sectionLabel}</p>
+    <h1>{c.heroTitle}</h1>
+  </div>
 
-    <div class="surface">
-        <h2>{c.worldAidsDayTitle}</h2>
-        {c.worldAidsDayParagraphs.map((text) => <p>{text}</p>)}
-    </div>
+  <div class="surface">
+    <h2>{c.worldAidsDayTitle}</h2>
+    {c.worldAidsDayParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.candlelightTitle}</h2>
-        {c.candlelightParagraphs.map((text) => <p>{text}</p>)}
-    </div>
+  <div class="surface">
+    <h2>{c.candlelightTitle}</h2>
+    {c.candlelightParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.candlelightGoalsTitle}</h2>
+  <div class="surface">
+    <h2>{c.candlelightGoalsTitle}</h2>
+    <ul class="list">
+      {c.candlelightGoals.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+
+  <div class="surface">
+    <h2>{c.principlesTitle}</h2>
+    {
+      c.principles.length > 0 && (
         <ul class="list">
-            {c.candlelightGoals.map((item) => <li>{item}</li>)}
+          {c.principles.map((item) => (
+            <li>{item}</li>
+          ))}
         </ul>
-    </div>
+      )
+    }
+    {c.additionalParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.principlesTitle}</h2>
-        {
-            c.principles.length > 0 && (
-                <ul class="list">
-                    {c.principles.map((item) => (
-                        <li>{item}</li>
-                    ))}
-                </ul>
-            )
-        }
-        {c.additionalParagraphs.map((text) => <p>{text}</p>)}
-    </div>
+  <div class="surface">
+    <h2>{c.ribbonTitle}</h2>
+    {c.ribbonParagraphs.map((text) => <p>{text}</p>)}
+  </div>
 
-    <div class="surface">
-        <h2>{c.ribbonTitle}</h2>
-        {c.ribbonParagraphs.map((text) => <p>{text}</p>)}
-    </div>
-
-    <div class="surface">
-        <h2>{c.ribbonSymbolismTitle}</h2>
-        {
-            c.ribbonSymbolism.length > 0 && (
-                <ul class="list">
-                    {c.ribbonSymbolism.map((item) => (
-                        <li>{item}</li>
-                    ))}
-                </ul>
-            )
-        }
-    </div>
+  <div class="surface">
+    <h2>{c.ribbonSymbolismTitle}</h2>
+    {
+      c.ribbonSymbolism.length > 0 && (
+        <ul class="list">
+          {c.ribbonSymbolism.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
 </section>
 
 <style>
-    .important-dates-page {
-        padding-block: 4rem 5rem;
-        display: grid;
-        gap: 1.5rem;
-    }
+  .important-dates-page {
+    padding-block: 4rem 5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
 
-    .breadcrumbs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        font-size: 0.9rem;
-        color: #64748b;
-    }
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #64748b;
+  }
 
-    .breadcrumbs a {
-        color: #0f172a;
-        text-decoration: none;
-    }
+  .breadcrumbs a {
+    color: #0f172a;
+    text-decoration: none;
+  }
 
-    .breadcrumbs a:hover {
-        text-decoration: underline;
-    }
+  .breadcrumbs a:hover {
+    text-decoration: underline;
+  }
 
-    .hero {
-        text-align: center;
-        max-width: 760px;
-        margin-inline: auto;
-    }
+  .hero {
+    text-align: center;
+    max-width: 760px;
+    margin-inline: auto;
+  }
 
-    .hero h1 {
-        font-size: clamp(1.9rem, 4vw, 2.9rem);
-        margin-bottom: 0.65rem;
-    }
+  .hero h1 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    margin-bottom: 0.65rem;
+  }
 
-    .surface {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 1.25rem;
-    }
+  .surface {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
 
-    .surface h2 {
-        margin-bottom: 0.8rem;
-    }
+  .surface h2 {
+    margin-bottom: 0.8rem;
+  }
 
-    .surface p {
-        color: #0f172a;
-        line-height: 1.7;
-        margin-bottom: 0.8rem;
-    }
+  .surface p {
+    color: #0f172a;
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
 
-    .surface p:last-child {
-        margin-bottom: 0;
-    }
+  .surface p:last-child {
+    margin-bottom: 0;
+  }
 
-    .list {
-        margin: 0;
-        padding-left: 1.2rem;
-        display: grid;
-        gap: 0.45rem;
-        color: #0f172a;
-        line-height: 1.6;
-    }
+  .list {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.45rem;
+    color: #0f172a;
+    line-height: 1.6;
+  }
 </style>

@@ -3,15 +3,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 const { apiGetMock, apiPutMock, apiDeleteMock } = vi.hoisted(() => ({
   apiGetMock: vi.fn(),
   apiPutMock: vi.fn(),
-  apiDeleteMock: vi.fn()
+  apiDeleteMock: vi.fn(),
 }));
 
 vi.mock('../api', () => ({
   api: {
     get: apiGetMock,
     put: apiPutMock,
-    delete: apiDeleteMock
-  }
+    delete: apiDeleteMock,
+  },
 }));
 
 import {
@@ -21,7 +21,7 @@ import {
   publishJobPostingDraft,
   toJobCard,
   updateJobPosting,
-  type JobOut
+  type JobOut,
 } from '../job-postings';
 
 describe('job postings service', () => {
@@ -35,7 +35,7 @@ describe('job postings service', () => {
     department_en: null,
     deadline: '2026-01-01T00:00:00.000Z',
     published: false,
-    updated_at: '2026-01-02T00:00:00.000Z'
+    updated_at: '2026-01-02T00:00:00.000Z',
   };
 
   beforeEach(() => {
@@ -76,7 +76,7 @@ describe('job postings service', () => {
       descriptionKa: ' Desc ',
       descriptionEn: '',
       deadline: '2026-01-15',
-      status: 'published'
+      status: 'published',
     });
 
     expect(apiPutMock).toHaveBeenCalledWith(
@@ -88,8 +88,8 @@ describe('job postings service', () => {
         department_en: null,
         description_ka: 'Desc',
         description_en: null,
-        published: true
-      })
+        published: true,
+      }),
     );
   });
 
@@ -100,7 +100,10 @@ describe('job postings service', () => {
     await publishJobPostingDraft(9);
     await deleteJobPosting(9);
 
-    expect(apiPutMock).toHaveBeenCalledWith('/api/job-postings/9', expect.objectContaining({ published: true }));
+    expect(apiPutMock).toHaveBeenCalledWith(
+      '/api/job-postings/9',
+      expect.objectContaining({ published: true }),
+    );
     expect(apiDeleteMock).toHaveBeenCalledWith('/api/job-postings/9');
   });
 });

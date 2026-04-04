@@ -1,43 +1,40 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
-import ArticlesArchive from "../../../components/content/ArticlesArchive.astro";
-import {
-    fetchPublishedArticlesPage,
-    getArticlesApiBase,
-} from "../../../lib/articles-api";
+import Layout from '../../../layouts/Layout.astro';
+import ArticlesArchive from '../../../components/content/ArticlesArchive.astro';
+import { fetchPublishedArticlesPage, getArticlesApiBase } from '../../../lib/articles-api';
 
 const apiBase = getArticlesApiBase();
 const perPage = 9;
 
 const currentPage = Number(Astro.params.page);
 if (!Number.isInteger(currentPage) || currentPage < 2) {
-    Astro.response.status = 404;
+  Astro.response.status = 404;
 }
 
 const result = await fetchPublishedArticlesPage(apiBase, currentPage, perPage);
 const totalPages = Math.max(1, Math.ceil(result.total / perPage));
 
 if (currentPage > totalPages) {
-    Astro.response.status = 404;
+  Astro.response.status = 404;
 }
 ---
 
 <Layout>
-    {
-        Astro.response.status === 404 ? (
-            <section class="news-archive content-grid">
-                <div class="archive-shell">
-                    <p class="archive-empty">გვერდი ვერ მოიძებნა.</p>
-                </div>
-            </section>
-        ) : (
-            <ArticlesArchive
-                lang="ka"
-                apiBase={apiBase}
-                articles={result.items}
-                currentPage={currentPage}
-                totalPages={totalPages}
-            />
-        )
-    }
+  {
+    Astro.response.status === 404 ? (
+      <section class="news-archive content-grid">
+        <div class="archive-shell">
+          <p class="archive-empty">გვერდი ვერ მოიძებნა.</p>
+        </div>
+      </section>
+    ) : (
+      <ArticlesArchive
+        lang="ka"
+        apiBase={apiBase}
+        articles={result.items}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
+    )
+  }
 </Layout>

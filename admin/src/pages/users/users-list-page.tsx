@@ -13,7 +13,7 @@ import {
   deleteEditorUser,
   fetchUsers,
   getUserId,
-  type UserRecord
+  type UserRecord,
 } from '../../lib/users';
 import '../shared/content-page.scss';
 
@@ -31,7 +31,7 @@ export function UsersListPage() {
   const usersQuery = useQuery({
     queryKey: queryKeys.users,
     queryFn: fetchUsers,
-    enabled: adminView
+    enabled: adminView,
   });
 
   const users = usersQuery.data ?? [];
@@ -39,7 +39,12 @@ export function UsersListPage() {
 
   useEffect(() => {
     if (usersQuery.isError) {
-      toast.error(extractApiErrorMessage(usersQuery.error, 'Could not load users. Check API endpoint/validation rules.'));
+      toast.error(
+        extractApiErrorMessage(
+          usersQuery.error,
+          'Could not load users. Check API endpoint/validation rules.',
+        ),
+      );
     }
   }, [usersQuery.isError, usersQuery.error]);
 
@@ -68,11 +73,16 @@ export function UsersListPage() {
       await queryClient.invalidateQueries({ queryKey: queryKeys.users });
     },
     onError: (error) => {
-      toast.error(extractApiErrorMessage(error, 'Could not delete user. Check API endpoint/validation rules.'));
+      toast.error(
+        extractApiErrorMessage(
+          error,
+          'Could not delete user. Check API endpoint/validation rules.',
+        ),
+      );
     },
     onSettled: () => {
       setBusyEditorId(null);
-    }
+    },
   });
 
   const changePasswordMutation = useMutation({
@@ -85,12 +95,17 @@ export function UsersListPage() {
       await queryClient.invalidateQueries({ queryKey: queryKeys.users });
     },
     onError: (error) => {
-      toast.error(extractApiErrorMessage(error, 'Could not update password. Check API endpoint/validation rules.'));
+      toast.error(
+        extractApiErrorMessage(
+          error,
+          'Could not update password. Check API endpoint/validation rules.',
+        ),
+      );
     },
     onSettled: () => {
       setUpdatingPassword(false);
       setBusyEditorId(null);
-    }
+    },
   });
 
   const onDeleteEditor = (editor: UserRecord) => {
@@ -142,7 +157,9 @@ export function UsersListPage() {
           <h1>Users List</h1>
           <p className="hint">Manage registered editors and their credentials.</p>
         </div>
-        <ButtonLink to="/users/new" variant="secondary">Register User</ButtonLink>
+        <ButtonLink to="/users/new" variant="secondary">
+          Register User
+        </ButtonLink>
       </div>
 
       <div className="posts-list">
@@ -213,7 +230,9 @@ export function UsersListPage() {
             onClick={(event) => event.stopPropagation()}
           >
             <h3>Change Password</h3>
-            <p className="hint">Set a new password for {editorToChangePassword.email ?? 'this editor'}.</p>
+            <p className="hint">
+              Set a new password for {editorToChangePassword.email ?? 'this editor'}.
+            </p>
             <label>
               New Password
               <Input

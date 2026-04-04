@@ -1,149 +1,142 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import Layout from '../../layouts/Layout.astro';
 import {
-    fetchDoctorById,
-    getDoctorsApiBase,
-    toAbsoluteImageUrl,
-    type DoctorRecord,
-} from "../../lib/doctors-api";
-import fallbackDoctorImage from "../../assets/images/clinic.webp";
+  fetchDoctorById,
+  getDoctorsApiBase,
+  toAbsoluteImageUrl,
+  type DoctorRecord,
+} from '../../lib/doctors-api';
+import fallbackDoctorImage from '../../assets/images/clinic.webp';
 
 const apiBase = getDoctorsApiBase();
 
-const doctorIdRaw = Astro.params.doctorId?.trim() ?? "";
+const doctorIdRaw = Astro.params.doctorId?.trim() ?? '';
 const doctorId = Number.parseInt(doctorIdRaw, 10);
 
 let doctor: DoctorRecord | null = null;
 
 if (Number.isFinite(doctorId) && doctorId > 0) {
-    doctor = await fetchDoctorById(apiBase, doctorId);
+  doctor = await fetchDoctorById(apiBase, doctorId);
 }
 
 if (!doctor) {
-    Astro.response.status = 404;
+  Astro.response.status = 404;
 }
 
-const pageTitle = doctor?.name?.trim()
-    ? `${doctor.name} — ჩვენი ექიმები`
-    : "ექიმი ვერ მოიძებნა";
+const pageTitle = doctor?.name?.trim() ? `${doctor.name} — ჩვენი ექიმები` : 'ექიმი ვერ მოიძებნა';
 
 const infoRows = doctor
-    ? [
-          { label: "დეპარტამენტი", value: doctor.department },
-          { label: "სპეციალიზაცია", value: doctor.specialty },
-          { label: "ხარისხი", value: doctor.degree },
-          { label: "განათლება", value: doctor.education },
-          { label: "გამოცდილება", value: doctor.experience },
-          {
-              label: "პედაგოგიური გამოცდილება",
-              value: doctor.pedagogical_experience,
-          },
-          { label: "წევრობა", value: doctor.memberships },
-          { label: "პუბლიკაციები", value: doctor.publications },
-          { label: "ექსპერტიზა", value: doctor.expertise },
-      ].filter((entry) => Boolean(entry.value?.trim()))
-    : [];
+  ? [
+      { label: 'დეპარტამენტი', value: doctor.department },
+      { label: 'სპეციალიზაცია', value: doctor.specialty },
+      { label: 'ხარისხი', value: doctor.degree },
+      { label: 'განათლება', value: doctor.education },
+      { label: 'გამოცდილება', value: doctor.experience },
+      {
+        label: 'პედაგოგიური გამოცდილება',
+        value: doctor.pedagogical_experience,
+      },
+      { label: 'წევრობა', value: doctor.memberships },
+      { label: 'პუბლიკაციები', value: doctor.publications },
+      { label: 'ექსპერტიზა', value: doctor.expertise },
+    ].filter((entry) => Boolean(entry.value?.trim()))
+  : [];
 ---
 
 <Layout title={pageTitle}>
-    <section class="doctor-detail-page content-grid">
-        <div class="container detail-container">
-            <a href="/doctors" class="back-link">← დაბრუნება ექიმების სიაში</a>
+  <section class="doctor-detail-page content-grid">
+    <div class="container detail-container">
+      <a href="/doctors" class="back-link">← დაბრუნება ექიმების სიაში</a>
 
-            {
-                doctor ? (
-                    <article class="detail-card">
-                        <img
-                            src={
-                                toAbsoluteImageUrl(apiBase, doctor.picture) ||
-                                fallbackDoctorImage.src
-                            }
-                            alt={doctor.name}
-                            class="doctor-image"
-                        />
+      {
+        doctor ? (
+          <article class="detail-card">
+            <img
+              src={toAbsoluteImageUrl(apiBase, doctor.picture) || fallbackDoctorImage.src}
+              alt={doctor.name}
+              class="doctor-image"
+            />
 
-                        <div class="detail-body">
-                            <h1>{doctor.name}</h1>
+            <div class="detail-body">
+              <h1>{doctor.name}</h1>
 
-                            <dl>
-                                {infoRows.map((row) => (
-                                    <>
-                                        <dt>{row.label}</dt>
-                                        <dd>{row.value}</dd>
-                                    </>
-                                ))}
-                            </dl>
-                        </div>
-                    </article>
-                ) : (
-                    <article class="detail-card">
-                        <h1>ექიმი ვერ მოიძებნა</h1>
-                        <p class="hint">
-                            მითითებული ექიმის ჩანაწერი ვერ მოიძებნა ან წაშლილია.
-                        </p>
-                    </article>
-                )
-            }
-        </div>
-    </section>
+              <dl>
+                {infoRows.map((row) => (
+                  <>
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </>
+                ))}
+              </dl>
+            </div>
+          </article>
+        ) : (
+          <article class="detail-card">
+            <h1>ექიმი ვერ მოიძებნა</h1>
+            <p class="hint">მითითებული ექიმის ჩანაწერი ვერ მოიძებნა ან წაშლილია.</p>
+          </article>
+        )
+      }
+    </div>
+  </section>
 </Layout>
 
 <style>
-    .doctor-detail-page {
-        padding-block: 2.5rem 4rem;
-    }
+  .doctor-detail-page {
+    padding-block: 2.5rem 4rem;
+  }
 
-    .detail-container {
-        max-width: 980px;
-    }
+  .detail-container {
+    max-width: 980px;
+  }
 
-    .back-link {
-        display: inline-block;
-        margin-bottom: 1rem;
-        text-decoration: none;
-        font-weight: 600;
-    }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
 
-    .detail-card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 1.25rem;
-        display: grid;
-        gap: 1rem;
-    }
+  .detail-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
 
-    .doctor-image {
-        width: 100%;
-        max-height: 420px;
-        object-fit: cover;
-        border-radius: 10px;
-        background: #f1f5f9;
-    }
+  .doctor-image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f1f5f9;
+  }
 
-    .detail-body h1 {
-        margin: 0 0 1rem;
-        font-size: clamp(1.5rem, 3vw, 2rem);
-    }
+  .detail-body h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
 
-    dl {
-        margin: 0;
-        display: grid;
-        gap: 0.45rem;
-    }
+  dl {
+    margin: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
 
-    dt {
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #64748b;
-        margin-top: 0.5rem;
-    }
+  dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    margin-top: 0.5rem;
+  }
 
-    dd {
-        margin: 0;
-        color: #0f172a;
-        line-height: 1.6;
-        white-space: pre-line;
-    }
+  dd {
+    margin: 0;
+    color: #0f172a;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
 </style>

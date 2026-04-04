@@ -1,161 +1,149 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
+import Layout from '../../../layouts/Layout.astro';
 import {
-    applyDoctorTranslation,
-    fetchDoctorById,
-    fetchDoctorTranslationByLang,
-    getDoctorsApiBase,
-    toAbsoluteImageUrl,
-    type DoctorRecord,
-} from "../../../lib/doctors-api";
-import fallbackDoctorImage from "../../../assets/images/clinic.webp";
+  applyDoctorTranslation,
+  fetchDoctorById,
+  fetchDoctorTranslationByLang,
+  getDoctorsApiBase,
+  toAbsoluteImageUrl,
+  type DoctorRecord,
+} from '../../../lib/doctors-api';
+import fallbackDoctorImage from '../../../assets/images/clinic.webp';
 
 const apiBase = getDoctorsApiBase();
 
-const doctorIdRaw = Astro.params.doctorId?.trim() ?? "";
+const doctorIdRaw = Astro.params.doctorId?.trim() ?? '';
 const doctorId = Number.parseInt(doctorIdRaw, 10);
 
 let doctor: DoctorRecord | null = null;
 
 if (Number.isFinite(doctorId) && doctorId > 0) {
-    const baseDoctor = await fetchDoctorById(apiBase, doctorId);
+  const baseDoctor = await fetchDoctorById(apiBase, doctorId);
 
-    if (baseDoctor) {
-        const translation = await fetchDoctorTranslationByLang(
-            apiBase,
-            doctorId,
-            "en",
-        );
-        doctor = applyDoctorTranslation(baseDoctor, translation);
-    }
+  if (baseDoctor) {
+    const translation = await fetchDoctorTranslationByLang(apiBase, doctorId, 'en');
+    doctor = applyDoctorTranslation(baseDoctor, translation);
+  }
 }
 
 if (!doctor) {
-    Astro.response.status = 404;
+  Astro.response.status = 404;
 }
 
-const pageTitle = doctor?.name?.trim()
-    ? `${doctor.name} — Our Doctors`
-    : "Doctor Not Found";
+const pageTitle = doctor?.name?.trim() ? `${doctor.name} — Our Doctors` : 'Doctor Not Found';
 
 const infoRows = doctor
-    ? [
-          { label: "Department", value: doctor.department },
-          { label: "Specialty", value: doctor.specialty },
-          { label: "Degree", value: doctor.degree },
-          { label: "Education", value: doctor.education },
-          { label: "Experience", value: doctor.experience },
-          {
-              label: "Pedagogical Experience",
-              value: doctor.pedagogical_experience,
-          },
-          { label: "Memberships", value: doctor.memberships },
-          { label: "Publications", value: doctor.publications },
-          { label: "Expertise", value: doctor.expertise },
-      ].filter((entry) => Boolean(entry.value?.trim()))
-    : [];
+  ? [
+      { label: 'Department', value: doctor.department },
+      { label: 'Specialty', value: doctor.specialty },
+      { label: 'Degree', value: doctor.degree },
+      { label: 'Education', value: doctor.education },
+      { label: 'Experience', value: doctor.experience },
+      {
+        label: 'Pedagogical Experience',
+        value: doctor.pedagogical_experience,
+      },
+      { label: 'Memberships', value: doctor.memberships },
+      { label: 'Publications', value: doctor.publications },
+      { label: 'Expertise', value: doctor.expertise },
+    ].filter((entry) => Boolean(entry.value?.trim()))
+  : [];
 ---
 
 <Layout title={pageTitle}>
-    <section class="doctor-detail-page content-grid">
-        <div class="container detail-container">
-            <a href="/en/doctors" class="back-link">← Back to Doctors</a>
+  <section class="doctor-detail-page content-grid">
+    <div class="container detail-container">
+      <a href="/en/doctors" class="back-link">← Back to Doctors</a>
 
-            {
-                doctor ? (
-                    <article class="detail-card">
-                        <img
-                            src={
-                                toAbsoluteImageUrl(apiBase, doctor.picture) ||
-                                fallbackDoctorImage.src
-                            }
-                            alt={doctor.name}
-                            class="doctor-image"
-                        />
+      {
+        doctor ? (
+          <article class="detail-card">
+            <img
+              src={toAbsoluteImageUrl(apiBase, doctor.picture) || fallbackDoctorImage.src}
+              alt={doctor.name}
+              class="doctor-image"
+            />
 
-                        <div class="detail-body">
-                            <h1>{doctor.name}</h1>
+            <div class="detail-body">
+              <h1>{doctor.name}</h1>
 
-                            <dl>
-                                {infoRows.map((row) => (
-                                    <>
-                                        <dt>{row.label}</dt>
-                                        <dd>{row.value}</dd>
-                                    </>
-                                ))}
-                            </dl>
-                        </div>
-                    </article>
-                ) : (
-                    <article class="detail-card">
-                        <h1>Doctor Not Found</h1>
-                        <p class="hint">
-                            The requested doctor profile does not exist or has
-                            been removed.
-                        </p>
-                    </article>
-                )
-            }
-        </div>
-    </section>
+              <dl>
+                {infoRows.map((row) => (
+                  <>
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </>
+                ))}
+              </dl>
+            </div>
+          </article>
+        ) : (
+          <article class="detail-card">
+            <h1>Doctor Not Found</h1>
+            <p class="hint">The requested doctor profile does not exist or has been removed.</p>
+          </article>
+        )
+      }
+    </div>
+  </section>
 </Layout>
 
 <style>
-    .doctor-detail-page {
-        padding-block: 2.5rem 4rem;
-    }
+  .doctor-detail-page {
+    padding-block: 2.5rem 4rem;
+  }
 
-    .detail-container {
-        max-width: 980px;
-    }
+  .detail-container {
+    max-width: 980px;
+  }
 
-    .back-link {
-        display: inline-block;
-        margin-bottom: 1rem;
-        text-decoration: none;
-        font-weight: 600;
-    }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
 
-    .detail-card {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 1.25rem;
-        display: grid;
-        gap: 1rem;
-    }
+  .detail-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
 
-    .doctor-image {
-        width: 100%;
-        max-height: 420px;
-        object-fit: cover;
-        border-radius: 10px;
-        background: #f1f5f9;
-    }
+  .doctor-image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f1f5f9;
+  }
 
-    .detail-body h1 {
-        margin: 0 0 1rem;
-        font-size: clamp(1.5rem, 3vw, 2rem);
-    }
+  .detail-body h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
 
-    dl {
-        margin: 0;
-        display: grid;
-        gap: 0.45rem;
-    }
+  dl {
+    margin: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
 
-    dt {
-        font-size: 0.78rem;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #64748b;
-        margin-top: 0.5rem;
-    }
+  dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    margin-top: 0.5rem;
+  }
 
-    dd {
-        margin: 0;
-        color: #0f172a;
-        line-height: 1.6;
-        white-space: pre-line;
-    }
+  dd {
+    margin: 0;
+    color: #0f172a;
+    line-height: 1.6;
+    white-space: pre-line;
+  }
 </style>

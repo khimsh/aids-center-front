@@ -1,21 +1,23 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const { apiGetMock, apiPostMock, apiDeleteMock, apiPatchMock, getErrorStatusMock } = vi.hoisted(() => ({
-  apiGetMock: vi.fn(),
-  apiPostMock: vi.fn(),
-  apiDeleteMock: vi.fn(),
-  apiPatchMock: vi.fn(),
-  getErrorStatusMock: vi.fn()
-}));
+const { apiGetMock, apiPostMock, apiDeleteMock, apiPatchMock, getErrorStatusMock } = vi.hoisted(
+  () => ({
+    apiGetMock: vi.fn(),
+    apiPostMock: vi.fn(),
+    apiDeleteMock: vi.fn(),
+    apiPatchMock: vi.fn(),
+    getErrorStatusMock: vi.fn(),
+  }),
+);
 
 vi.mock('../api', () => ({
   api: {
     get: apiGetMock,
     post: apiPostMock,
     delete: apiDeleteMock,
-    patch: apiPatchMock
+    patch: apiPatchMock,
   },
-  getErrorStatus: getErrorStatusMock
+  getErrorStatus: getErrorStatusMock,
 }));
 
 import {
@@ -23,7 +25,7 @@ import {
   createEditorUser,
   deleteEditorUser,
   fetchUsers,
-  getUserId
+  getUserId,
 } from '../users';
 
 describe('users service', () => {
@@ -47,14 +49,19 @@ describe('users service', () => {
   });
 
   it('creates and deletes users through API', async () => {
-    await createEditorUser({ email: 'a@b.com', full_name: 'Name', password: '123', role: 'editor' });
+    await createEditorUser({
+      email: 'a@b.com',
+      full_name: 'Name',
+      password: '123',
+      role: 'editor',
+    });
     await deleteEditorUser('55');
 
     expect(apiPostMock).toHaveBeenCalledWith('/api/users', {
       email: 'a@b.com',
       full_name: 'Name',
       password: '123',
-      role: 'editor'
+      role: 'editor',
     });
     expect(apiDeleteMock).toHaveBeenCalledWith('/api/users/55');
   });
@@ -65,9 +72,7 @@ describe('users service', () => {
       .mockRejectedValueOnce(new Error('bad 2'))
       .mockResolvedValueOnce({});
 
-    getErrorStatusMock
-      .mockReturnValueOnce(400)
-      .mockReturnValueOnce(422);
+    getErrorStatusMock.mockReturnValueOnce(400).mockReturnValueOnce(422);
 
     await expect(changeEditorPassword(5, 'pw')).resolves.toBeUndefined();
     expect(apiPatchMock).toHaveBeenCalledTimes(3);

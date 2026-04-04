@@ -12,13 +12,15 @@ import {
   fetchArticles,
   getVisibleArticles,
   publishArticleDraft,
-  type ArticleRecord
+  type ArticleRecord,
 } from '../../lib/articles';
 import { isAdminRole } from '../../lib/permissions';
 import { queryKeys } from '../../lib/query-keys';
 import '../shared/content-page.scss';
 
-const configuredPublicSiteUrl = (import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined)?.trim();
+const configuredPublicSiteUrl = (
+  import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined
+)?.trim();
 const configuredSiteUrlFallback = (import.meta.env.VITE_SITE_URL as string | undefined)?.trim();
 
 function getPublicSiteBase(): string {
@@ -73,7 +75,7 @@ export function MyArticlesPage() {
       const result = await fetchArticles(DEFAULT_ARTICLES_QUERY);
       const visible = getVisibleArticles(result.items, adminView, user?.id);
       return visible;
-    }
+    },
   });
 
   useEffect(() => {
@@ -98,7 +100,7 @@ export function MyArticlesPage() {
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const removeArticleMutation = useMutation({
@@ -112,7 +114,7 @@ export function MyArticlesPage() {
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const publishDraft = (articleId: number) => {
@@ -156,7 +158,11 @@ export function MyArticlesPage() {
                 editLabel={isPublished ? 'Edit Article' : 'Edit Draft'}
                 viewPublishedUrl={getPublicArticleUrl(article)}
                 showEnglishTitle
-                onEdit={() => navigate(`/articles/${article.id}/edit`, { state: { article, returnTo: '/articles/mine' } })}
+                onEdit={() =>
+                  navigate(`/articles/${article.id}/edit`, {
+                    state: { article, returnTo: '/articles/mine' },
+                  })
+                }
                 onPublishDraft={() => publishDraft(article.id)}
                 onDelete={() => setArticleToDeleteId(article.id)}
               />

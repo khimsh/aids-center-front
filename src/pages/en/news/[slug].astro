@@ -1,117 +1,106 @@
 ---
-import Layout from "../../../layouts/Layout.astro";
+import Layout from '../../../layouts/Layout.astro';
 import {
-    fetchArticleBySlug,
-    getArticlesApiBase,
-    toAbsoluteImageUrl,
-    type ArticleDetails,
-} from "../../../lib/articles-api";
+  fetchArticleBySlug,
+  getArticlesApiBase,
+  toAbsoluteImageUrl,
+  type ArticleDetails,
+} from '../../../lib/articles-api';
 
 const API_BASE = getArticlesApiBase();
 
-const slug = Astro.params.slug?.trim() ?? "";
+const slug = Astro.params.slug?.trim() ?? '';
 
-const article: ArticleDetails | null = slug
-    ? await fetchArticleBySlug(API_BASE, slug)
-    : null;
+const article: ArticleDetails | null = slug ? await fetchArticleBySlug(API_BASE, slug) : null;
 
 if (!article) {
-    Astro.response.status = 404;
+  Astro.response.status = 404;
 }
 
-const pageTitle =
-    article?.title_en?.trim() || article?.title_ka?.trim() || "Article";
-const bodyHtml = article?.body_en ?? article?.body_ka ?? "";
-const publishDate =
-    article?.published_at ?? article?.updated_at ?? article?.created_at;
+const pageTitle = article?.title_en?.trim() || article?.title_ka?.trim() || 'Article';
+const bodyHtml = article?.body_en ?? article?.body_ka ?? '';
+const publishDate = article?.published_at ?? article?.updated_at ?? article?.created_at;
 ---
 
 <Layout>
-    <section class="article-page content-grid">
-        <div class="container article-container">
-            <a href="/en/#news" class="back-link">← Back to News</a>
+  <section class="article-page content-grid">
+    <div class="container article-container">
+      <a href="/en/#news" class="back-link">← Back to News</a>
 
-            <article class="article-detail">
-                <header class="article-header">
-                    <p class="article-meta">
-                        {article?.category ?? "news"}
-                        {
-                            publishDate
-                                ? ` • ${new Date(publishDate).toLocaleDateString("en-US")}`
-                                : ""
-                        }
-                    </p>
-                    <h1>{pageTitle}</h1>
-                </header>
+      <article class="article-detail">
+        <header class="article-header">
+          <p class="article-meta">
+            {article?.category ?? 'news'}
+            {publishDate ? ` • ${new Date(publishDate).toLocaleDateString('en-US')}` : ''}
+          </p>
+          <h1>{pageTitle}</h1>
+        </header>
 
-                {
-                    article?.image_url ? (
-                        <img
-                            src={toAbsoluteImageUrl(
-                                API_BASE,
-                                article.image_url,
-                            )}
-                            alt={pageTitle}
-                            class="article-image"
-                        />
-                    ) : null
-                }
+        {
+          article?.image_url ? (
+            <img
+              src={toAbsoluteImageUrl(API_BASE, article.image_url)}
+              alt={pageTitle}
+              class="article-image"
+            />
+          ) : null
+        }
 
-                {
-                    article ? (
-                        <div class="article-body" set:html={bodyHtml} />
-                    ) : (
-                        <p class="article-not-found">Article not found.</p>
-                    )
-                }
-            </article>
-        </div>
-    </section>
+        {
+          article ? (
+            <div class="article-body" set:html={bodyHtml} />
+          ) : (
+            <p class="article-not-found">Article not found.</p>
+          )
+        }
+      </article>
+    </div>
+  </section>
 </Layout>
 
 <style>
-    .article-page {
-        padding-block: 2.5rem 4rem;
-    }
+  .article-page {
+    padding-block: 2.5rem 4rem;
+  }
 
-    .back-link {
-        display: inline-block;
-        margin-bottom: 1rem;
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-    }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
 
-    .article-detail {
-        background: #fff;
-        border-radius: 12px;
-        padding: 1.25rem;
-    }
+  .article-detail {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
 
-    .article-header h1 {
-        margin: 0;
-        font-family: "Satoshi", sans-serif;
-    }
+  .article-header h1 {
+    margin: 0;
+    font-family: 'Satoshi', sans-serif;
+  }
 
-    .article-meta {
-        margin: 0 0 0.5rem;
-        color: #64748b;
-        text-transform: lowercase;
-    }
+  .article-meta {
+    margin: 0 0 0.5rem;
+    color: #64748b;
+    text-transform: lowercase;
+  }
 
-    .article-image {
-        width: 100%;
-        border-radius: 10px;
-        margin-block: 1rem;
-    }
+  .article-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-block: 1rem;
+  }
 
-    .article-body {
-        color: #1f2937;
-        line-height: 1.75;
-    }
+  .article-body {
+    color: #1f2937;
+    line-height: 1.75;
+  }
 
-    .article-not-found {
-        margin: 0;
-        color: #64748b;
-    }
+  .article-not-found {
+    margin: 0;
+    color: #64748b;
+  }
 </style>

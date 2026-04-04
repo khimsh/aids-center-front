@@ -1,20 +1,19 @@
 ---
-import "../styles/global.scss";
-import Header from "../components/layout/Header.astro";
-import Topbar from "../components/layout/Topbar.astro";
-import Footer from "../components/layout/Footer.astro";
+import '../styles/global.scss';
+import Header from '../components/layout/Header.astro';
+import Topbar from '../components/layout/Topbar.astro';
+import Footer from '../components/layout/Footer.astro';
 
 interface Props {
   title?: string;
 }
 
-const siteName =
-  (Astro.currentLocale ?? "ka") === "en" ? "AIDS Center" : "AIDS ცენტრი";
+const siteName = (Astro.currentLocale ?? 'ka') === 'en' ? 'AIDS Center' : 'AIDS ცენტრი';
 const { title = siteName } = Astro.props;
-const isEnglish = (Astro.currentLocale ?? "ka") === "en";
+const isEnglish = (Astro.currentLocale ?? 'ka') === 'en';
 ---
 
-<html lang={Astro.currentLocale ?? "ka"}>
+<html lang={Astro.currentLocale ?? 'ka'}>
   <head>
     <meta charset="utf-8" />
     <meta
@@ -31,7 +30,7 @@ const isEnglish = (Astro.currentLocale ?? "ka") === "en";
       rel="stylesheet"
     />
   </head>
-  <body class={isEnglish ? "lang-en-body" : undefined}>
+  <body class={isEnglish ? 'lang-en-body' : undefined}>
     <Topbar />
     <div class="container">
       <Header />

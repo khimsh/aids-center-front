@@ -1,333 +1,298 @@
 ---
-import { toAbsoluteImageUrl, type DoctorRecord } from "../../lib/doctors-api";
-import fallbackDoctorImage from "../../assets/images/clinic.webp";
+import { toAbsoluteImageUrl, type DoctorRecord } from '../../lib/doctors-api';
+import fallbackDoctorImage from '../../assets/images/clinic.webp';
 
-type Lang = "ka" | "en";
+type Lang = 'ka' | 'en';
 
 type Props = {
-    apiBase: string;
-    doctors: DoctorRecord[];
+  apiBase: string;
+  doctors: DoctorRecord[];
 };
 
-const lang = (Astro.currentLocale ?? "ka") as Lang;
+const lang = (Astro.currentLocale ?? 'ka') as Lang;
 const { apiBase, doctors } = Astro.props as Props;
 
 const content = {
-    en: {
-        pageTitle: "Our Doctors",
-        subtitle:
-            "Meet our specialists in infectious diseases, HIV/AIDS, and clinical immunology.",
-        emptyText:
-            "Doctors list is not available right now. Please try again later.",
-        filterLabel: "Filter by department",
-        allDepartments: "All departments",
-        noFilterMatch: "No doctors found for the selected department.",
-        hivAidsGroup: "HIV / AIDS",
-        hepatitisGroup: "Hepatitis",
-        laboratoryGroup: "Laboratory",
-        department: "Department",
-        departmentFallback: "Department not specified",
-        profileLink: "Read Full Profile",
-    },
-    ka: {
-        pageTitle: "ჩვენი ექიმები",
-        subtitle:
-            "გაიცანით ჩვენი ინფექციური დაავადებების, აივ/შიდსისა და კლინიკური იმუნოლოგიის სპეციალისტები.",
-        emptyText: "ექიმების სია ამ ეტაპზე მიუწვდომელია. სცადეთ მოგვიანებით.",
-        filterLabel: "გაფილტრე დეპარტამენტით",
-        allDepartments: "ყველა დეპარტამენტი",
-        noFilterMatch: "არჩეული დეპარტამენტისთვის ექიმები ვერ მოიძებნა.",
-        hivAidsGroup: "აივ / შიდსი",
-        hepatitisGroup: "ჰეპატიტი",
-        laboratoryGroup: "ლაბორატორია",
-        department: "დეპარტამენტი",
-        departmentFallback: "დეპარტამენტი მითითებული არ არის",
-        profileLink: "სრული პროფილი",
-    },
+  en: {
+    pageTitle: 'Our Doctors',
+    subtitle: 'Meet our specialists in infectious diseases, HIV/AIDS, and clinical immunology.',
+    emptyText: 'Doctors list is not available right now. Please try again later.',
+    filterLabel: 'Filter by department',
+    allDepartments: 'All departments',
+    noFilterMatch: 'No doctors found for the selected department.',
+    hivAidsGroup: 'HIV / AIDS',
+    hepatitisGroup: 'Hepatitis',
+    laboratoryGroup: 'Laboratory',
+    department: 'Department',
+    departmentFallback: 'Department not specified',
+    profileLink: 'Read Full Profile',
+  },
+  ka: {
+    pageTitle: 'ჩვენი ექიმები',
+    subtitle:
+      'გაიცანით ჩვენი ინფექციური დაავადებების, აივ/შიდსისა და კლინიკური იმუნოლოგიის სპეციალისტები.',
+    emptyText: 'ექიმების სია ამ ეტაპზე მიუწვდომელია. სცადეთ მოგვიანებით.',
+    filterLabel: 'გაფილტრე დეპარტამენტით',
+    allDepartments: 'ყველა დეპარტამენტი',
+    noFilterMatch: 'არჩეული დეპარტამენტისთვის ექიმები ვერ მოიძებნა.',
+    hivAidsGroup: 'აივ / შიდსი',
+    hepatitisGroup: 'ჰეპატიტი',
+    laboratoryGroup: 'ლაბორატორია',
+    department: 'დეპარტამენტი',
+    departmentFallback: 'დეპარტამენტი მითითებული არ არის',
+    profileLink: 'სრული პროფილი',
+  },
 } as const;
 
 const c = content[lang];
 
-const normalizedDoctors = [...doctors].sort(
-    (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
-);
+const normalizedDoctors = [...doctors].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
 
 const compactDepartmentKey = (value: string) => {
-    const normalized = value.trim().toLowerCase();
+  const normalized = value.trim().toLowerCase();
 
-    if (
-        normalized.includes("hiv") ||
-        normalized.includes("aids") ||
-        normalized.includes("აივ") ||
-        normalized.includes("შიდს")
-    ) {
-        return "hiv-aids";
-    }
+  if (
+    normalized.includes('hiv') ||
+    normalized.includes('aids') ||
+    normalized.includes('აივ') ||
+    normalized.includes('შიდს')
+  ) {
+    return 'hiv-aids';
+  }
 
-    if (normalized.includes("hepat") || normalized.includes("ჰეპატ")) {
-        return "hepatitis";
-    }
+  if (normalized.includes('hepat') || normalized.includes('ჰეპატ')) {
+    return 'hepatitis';
+  }
 
-    if (normalized.includes("lab") || normalized.includes("ლაბორატ")) {
-        return "laboratory";
-    }
+  if (normalized.includes('lab') || normalized.includes('ლაბორატ')) {
+    return 'laboratory';
+  }
 
-    return normalized;
+  return normalized;
 };
 
 const compactDepartmentLabel = (key: string, fallbackLabel: string) => {
-    if (key === "hiv-aids") {
-        return c.hivAidsGroup;
-    }
+  if (key === 'hiv-aids') {
+    return c.hivAidsGroup;
+  }
 
-    if (key === "hepatitis") {
-        return c.hepatitisGroup;
-    }
+  if (key === 'hepatitis') {
+    return c.hepatitisGroup;
+  }
 
-    if (key === "laboratory") {
-        return c.laboratoryGroup;
-    }
+  if (key === 'laboratory') {
+    return c.laboratoryGroup;
+  }
 
-    return fallbackLabel;
+  return fallbackLabel;
 };
 
 const cardRows = normalizedDoctors.map((doctor) => ({
-    doctor,
-    imageUrl:
-        toAbsoluteImageUrl(apiBase, doctor.picture) || fallbackDoctorImage.src,
-    detailUrl:
-        lang === "en" ? `/en/doctors/${doctor.id}` : `/doctors/${doctor.id}`,
-    normalizedDepartment: compactDepartmentKey(
-        doctor.department?.trim() || c.departmentFallback,
-    ),
+  doctor,
+  imageUrl: toAbsoluteImageUrl(apiBase, doctor.picture) || fallbackDoctorImage.src,
+  detailUrl: lang === 'en' ? `/en/doctors/${doctor.id}` : `/doctors/${doctor.id}`,
+  normalizedDepartment: compactDepartmentKey(doctor.department?.trim() || c.departmentFallback),
 }));
 
 const departmentOptions = Array.from(
-    new Map(
-        normalizedDoctors
-            .map((doctor) => doctor.department?.trim())
-            .filter((value): value is string => Boolean(value))
-            .map((raw) => {
-                const key = compactDepartmentKey(raw);
-                return [key, compactDepartmentLabel(key, raw)] as const;
-            }),
-    ).entries(),
+  new Map(
+    normalizedDoctors
+      .map((doctor) => doctor.department?.trim())
+      .filter((value): value is string => Boolean(value))
+      .map((raw) => {
+        const key = compactDepartmentKey(raw);
+        return [key, compactDepartmentLabel(key, raw)] as const;
+      }),
+  ).entries(),
 )
-    .map(([value, label]) => ({ value, label }))
-    .sort((a, b) =>
-        a.label.localeCompare(b.label, lang === "en" ? "en" : "ka"),
-    );
+  .map(([value, label]) => ({ value, label }))
+  .sort((a, b) => a.label.localeCompare(b.label, lang === 'en' ? 'en' : 'ka'));
 ---
 
 <section class="doctors-page content-grid">
-    <header class="hero">
-        <h1>{c.pageTitle}</h1>
-        <p>{c.subtitle}</p>
-    </header>
+  <header class="hero">
+    <h1>{c.pageTitle}</h1>
+    <p>{c.subtitle}</p>
+  </header>
 
-    {
-        cardRows.length === 0 ? (
-            <div class="surface empty-state">
-                <p>{c.emptyText}</p>
-            </div>
-        ) : (
-            <div>
-                <div class="filter-row surface">
-                    <label for="department-filter">{c.filterLabel}</label>
-                    <select
-                        id="department-filter"
-                        class="department-filter-select"
-                    >
-                        <option value="all">{c.allDepartments}</option>
-                        {departmentOptions.map((department) => (
-                            <option value={department.value}>
-                                {department.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+  {
+    cardRows.length === 0 ? (
+      <div class="surface empty-state">
+        <p>{c.emptyText}</p>
+      </div>
+    ) : (
+      <div>
+        <div class="filter-row surface">
+          <label for="department-filter">{c.filterLabel}</label>
+          <select id="department-filter" class="department-filter-select">
+            <option value="all">{c.allDepartments}</option>
+            {departmentOptions.map((department) => (
+              <option value={department.value}>{department.label}</option>
+            ))}
+          </select>
+        </div>
 
-                <p id="doctor-filter-empty" class="filter-empty" hidden>
-                    {c.noFilterMatch}
+        <p id="doctor-filter-empty" class="filter-empty" hidden>
+          {c.noFilterMatch}
+        </p>
+
+        <div class="doctor-grid" id="doctor-grid">
+          {cardRows.map(({ doctor, imageUrl, detailUrl, normalizedDepartment }) => (
+            <article class="doctor-card surface" data-department={normalizedDepartment}>
+              <img src={imageUrl} alt={doctor.name} class="doctor-image" loading="lazy" />
+              <div class="doctor-body">
+                <h2>{doctor.name}</h2>
+                <p class="department-line">
+                  <span>{c.department}:</span> {doctor.department?.trim() || c.departmentFallback}
                 </p>
-
-                <div class="doctor-grid" id="doctor-grid">
-                    {cardRows.map(
-                        ({
-                            doctor,
-                            imageUrl,
-                            detailUrl,
-                            normalizedDepartment,
-                        }) => (
-                            <article
-                                class="doctor-card surface"
-                                data-department={normalizedDepartment}
-                            >
-                                <img
-                                    src={imageUrl}
-                                    alt={doctor.name}
-                                    class="doctor-image"
-                                    loading="lazy"
-                                />
-                                <div class="doctor-body">
-                                    <h2>{doctor.name}</h2>
-                                    <p class="department-line">
-                                        <span>{c.department}:</span>{" "}
-                                        {doctor.department?.trim() ||
-                                            c.departmentFallback}
-                                    </p>
-                                    <a href={detailUrl} class="profile-link">
-                                        {c.profileLink}
-                                    </a>
-                                </div>
-                            </article>
-                        ),
-                    )}
-                </div>
-            </div>
-        )
-    }
+                <a href={detailUrl} class="profile-link">
+                  {c.profileLink}
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    )
+  }
 </section>
 
 <script>
-    const filter = document.querySelector("#department-filter");
-    const cards = Array.from(
-        document.querySelectorAll("#doctor-grid .doctor-card"),
-    );
-    const emptyState = document.querySelector("#doctor-filter-empty");
+  const filter = document.querySelector('#department-filter');
+  const cards = Array.from(document.querySelectorAll('#doctor-grid .doctor-card'));
+  const emptyState = document.querySelector('#doctor-filter-empty');
 
-    if (filter && cards.length > 0) {
-        filter.addEventListener("change", (event) => {
-            const target = event.target;
-            if (!(target instanceof HTMLSelectElement)) {
-                return;
-            }
+  if (filter && cards.length > 0) {
+    filter.addEventListener('change', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLSelectElement)) {
+        return;
+      }
 
-            const selected = target.value;
-            let visibleCount = 0;
+      const selected = target.value;
+      let visibleCount = 0;
 
-            cards.forEach((card) => {
-                const department =
-                    card.getAttribute("data-department")?.toLowerCase() || "";
-                const visible = selected === "all" || department === selected;
-                card.toggleAttribute("hidden", !visible);
-                if (visible) {
-                    visibleCount += 1;
-                }
-            });
+      cards.forEach((card) => {
+        const department = card.getAttribute('data-department')?.toLowerCase() || '';
+        const visible = selected === 'all' || department === selected;
+        card.toggleAttribute('hidden', !visible);
+        if (visible) {
+          visibleCount += 1;
+        }
+      });
 
-            if (emptyState instanceof HTMLElement) {
-                emptyState.hidden = visibleCount !== 0;
-            }
-        });
-    }
+      if (emptyState instanceof HTMLElement) {
+        emptyState.hidden = visibleCount !== 0;
+      }
+    });
+  }
 </script>
 
 <style>
-    .doctors-page {
-        padding-block: 4rem 5rem;
-        display: grid;
-        gap: 1.5rem;
-    }
+  .doctors-page {
+    padding-block: 4rem 5rem;
+    display: grid;
+    gap: 1.5rem;
+  }
 
-    .hero {
-        text-align: center;
-        max-width: 760px;
-        margin-inline: auto;
-    }
+  .hero {
+    text-align: center;
+    max-width: 760px;
+    margin-inline: auto;
+  }
 
-    .hero h1 {
-        font-size: clamp(1.9rem, 4vw, 2.9rem);
-        margin-bottom: 0.65rem;
-    }
+  .hero h1 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    margin-bottom: 0.65rem;
+  }
 
-    .hero p {
-        color: #475569;
-        line-height: 1.7;
-    }
+  .hero p {
+    color: #475569;
+    line-height: 1.7;
+  }
 
-    .surface {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 1.25rem;
-    }
+  .surface {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
 
-    .empty-state {
-        text-align: center;
-        color: #475569;
-    }
+  .empty-state {
+    text-align: center;
+    color: #475569;
+  }
 
-    .doctor-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
-    }
+  .doctor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
 
-    .filter-row {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-    }
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
 
-    .filter-row label {
-        font-weight: 600;
-        color: #0f172a;
-    }
+  .filter-row label {
+    font-weight: 600;
+    color: #0f172a;
+  }
 
-    .department-filter-select {
-        min-width: 220px;
-        padding: 0.55rem 0.7rem;
-        border: 1px solid #cbd5e1;
-        border-radius: 8px;
-        background: #fff;
-        color: #0f172a;
-    }
+  .department-filter-select {
+    min-width: 220px;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    color: #0f172a;
+  }
 
-    .filter-empty {
-        margin: 1rem 0 0;
-        color: #64748b;
-        font-weight: 600;
-    }
+  .filter-empty {
+    margin: 1rem 0 0;
+    color: #64748b;
+    font-weight: 600;
+  }
 
-    .doctor-card {
-        display: grid;
-        gap: 1rem;
-    }
+  .doctor-card {
+    display: grid;
+    gap: 1rem;
+  }
 
-    .doctor-card[hidden] {
-        display: none;
-    }
+  .doctor-card[hidden] {
+    display: none;
+  }
 
-    .doctor-image {
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
-        border-radius: 10px;
-        background: #f1f5f9;
-    }
+  .doctor-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f1f5f9;
+  }
 
-    .doctor-body h2 {
-        margin: 0 0 0.8rem;
-        font-size: 1.2rem;
-    }
+  .doctor-body h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.2rem;
+  }
 
-    .department-line {
-        margin: 0;
-        color: #0f172a;
-        line-height: 1.55;
-    }
+  .department-line {
+    margin: 0;
+    color: #0f172a;
+    line-height: 1.55;
+  }
 
-    .department-line span {
-        color: #64748b;
-        font-weight: 600;
-    }
+  .department-line span {
+    color: #64748b;
+    font-weight: 600;
+  }
 
-    .profile-link {
-        display: inline-block;
-        margin-top: 0.95rem;
-        font-weight: 600;
-    }
+  .profile-link {
+    display: inline-block;
+    margin-top: 0.95rem;
+    font-weight: 600;
+  }
 </style>

@@ -1,31 +1,25 @@
 ---
-import { Icon } from "astro-icon/components";
+import { Icon } from 'astro-icon/components';
 
 const { currentLocale } = Astro;
 const currentPath = Astro.url.pathname;
 
 const languages = [
-  { code: "ka", label: "KA" },
-  { code: "en", label: "ENG" },
+  { code: 'ka', label: 'KA' },
+  { code: 'en', label: 'ENG' },
 ];
 
 function getLocalizedPath(locale: string) {
-  const pathWithoutLocale = currentPath.replace(/^\/(ka|en)/, "") || "/";
-  if (locale === "ka") return pathWithoutLocale;
-  return `/en${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
+  const pathWithoutLocale = currentPath.replace(/^\/(ka|en)/, '') || '/';
+  if (locale === 'ka') return pathWithoutLocale;
+  return `/en${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
 }
 
-const activeLabel =
-  languages.find((l) => l.code === currentLocale)?.label ?? "KA";
+const activeLabel = languages.find((l) => l.code === currentLocale)?.label ?? 'KA';
 ---
 
 <div class="lang-switcher">
-  <button
-    id="lang-toggle"
-    class="lang-toggle"
-    aria-expanded="false"
-    aria-label="Switch language"
-  >
+  <button id="lang-toggle" class="lang-toggle" aria-expanded="false" aria-label="Switch language">
     <Icon name="heroicons:globe-alt" class="lang-globe" />
     <span class="lang-current">{activeLabel}</span>
     <Icon name="heroicons:chevron-down" class="lang-chevron" />
@@ -37,7 +31,7 @@ const activeLabel =
         <li role="option">
           <a
             href={getLocalizedPath(lang.code)}
-            class={`lang-option${currentLocale === lang.code ? " lang-option--active" : ""}`}
+            class={`lang-option${currentLocale === lang.code ? ' lang-option--active' : ''}`}
           >
             {lang.label}
           </a>
@@ -87,7 +81,7 @@ const activeLabel =
       transition: transform 0.2s ease;
     }
 
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       border-color: var(--primary);
       background-color: oklch(from var(--primary) 97% c h / 0.5);
 
@@ -150,18 +144,18 @@ const activeLabel =
 </style>
 
 <script>
-  const toggle = document.getElementById("lang-toggle");
-  const menu = document.getElementById("lang-menu");
+  const toggle = document.getElementById('lang-toggle');
+  const menu = document.getElementById('lang-menu');
 
-  toggle?.addEventListener("click", (e) => {
+  toggle?.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isOpen = toggle.getAttribute("aria-expanded") === "true";
-    toggle.setAttribute("aria-expanded", String(!isOpen));
-    menu?.classList.toggle("is-open", !isOpen);
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    menu?.classList.toggle('is-open', !isOpen);
   });
 
-  document.addEventListener("click", () => {
-    toggle?.setAttribute("aria-expanded", "false");
-    menu?.classList.remove("is-open");
+  document.addEventListener('click', () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    menu?.classList.remove('is-open');
   });
 </script>

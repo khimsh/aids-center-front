@@ -22,7 +22,7 @@ export function ConfirmModal({
   destructive = false,
   busy = false,
   onConfirm,
-  onCancel
+  onCancel,
 }: ConfirmModalProps) {
   useEffect(() => {
     if (!open) {

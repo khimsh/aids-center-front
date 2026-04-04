@@ -21,16 +21,18 @@ export function DashboardPage() {
       const [articleResult, users, vacanciesResponse] = await Promise.all([
         fetchArticles({ page: 1, per_page: 200, include_drafts: true }),
         adminView ? fetchUsers() : Promise.resolve([]),
-        api.get('/api/job-postings')
+        api.get('/api/job-postings'),
       ]);
 
-      const visible = adminView ? articleResult.items : filterArticlesByUser(articleResult.items, user?.id);
+      const visible = adminView
+        ? articleResult.items
+        : filterArticlesByUser(articleResult.items, user?.id);
       return {
         articleCount: visible.length,
         vacancyCount: Array.isArray(vacanciesResponse.data) ? vacanciesResponse.data.length : 0,
-        editorCount: adminView ? users.filter((entry) => isEditorRole(entry.role)).length : 0
+        editorCount: adminView ? users.filter((entry) => isEditorRole(entry.role)).length : 0,
       };
-    }
+    },
   });
 
   useEffect(() => {

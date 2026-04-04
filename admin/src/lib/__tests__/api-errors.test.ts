@@ -7,7 +7,7 @@ describe('extractApiErrorMessage', () => {
   it('returns detail string when present', () => {
     const message = extractApiErrorMessage(
       { response: { status: 400, data: { detail: 'Bad request' } } },
-      fallback
+      fallback,
     );
 
     expect(message).toBe('400: Bad request');
@@ -19,11 +19,11 @@ describe('extractApiErrorMessage', () => {
         response: {
           status: 422,
           data: {
-            detail: [{ loc: ['body', 'email'], msg: 'invalid email' }]
-          }
-        }
+            detail: [{ loc: ['body', 'email'], msg: 'invalid email' }],
+          },
+        },
       },
-      fallback
+      fallback,
     );
 
     expect(message).toBe('422: body.email - invalid email');
@@ -32,7 +32,7 @@ describe('extractApiErrorMessage', () => {
   it('returns response message when present', () => {
     const message = extractApiErrorMessage(
       { response: { status: 500, data: { message: 'Server down' } } },
-      fallback
+      fallback,
     );
 
     expect(message).toBe('500: Server down');

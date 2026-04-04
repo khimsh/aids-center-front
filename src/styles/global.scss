@@ -1,5 +1,5 @@
-@use "./fontFace.scss";
-@use "./contentGrid.scss";
+@use './fontFace.scss';
+@use './contentGrid.scss';
 
 * {
   /* box-sizing: border-box; */
@@ -22,42 +22,42 @@ span,
 a,
 li,
 button {
-  font-family: "Noto Sans Georgian", sans-serif;
+  font-family: 'Noto Sans Georgian', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  font-variation-settings: "wdth" 100;
+  font-variation-settings: 'wdth' 100;
 }
 
-html[lang="en"] p,
-html[lang="en"] span,
-html[lang="en"] a,
-html[lang="en"] li,
-html[lang="en"] button,
-html[lang="en"] input,
-html[lang="en"] textarea,
-html[lang="en"] select,
-html[lang="en"] label {
-  font-family: "Hind", sans-serif;
+html[lang='en'] p,
+html[lang='en'] span,
+html[lang='en'] a,
+html[lang='en'] li,
+html[lang='en'] button,
+html[lang='en'] input,
+html[lang='en'] textarea,
+html[lang='en'] select,
+html[lang='en'] label {
+  font-family: 'Hind', sans-serif;
 }
 
-html[lang="en"] h1,
-html[lang="en"] h2,
-html[lang="en"] h3,
-html[lang="en"] h4,
-html[lang="en"] h5,
-html[lang="en"] h6,
-html[lang="en"] .section-title {
-  font-family: "Satoshi", sans-serif;
+html[lang='en'] h1,
+html[lang='en'] h2,
+html[lang='en'] h3,
+html[lang='en'] h4,
+html[lang='en'] h5,
+html[lang='en'] h6,
+html[lang='en'] .section-title {
+  font-family: 'Satoshi', sans-serif;
 }
 
-html[lang="ka"] h1,
-html[lang="ka"] h2,
-html[lang="ka"] h3,
-html[lang="ka"] h4,
-html[lang="ka"] h5,
-html[lang="ka"] h6,
-html[lang="ka"] .section-title {
-  font-family: "BPG Nino Mtavruli Bold", sans-serif;
+html[lang='ka'] h1,
+html[lang='ka'] h2,
+html[lang='ka'] h3,
+html[lang='ka'] h4,
+html[lang='ka'] h5,
+html[lang='ka'] h6,
+html[lang='ka'] .section-title {
+  font-family: 'BPG Nino Mtavruli Bold', sans-serif;
 }
 
 a {
@@ -82,10 +82,10 @@ ol {
   color: oklch(from var(--primary) 90% c h);
   background-color: oklch(from var(--primary) 20% c h);
   font-size: 0.85rem;
-  font-family: "Noto Sans Georgian", sans-serif;
+  font-family: 'Noto Sans Georgian', sans-serif;
 
-  html[lang="en"] & {
-    font-family: "Hind", sans-serif;
+  html[lang='en'] & {
+    font-family: 'Hind', sans-serif;
   }
 }
 
@@ -94,12 +94,12 @@ body {
 }
 
 .lang-en-body {
-  font-family: "Hind", sans-serif;
+  font-family: 'Hind', sans-serif;
 }
 
 .section-title {
   margin-bottom: 32px;
-  font-family: "BPG Nino Mtavruli Bold";
+  font-family: 'BPG Nino Mtavruli Bold';
   font-size: 24px;
   font-weight: 700;
 }
@@ -112,16 +112,16 @@ body {
   gap: 0.25rem;
   font-size: 20px;
   font-weight: 500;
-  font-family: "Noto Sans Georgian", sans-serif;
+  font-family: 'Noto Sans Georgian', sans-serif;
   color: #fff;
   cursor: pointer;
 
-  html[lang="en"] & {
-    font-family: "Hind", sans-serif;
+  html[lang='en'] & {
+    font-family: 'Hind', sans-serif;
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -2px;

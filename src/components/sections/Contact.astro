@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from "../../i18n/utils";
+import { useTranslations } from '../../i18n/utils';
 
-const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const lang = (Astro.currentLocale ?? 'ka') as 'ka' | 'en';
 const t = useTranslations(lang);
 ---
 
@@ -128,6 +128,6 @@ const t = useTranslations(lang);
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: "Noto Sans Georgian", sans-serif;
+    font-family: 'Noto Sans Georgian', sans-serif;
   }
 </style>

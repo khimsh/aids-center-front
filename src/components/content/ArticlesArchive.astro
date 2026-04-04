@@ -1,233 +1,218 @@
 ---
-import Article from "./Article.astro";
-import { useTranslations } from "../../i18n/utils";
+import Article from './Article.astro';
+import { useTranslations } from '../../i18n/utils';
 import {
-    fetchArticleBySlug,
-    toAbsoluteImageUrl,
-    type ArticleDetails,
-} from "../../lib/articles-api";
-import fallbackNewsImage from "../../assets/images/clinic.webp";
+  fetchArticleBySlug,
+  toAbsoluteImageUrl,
+  type ArticleDetails,
+} from '../../lib/articles-api';
+import fallbackNewsImage from '../../assets/images/clinic.webp';
 
 type Props = {
-    lang: "ka" | "en";
-    apiBase: string;
-    articles: ArticleDetails[];
-    currentPage: number;
-    totalPages: number;
+  lang: 'ka' | 'en';
+  apiBase: string;
+  articles: ArticleDetails[];
+  currentPage: number;
+  totalPages: number;
 };
 
-const { lang, apiBase, articles, currentPage, totalPages } =
-    Astro.props as Props;
+const { lang, apiBase, articles, currentPage, totalPages } = Astro.props as Props;
 const t = useTranslations(lang);
 
 const hydratedArticles = await Promise.all(
-    articles.map(async (entry) => {
-        const hasBody = Boolean(
-            (entry.body_ka ?? "").trim() || (entry.body_en ?? "").trim(),
-        );
+  articles.map(async (entry) => {
+    const hasBody = Boolean((entry.body_ka ?? '').trim() || (entry.body_en ?? '').trim());
 
-        if (hasBody || !entry.slug?.trim()) {
-            return entry;
-        }
+    if (hasBody || !entry.slug?.trim()) {
+      return entry;
+    }
 
-        const detail = await fetchArticleBySlug(apiBase, entry.slug.trim());
-        if (!detail) {
-            return entry;
-        }
+    const detail = await fetchArticleBySlug(apiBase, entry.slug.trim());
+    if (!detail) {
+      return entry;
+    }
 
-        return {
-            ...entry,
-            body_ka: detail.body_ka ?? entry.body_ka,
-            body_en: detail.body_en ?? entry.body_en,
-        };
-    }),
+    return {
+      ...entry,
+      body_ka: detail.body_ka ?? entry.body_ka,
+      body_en: detail.body_en ?? entry.body_en,
+    };
+  }),
 );
 
 const stripHtml = (value: string) =>
-    value
-        .replace(/<[^>]*>/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+  value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 
-const basePath = lang === "en" ? "/en/news" : "/news";
+const basePath = lang === 'en' ? '/en/news' : '/news';
 const previousHref =
-    currentPage <= 1
-        ? null
-        : currentPage === 2
-          ? basePath
-          : `${basePath}/page/${currentPage - 1}`;
-const nextHref =
-    currentPage >= totalPages ? null : `${basePath}/page/${currentPage + 1}`;
+  currentPage <= 1 ? null : currentPage === 2 ? basePath : `${basePath}/page/${currentPage - 1}`;
+const nextHref = currentPage >= totalPages ? null : `${basePath}/page/${currentPage + 1}`;
 
 const cards = hydratedArticles.map((entry) => {
-    const localizedTitle =
-        lang === "en"
-            ? (entry.title_en ?? entry.title_ka)
-            : (entry.title_ka ?? entry.title_en);
-    const localizedBody =
-        lang === "en"
-            ? (entry.body_en ?? entry.body_ka)
-            : (entry.body_ka ?? entry.body_en);
+  const localizedTitle =
+    lang === 'en' ? (entry.title_en ?? entry.title_ka) : (entry.title_ka ?? entry.title_en);
+  const localizedBody =
+    lang === 'en' ? (entry.body_en ?? entry.body_ka) : (entry.body_ka ?? entry.body_en);
 
-    return {
-        id: entry.id,
-        title:
-            localizedTitle?.trim() ||
-            (lang === "en" ? "Untitled Article" : "სტატიის სათაურის გარეშე"),
-        content:
-            stripHtml(localizedBody ?? "") ||
-            (lang === "en" ? "No summary available." : "აღწერა არ არის."),
-        image:
-            toAbsoluteImageUrl(apiBase, entry.image_url) ||
-            fallbackNewsImage.src,
-        articleTag: entry.category ?? "news",
-        date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? "",
-        link: `${basePath}/${encodeURIComponent(entry.slug)}`,
-    };
+  return {
+    id: entry.id,
+    title:
+      localizedTitle?.trim() || (lang === 'en' ? 'Untitled Article' : 'სტატიის სათაურის გარეშე'),
+    content:
+      stripHtml(localizedBody ?? '') ||
+      (lang === 'en' ? 'No summary available.' : 'აღწერა არ არის.'),
+    image: toAbsoluteImageUrl(apiBase, entry.image_url) || fallbackNewsImage.src,
+    articleTag: entry.category ?? 'news',
+    date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? '',
+    link: `${basePath}/${encodeURIComponent(entry.slug)}`,
+  };
 });
 ---
 
 <section class="news-archive content-grid" aria-labelledby="news-archive-title">
-    <div class="archive-shell">
-        <div class="archive-header">
-            <h1 id="news-archive-title" class="news-title">
-                {t.news.archiveTitle}
-            </h1>
-        </div>
-
-        {
-            cards.length > 0 ? (
-                <div class="archive-grid">
-                    {cards.map((card) => (
-                        <Article
-                            featured={false}
-                            image={card.image}
-                            title={card.title}
-                            articleTag={card.articleTag}
-                            content={card.content}
-                            link={card.link}
-                            date={card.date}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <p class="archive-empty">{t.news.emptyText}</p>
-            )
-        }
-
-        {
-            totalPages > 1 ? (
-                <nav class="archive-pagination" aria-label="Pagination">
-                    {previousHref ? (
-                        <a href={previousHref}>{t.news.previousPage}</a>
-                    ) : (
-                        <span class="is-disabled">{t.news.previousPage}</span>
-                    )}
-                    <span class="archive-page-indicator">
-                        {t.news.pageSummary} {currentPage} / {totalPages}
-                    </span>
-                    {nextHref ? (
-                        <a href={nextHref}>{t.news.nextPage}</a>
-                    ) : (
-                        <span class="is-disabled">{t.news.nextPage}</span>
-                    )}
-                </nav>
-            ) : null
-        }
+  <div class="archive-shell">
+    <div class="archive-header">
+      <h1 id="news-archive-title" class="news-title">
+        {t.news.archiveTitle}
+      </h1>
     </div>
 
-    <p class="archive-summary">
-        {t.news.pageSummary}
-        {currentPage} / {totalPages}
-    </p>
+    {
+      cards.length > 0 ? (
+        <div class="archive-grid">
+          {cards.map((card) => (
+            <Article
+              featured={false}
+              image={card.image}
+              title={card.title}
+              articleTag={card.articleTag}
+              content={card.content}
+              link={card.link}
+              date={card.date}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="archive-empty">{t.news.emptyText}</p>
+      )
+    }
+
+    {
+      totalPages > 1 ? (
+        <nav class="archive-pagination" aria-label="Pagination">
+          {previousHref ? (
+            <a href={previousHref}>{t.news.previousPage}</a>
+          ) : (
+            <span class="is-disabled">{t.news.previousPage}</span>
+          )}
+          <span class="archive-page-indicator">
+            {t.news.pageSummary} {currentPage} / {totalPages}
+          </span>
+          {nextHref ? (
+            <a href={nextHref}>{t.news.nextPage}</a>
+          ) : (
+            <span class="is-disabled">{t.news.nextPage}</span>
+          )}
+        </nav>
+      ) : null
+    }
+  </div>
+
+  <p class="archive-summary">
+    {t.news.pageSummary}
+    {currentPage} / {totalPages}
+  </p>
 </section>
 
 <style>
-    .news-title {
-        text-align: center;
-        margin-block: 3rem;
-        color: #dbeafe;
-    }
+  .news-title {
+    text-align: center;
+    margin-block: 3rem;
+    color: #dbeafe;
+  }
 
-    .news-archive {
-        padding-block: 3rem 4rem;
-        background: linear-gradient(180deg, #034485 0%, #02315f 100%);
-    }
+  .news-archive {
+    padding-block: 3rem 4rem;
+    background: linear-gradient(180deg, #034485 0%, #02315f 100%);
+  }
 
-    .archive-shell {
-        grid-column: content;
-        display: grid;
-        gap: 1.5rem;
-    }
+  .archive-shell {
+    grid-column: content;
+    display: grid;
+    gap: 1.5rem;
+  }
 
-    .archive-header {
-        display: grid;
-        gap: 0.35rem;
-    }
+  .archive-header {
+    display: grid;
+    gap: 0.35rem;
+  }
 
-    .archive-summary {
-        margin: 0;
-        color: #bfdbfe;
-    }
+  .archive-summary {
+    margin: 0;
+    color: #bfdbfe;
+  }
 
+  .archive-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .archive-empty {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #fff;
+    color: #475569;
+  }
+
+  .archive-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: #fff;
+  }
+
+  .archive-pagination a,
+  .archive-pagination .is-disabled {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 112px;
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    color: inherit;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+  }
+
+  .archive-pagination .is-disabled {
+    opacity: 0.45;
+  }
+
+  .archive-page-indicator {
+    color: #dbeafe;
+  }
+
+  @media (max-width: 1100px) {
     .archive-grid {
-        display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
 
-    .archive-empty {
-        margin: 0;
-        padding: 1rem;
-        border-radius: 12px;
-        background: #fff;
-        color: #475569;
+  @media (max-width: 760px) {
+    .archive-grid {
+      grid-template-columns: 1fr;
     }
 
     .archive-pagination {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        color: #fff;
+      flex-direction: column;
+      align-items: stretch;
     }
-
-    .archive-pagination a,
-    .archive-pagination .is-disabled {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 112px;
-        padding: 0.7rem 1rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.14);
-        color: inherit;
-        text-decoration: none;
-        backdrop-filter: blur(8px);
-    }
-
-    .archive-pagination .is-disabled {
-        opacity: 0.45;
-    }
-
-    .archive-page-indicator {
-        color: #dbeafe;
-    }
-
-    @media (max-width: 1100px) {
-        .archive-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    @media (max-width: 760px) {
-        .archive-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .archive-pagination {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    }
+  }
 </style>

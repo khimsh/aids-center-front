@@ -1,0 +1,7 @@
+node_modules
+.astro
+dist
+coverage
+admin/node_modules
+admin/dist
+admin/coverage

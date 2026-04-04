@@ -12,7 +12,7 @@ import {
   fetchArticles,
   getVisibleArticles,
   publishArticleDraft,
-  type ArticleRecord
+  type ArticleRecord,
 } from '../../lib/articles';
 import { isAdminRole } from '../../lib/permissions';
 import { queryKeys } from '../../lib/query-keys';
@@ -55,7 +55,7 @@ export function ArticleDraftsPage() {
 
         throw error;
       }
-    }
+    },
   });
 
   useEffect(() => {
@@ -73,28 +73,32 @@ export function ArticleDraftsPage() {
         toast.success('Draft published successfully.');
       }
 
-      await queryClient.invalidateQueries({ queryKey: queryKeys.articleDrafts(adminView, user?.id) });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.articleDrafts(adminView, user?.id),
+      });
     },
     onError: () => {
       toast.error('Could not publish draft.');
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const deleteDraftMutation = useMutation({
     mutationFn: deleteArticleById,
     onSuccess: async () => {
       toast.success('Draft deleted successfully.');
-      await queryClient.invalidateQueries({ queryKey: queryKeys.articleDrafts(adminView, user?.id) });
+      await queryClient.invalidateQueries({
+        queryKey: queryKeys.articleDrafts(adminView, user?.id),
+      });
     },
     onError: () => {
       toast.error('Could not delete draft.');
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const publishDraft = (articleId: number) => {
@@ -135,7 +139,11 @@ export function ArticleDraftsPage() {
               editLabel="Edit Draft"
               showCategoryPrefix={false}
               forceDraftStatus
-              onEdit={() => navigate(`/articles/${draft.id}/edit`, { state: { article: draft, returnTo: '/articles/drafts' } })}
+              onEdit={() =>
+                navigate(`/articles/${draft.id}/edit`, {
+                  state: { article: draft, returnTo: '/articles/drafts' },
+                })
+              }
               onPublishDraft={() => publishDraft(draft.id)}
               onDelete={() => setDraftToDeleteId(draft.id)}
             />

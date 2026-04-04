@@ -2,7 +2,6 @@ import '../shared/content-page.scss';
 import { ArticleForm } from '../../components/forms/article-form';
 
 export function PostsPage() {
-
   return (
     <div className="posts-page">
       <div className="posts-header">

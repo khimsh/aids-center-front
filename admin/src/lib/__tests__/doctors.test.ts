@@ -5,7 +5,7 @@ const { apiGetMock, apiPostMock, apiPutMock, apiDeleteMock, apiPatchMock } = vi.
   apiPostMock: vi.fn(),
   apiPutMock: vi.fn(),
   apiDeleteMock: vi.fn(),
-  apiPatchMock: vi.fn()
+  apiPatchMock: vi.fn(),
 }));
 
 vi.mock('../api', () => ({
@@ -14,8 +14,8 @@ vi.mock('../api', () => ({
     post: apiPostMock,
     put: apiPutMock,
     delete: apiDeleteMock,
-    patch: apiPatchMock
-  }
+    patch: apiPatchMock,
+  },
 }));
 
 import {
@@ -28,7 +28,7 @@ import {
   reorderDoctorsByIds,
   updateDoctorTranslation,
   updateDoctor,
-  type DoctorRecord
+  type DoctorRecord,
 } from '../doctors';
 
 describe('doctors service', () => {
@@ -37,7 +37,7 @@ describe('doctors service', () => {
     name: 'Doctor Name',
     education: 'Education',
     experience: 'Experience',
-    sort_order: 2
+    sort_order: 2,
   };
 
   beforeEach(() => {
@@ -71,25 +71,31 @@ describe('doctors service', () => {
       education: ' Education ',
       experience: ' Experience ',
       department: '',
-      sort_order: 5
+      sort_order: 5,
     };
 
     await createDoctor(payload);
     await updateDoctor(doctor.id, payload);
 
-    expect(apiPostMock).toHaveBeenCalledWith('/api/doctors', expect.objectContaining({
-      name: 'Doctor Name',
-      education: 'Education',
-      experience: 'Experience',
-      department: null,
-      sort_order: 5
-    }));
+    expect(apiPostMock).toHaveBeenCalledWith(
+      '/api/doctors',
+      expect.objectContaining({
+        name: 'Doctor Name',
+        education: 'Education',
+        experience: 'Experience',
+        department: null,
+        sort_order: 5,
+      }),
+    );
 
-    expect(apiPutMock).toHaveBeenCalledWith('/api/doctors/7', expect.objectContaining({
-      name: 'Doctor Name',
-      education: 'Education',
-      experience: 'Experience'
-    }));
+    expect(apiPutMock).toHaveBeenCalledWith(
+      '/api/doctors/7',
+      expect.objectContaining({
+        name: 'Doctor Name',
+        education: 'Education',
+        experience: 'Experience',
+      }),
+    );
   });
 
   it('deletes and reorders doctors', async () => {
@@ -110,7 +116,7 @@ describe('doctors service', () => {
       lang: 'en',
       name: 'Doctor Name EN',
       education: 'Education EN',
-      experience: 'Experience EN'
+      experience: 'Experience EN',
     };
 
     apiGetMock.mockResolvedValue({ data: [translation] });
@@ -123,28 +129,34 @@ describe('doctors service', () => {
         lang: 'en',
         name: ' Doctor Name EN ',
         education: ' Education EN ',
-        experience: ' Experience EN '
-      })
+        experience: ' Experience EN ',
+      }),
     ).resolves.toEqual(translation);
     await expect(
       updateDoctorTranslation(7, 'en', {
         name: ' Doctor Name EN ',
         education: ' Education EN ',
-        experience: ' Experience EN '
-      })
+        experience: ' Experience EN ',
+      }),
     ).resolves.toEqual(translation);
 
     expect(apiGetMock).toHaveBeenCalledWith('/api/doctors/7/translations');
-    expect(apiPostMock).toHaveBeenCalledWith('/api/doctors/7/translations', expect.objectContaining({
-      lang: 'en',
-      name: 'Doctor Name EN',
-      education: 'Education EN',
-      experience: 'Experience EN'
-    }));
-    expect(apiPutMock).toHaveBeenCalledWith('/api/doctors/7/translations/en', expect.objectContaining({
-      name: 'Doctor Name EN',
-      education: 'Education EN',
-      experience: 'Experience EN'
-    }));
+    expect(apiPostMock).toHaveBeenCalledWith(
+      '/api/doctors/7/translations',
+      expect.objectContaining({
+        lang: 'en',
+        name: 'Doctor Name EN',
+        education: 'Education EN',
+        experience: 'Experience EN',
+      }),
+    );
+    expect(apiPutMock).toHaveBeenCalledWith(
+      '/api/doctors/7/translations/en',
+      expect.objectContaining({
+        name: 'Doctor Name EN',
+        education: 'Education EN',
+        experience: 'Experience EN',
+      }),
+    );
   });
 });

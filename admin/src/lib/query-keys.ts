@@ -11,5 +11,5 @@ export const queryKeys = {
   jobPostings: ['job-postings'] as const,
   jobPosting: (jobId: number) => ['job-posting', jobId] as const,
   doctors: ['doctors'] as const,
-  doctor: (doctorId: number) => ['doctor', doctorId] as const
+  doctor: (doctorId: number) => ['doctor', doctorId] as const,
 };

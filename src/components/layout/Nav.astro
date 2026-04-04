@@ -1,29 +1,24 @@
 ---
-import { Icon } from "astro-icon/components";
+import { Icon } from 'astro-icon/components';
 
-import { useTranslations } from "../../i18n/utils";
+import { useTranslations } from '../../i18n/utils';
 
-const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const lang = (Astro.currentLocale ?? 'ka') as 'ka' | 'en';
 const t = useTranslations(lang);
-const homeUrl = lang === "ka" ? "/" : `/${lang}`;
-const newsUrl = lang === "ka" ? "/news" : `/${lang}/news`;
-const hivAidsUrl = lang === "ka" ? "/hiv-aids" : `/${lang}/hiv-aids`;
-const aboutUrl = lang === "ka" ? "/about" : `/${lang}/about`;
-const doctorsUrl = lang === "ka" ? "/doctors" : `/${lang}/doctors`;
-const legislationUrl = lang === "ka" ? "/legislation" : `/${lang}/legislation`;
-const palliativeCareUrl =
-  lang === "ka" ? "/palliative-care" : `/${lang}/palliative-care`;
-const etiopathogenesisUrl =
-  lang === "ka" ? "/etiopathogenesis" : `/${lang}/etiopathogenesis`;
-const clinicalSpectrumUrl =
-  lang === "ka" ? "/clinical-spectrum" : `/${lang}/clinical-spectrum`;
-const diagnosticUrl = lang === "ka" ? "/diagnostic" : `/${lang}/diagnostic`;
-const importantDatesUrl =
-  lang === "ka" ? "/important-dates" : `/${lang}/important-dates`;
+const homeUrl = lang === 'ka' ? '/' : `/${lang}`;
+const newsUrl = lang === 'ka' ? '/news' : `/${lang}/news`;
+const hivAidsUrl = lang === 'ka' ? '/hiv-aids' : `/${lang}/hiv-aids`;
+const aboutUrl = lang === 'ka' ? '/about' : `/${lang}/about`;
+const doctorsUrl = lang === 'ka' ? '/doctors' : `/${lang}/doctors`;
+const legislationUrl = lang === 'ka' ? '/legislation' : `/${lang}/legislation`;
+const palliativeCareUrl = lang === 'ka' ? '/palliative-care' : `/${lang}/palliative-care`;
+const etiopathogenesisUrl = lang === 'ka' ? '/etiopathogenesis' : `/${lang}/etiopathogenesis`;
+const clinicalSpectrumUrl = lang === 'ka' ? '/clinical-spectrum' : `/${lang}/clinical-spectrum`;
+const diagnosticUrl = lang === 'ka' ? '/diagnostic' : `/${lang}/diagnostic`;
+const importantDatesUrl = lang === 'ka' ? '/important-dates' : `/${lang}/important-dates`;
 
-const labUrl = lang === "ka" ? "/laboratory" : `/${lang}/laboratory`;
-const transmissionUrl =
-  lang === "ka" ? "/transmission" : `/${lang}/transmission`;
+const labUrl = lang === 'ka' ? '/laboratory' : `/${lang}/laboratory`;
+const transmissionUrl = lang === 'ka' ? '/transmission' : `/${lang}/transmission`;
 ---
 
 <nav aria-label={t.nav.navAriaLabel} class="main-nav">
@@ -202,7 +197,7 @@ const transmissionUrl =
   }
 
   .nav-group-title::after {
-    content: ">";
+    content: '>';
     opacity: 0.8;
   }
 
@@ -227,7 +222,7 @@ const transmissionUrl =
       transition: transform 0.2s ease;
     }
 
-    &[aria-expanded="true"] [data-icon] {
+    &[aria-expanded='true'] [data-icon] {
       transform: rotate(180deg);
     }
   }
@@ -236,7 +231,7 @@ const transmissionUrl =
   a,
   button {
     font-size: 0.9rem;
-    font-family: "Noto Sans Georgian", sans-serif;
+    font-family: 'Noto Sans Georgian', sans-serif;
     font-weight: 500;
     color: oklch(from var(--primary) 20% c h);
   }
@@ -252,54 +247,49 @@ const transmissionUrl =
     }
   }
 
-  .nav-list > li > button[aria-expanded="true"] {
+  .nav-list > li > button[aria-expanded='true'] {
     color: var(--primary);
   }
 </style>
 
 <script>
   // Toggle mobile menu
-  const menuToggle = document.querySelector(".menu-toggle");
-  const mainNav = document.querySelector(".main-nav");
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
 
   if (menuToggle && mainNav) {
-    menuToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("is-open");
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('is-open');
     });
   }
 
   // Dropdown toggle
-  const dropdownBtns =
-    document.querySelectorAll<HTMLButtonElement>(".nav-dropdown-btn");
+  const dropdownBtns = document.querySelectorAll<HTMLButtonElement>('.nav-dropdown-btn');
 
   dropdownBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const dropdown = btn.nextElementSibling as HTMLElement | null;
-      const isOpen = btn.getAttribute("aria-expanded") === "true";
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
 
       // Close all other open dropdowns
       dropdownBtns.forEach((other) => {
         if (other !== btn) {
-          other.setAttribute("aria-expanded", "false");
-          (other.nextElementSibling as HTMLElement | null)?.classList.remove(
-            "is-open",
-          );
+          other.setAttribute('aria-expanded', 'false');
+          (other.nextElementSibling as HTMLElement | null)?.classList.remove('is-open');
         }
       });
 
-      btn.setAttribute("aria-expanded", String(!isOpen));
-      dropdown?.classList.toggle("is-open", !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      dropdown?.classList.toggle('is-open', !isOpen);
     });
   });
 
   // Close dropdowns when clicking outside
-  document.addEventListener("click", () => {
+  document.addEventListener('click', () => {
     dropdownBtns.forEach((btn) => {
-      btn.setAttribute("aria-expanded", "false");
-      (btn.nextElementSibling as HTMLElement | null)?.classList.remove(
-        "is-open",
-      );
+      btn.setAttribute('aria-expanded', 'false');
+      (btn.nextElementSibling as HTMLElement | null)?.classList.remove('is-open');
     });
   });
 </script>

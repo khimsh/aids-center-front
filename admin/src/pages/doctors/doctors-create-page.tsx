@@ -9,7 +9,7 @@ import '../shared/content-page.scss';
 export function DoctorsCreatePage() {
   const doctorsQuery = useQuery({
     queryKey: queryKeys.doctors,
-    queryFn: fetchDoctors
+    queryFn: fetchDoctors,
   });
 
   const nextSortOrder = useMemo(() => {
@@ -20,8 +20,8 @@ export function DoctorsCreatePage() {
 
     const maxSortOrder = Math.max(
       ...doctors.map((doctor, index) =>
-        typeof doctor.sort_order === 'number' ? doctor.sort_order : index + 1
-      )
+        typeof doctor.sort_order === 'number' ? doctor.sort_order : index + 1,
+      ),
     );
 
     return maxSortOrder + 1;
@@ -32,10 +32,14 @@ export function DoctorsCreatePage() {
       <div className="posts-header">
         <div>
           <h1>ახალი ექიმის დამატება</h1>
-          <p className="hint">შეავსეთ ექიმის ინფორმაცია და შეინახეთ. რიგითობა დაემატება ავტომატურად.</p>
+          <p className="hint">
+            შეავსეთ ექიმის ინფორმაცია და შეინახეთ. რიგითობა დაემატება ავტომატურად.
+          </p>
         </div>
 
-        <ButtonLink to="/doctors/list" variant="secondary">ექიმების სია</ButtonLink>
+        <ButtonLink to="/doctors/list" variant="secondary">
+          ექიმების სია
+        </ButtonLink>
       </div>
 
       <DoctorForm

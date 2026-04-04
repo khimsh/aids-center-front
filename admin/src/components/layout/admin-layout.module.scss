@@ -34,7 +34,9 @@
   transform: scaleX(0);
   transform-origin: left;
   opacity: 0;
-  transition: transform 280ms cubic-bezier(.2, .8, .2, 1), opacity 220ms ease;
+  transition:
+    transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 220ms ease;
   z-index: -1;
 }
 
@@ -48,7 +50,9 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.95);
   transform: translateY(-50%);
-  transition: height 280ms cubic-bezier(.2, .8, .2, 1), opacity 180ms ease;
+  transition:
+    height 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 180ms ease;
   opacity: 0;
 }
 
@@ -73,7 +77,7 @@
   backdrop-filter: blur(10px) saturate(130%);
   -webkit-backdrop-filter: blur(10px) saturate(130%);
   transform: translateY(-1px);
-  animation: tabActivate 280ms cubic-bezier(.2, .8, .2, 1);
+  animation: tabActivate 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .menuLinkActive::before {
@@ -96,7 +100,7 @@
 }
 
 .pageTransition {
-  animation: pageEnter 280ms cubic-bezier(.2, .8, .2, 1);
+  animation: pageEnter 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
   transform-origin: top center;
 }
 

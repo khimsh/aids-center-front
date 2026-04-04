@@ -110,7 +110,10 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
     return '';
   };
 
-  const getLocalizedText = (article: ArticleDetails | ArticleRecord, language: 'ka' | 'en'): string => {
+  const getLocalizedText = (
+    article: ArticleDetails | ArticleRecord,
+    language: 'ka' | 'en',
+  ): string => {
     const record = article as Record<string, unknown>;
 
     const languageSuffix = language === 'ka' ? 'ka' : 'en';
@@ -122,7 +125,7 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       record[`description_${languageSuffix}`],
       record[`text_${languageSuffix}`],
       record[`body${languageSuffix.toUpperCase()}`],
-      record[`content${languageSuffix.toUpperCase()}`]
+      record[`content${languageSuffix.toUpperCase()}`],
     ];
 
     for (const value of directCandidates) {
@@ -153,9 +156,11 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
     return '';
   };
 
-  const getBodyKa = (article: ArticleDetails | ArticleRecord): string => getLocalizedText(article, 'ka');
+  const getBodyKa = (article: ArticleDetails | ArticleRecord): string =>
+    getLocalizedText(article, 'ka');
 
-  const getBodyEn = (article: ArticleDetails | ArticleRecord): string => getLocalizedText(article, 'en');
+  const getBodyEn = (article: ArticleDetails | ArticleRecord): string =>
+    getLocalizedText(article, 'en');
 
   const applyBodyToEditors = (bodyKa: string, bodyEn: string) => {
     if (quillRef.current) {
@@ -195,7 +200,8 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       return raw as ArticleDetails;
     }
 
-    const fromWrapper = raw.item ?? raw.article ?? raw.data ?? raw.result ?? raw.payload ?? raw.record;
+    const fromWrapper =
+      raw.item ?? raw.article ?? raw.data ?? raw.result ?? raw.payload ?? raw.record;
     if (isArticleDetails(fromWrapper)) {
       return fromWrapper;
     }
@@ -237,9 +243,9 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
           ['bold', 'italic', 'underline', 'strike'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           ['blockquote', 'link'],
-          ['clean']
-        ]
-      }
+          ['clean'],
+        ],
+      },
     });
 
     quillRef.current = quill;
@@ -274,9 +280,9 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
           ['bold', 'italic', 'underline', 'strike'],
           [{ list: 'ordered' }, { list: 'bullet' }],
           ['blockquote', 'link'],
-          ['clean']
-        ]
-      }
+          ['clean'],
+        ],
+      },
     });
 
     quillEnRef.current = quill;
@@ -337,7 +343,9 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       } catch {
         try {
           const result = await fetchArticles({ page: 1, per_page: 200, include_drafts: true });
-          const fallbackArticle = result.items.find((item) => String(item.id) === String(articleId));
+          const fallbackArticle = result.items.find(
+            (item) => String(item.id) === String(articleId),
+          );
 
           if (fallbackArticle) {
             hydrateForm(fallbackArticle);
@@ -371,7 +379,6 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
     void loadArticle();
   }, [articleId, initialArticle]);
 
-
   const clearForm = () => {
     setTitleKa('');
     setTitleEn('');
@@ -401,8 +408,8 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
 
       const response = await api.post('/api/uploads/image', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
       const uploadedUrl = (response.data as { url?: string }).url?.trim();
@@ -423,14 +430,16 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
     }
 
     const result = await fetchArticles({ page: 1, per_page: 200, include_drafts: true });
-    const otherFeaturedArticles = result.items.filter((item) => item.featured && item.id !== articleId);
+    const otherFeaturedArticles = result.items.filter(
+      (item) => item.featured && item.id !== articleId,
+    );
 
     if (otherFeaturedArticles.length === 0) {
       return;
     }
 
     await Promise.all(
-      otherFeaturedArticles.map((item) => api.put(`/api/articles/${item.id}`, { featured: false }))
+      otherFeaturedArticles.map((item) => api.put(`/api/articles/${item.id}`, { featured: false })),
     );
   };
 
@@ -484,7 +493,7 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
         category,
         featured,
         published: status === 'published',
-        published_at: status === 'published' ? new Date().toISOString() : null
+        published_at: status === 'published' ? new Date().toISOString() : null,
       };
 
       if (articleId) {
@@ -495,9 +504,17 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
 
       setError(null);
       if (articleId) {
-        toast.success(status === 'published' ? 'Article updated and published.' : 'Article updated successfully.');
+        toast.success(
+          status === 'published'
+            ? 'Article updated and published.'
+            : 'Article updated successfully.',
+        );
       } else {
-        toast.success(status === 'published' ? 'Article published successfully.' : 'Article draft saved successfully.');
+        toast.success(
+          status === 'published'
+            ? 'Article published successfully.'
+            : 'Article draft saved successfully.',
+        );
       }
 
       if (!articleId) {
@@ -548,7 +565,10 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       <div className="field-row">
         <label>
           Category
-          <Select value={category} onChange={(event) => setCategory(event.target.value as ArticleCategory)}>
+          <Select
+            value={category}
+            onChange={(event) => setCategory(event.target.value as ArticleCategory)}
+          >
             <option value="news">news</option>
             <option value="announcements">announcements</option>
           </Select>
@@ -564,7 +584,9 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
             disabled={saving || uploadingImage}
           />
           {selectedImage ? <span className="hint">Selected: {selectedImage.name}</span> : null}
-          {!selectedImage && imageUrl ? <span className="hint">Current image: {imageUrl}</span> : null}
+          {!selectedImage && imageUrl ? (
+            <span className="hint">Current image: {imageUrl}</span>
+          ) : null}
         </label>
       </div>
 
@@ -617,7 +639,12 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
           </>
         ) : (
           <>
-            <Button type="button" variant="secondary" onClick={() => void saveArticle('draft')} disabled={saving}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => void saveArticle('draft')}
+              disabled={saving}
+            >
               Save Draft
             </Button>
             <Button type="button" onClick={() => void saveArticle('published')} disabled={saving}>

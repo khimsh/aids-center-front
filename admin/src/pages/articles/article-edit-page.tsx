@@ -9,7 +9,11 @@ export function ArticleEditPage() {
   const location = useLocation();
   const params = useParams();
 
-  const routeState = location.state as { draft?: ArticleRecord; article?: ArticleRecord; returnTo?: string } | null;
+  const routeState = location.state as {
+    draft?: ArticleRecord;
+    article?: ArticleRecord;
+    returnTo?: string;
+  } | null;
   const initialArticle = routeState?.article ?? routeState?.draft;
   const returnTo = routeState?.returnTo ?? '/articles/mine';
 

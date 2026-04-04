@@ -78,7 +78,7 @@ export async function fetchArticleSlugs(apiBase: string): Promise<string[]> {
   if (totalPagesFromTotal) {
     for (let page = 2; page <= totalPagesFromTotal; page += 1) {
       const pageResponse = await fetch(
-        `${apiBase}/api/articles?page=${page}&per_page=${reportedPerPage}`
+        `${apiBase}/api/articles?page=${page}&per_page=${reportedPerPage}`,
       );
 
       if (!pageResponse.ok) {
@@ -86,9 +86,7 @@ export async function fetchArticleSlugs(apiBase: string): Promise<string[]> {
       }
 
       const pagePayload = (await pageResponse.json()) as ArticleListResponse;
-      const pageItems = Array.isArray(pagePayload)
-        ? pagePayload
-        : (pagePayload.items ?? []);
+      const pageItems = Array.isArray(pagePayload) ? pagePayload : (pagePayload.items ?? []);
 
       pageItems
         .map((item) => item.slug?.trim())
@@ -102,7 +100,7 @@ export async function fetchArticleSlugs(apiBase: string): Promise<string[]> {
   // Fallback when total/per_page is unavailable: keep requesting until page is empty.
   for (let page = 2; page <= 200; page += 1) {
     const pageResponse = await fetch(
-      `${apiBase}/api/articles?page=${page}&per_page=${reportedPerPage}`
+      `${apiBase}/api/articles?page=${page}&per_page=${reportedPerPage}`,
     );
 
     if (!pageResponse.ok) {
@@ -110,9 +108,7 @@ export async function fetchArticleSlugs(apiBase: string): Promise<string[]> {
     }
 
     const pagePayload = (await pageResponse.json()) as ArticleListResponse;
-    const pageItems = Array.isArray(pagePayload)
-      ? pagePayload
-      : (pagePayload.items ?? []);
+    const pageItems = Array.isArray(pagePayload) ? pagePayload : (pagePayload.items ?? []);
 
     if (pageItems.length === 0) {
       break;
@@ -133,7 +129,7 @@ export async function fetchArticleSlugs(apiBase: string): Promise<string[]> {
 
 export async function fetchArticleBySlug(
   apiBase: string,
-  slug: string
+  slug: string,
 ): Promise<ArticleDetails | null> {
   const response = await fetch(`${apiBase}/api/articles/${encodeURIComponent(slug)}`);
   if (!response.ok) {
@@ -143,7 +139,9 @@ export async function fetchArticleBySlug(
   return (await response.json()) as ArticleDetails;
 }
 
-export function isArticlePublished(article: Pick<ArticleDetails, 'published' | 'published_at'>): boolean {
+export function isArticlePublished(
+  article: Pick<ArticleDetails, 'published' | 'published_at'>,
+): boolean {
   if (typeof article.published === 'boolean') {
     return article.published;
   }
@@ -158,7 +156,7 @@ export function isArticlePublished(article: Pick<ArticleDetails, 'published' | '
 export async function fetchPublishedArticlesPage(
   apiBase: string,
   page: number,
-  perPage: number
+  perPage: number,
 ): Promise<PaginatedArticlesResult> {
   let response = await fetch(`${apiBase}/api/articles?page=${page}&per_page=${perPage}`);
 
@@ -181,7 +179,7 @@ export async function fetchPublishedArticlesPage(
       items: publishedItems.slice(startIndex, startIndex + perPage),
       total: publishedItems.length,
       page,
-      perPage
+      perPage,
     };
   }
 
@@ -189,7 +187,7 @@ export async function fetchPublishedArticlesPage(
     items: publishedItems,
     total: data.total ?? publishedItems.length,
     page: data.page ?? page,
-    perPage: data.per_page ?? perPage
+    perPage: data.per_page ?? perPage,
   };
 }
 

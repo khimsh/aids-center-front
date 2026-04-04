@@ -6,7 +6,7 @@ import {
   deleteDoctor,
   fetchDoctors,
   reorderDoctorsByIds,
-  type DoctorRecord
+  type DoctorRecord,
 } from '../../lib/doctors';
 import { queryKeys } from '../../lib/query-keys';
 import '../shared/content-page.scss';
@@ -30,12 +30,12 @@ export function DoctorsListPage() {
 
   const doctorsQuery = useQuery({
     queryKey: queryKeys.doctors,
-    queryFn: fetchDoctors
+    queryFn: fetchDoctors,
   });
 
   const doctors = useMemo(
     () => [...(doctorsQuery.data ?? [])].sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0)),
-    [doctorsQuery.data]
+    [doctorsQuery.data],
   );
 
   const refreshDoctors = async () => {
@@ -101,7 +101,9 @@ export function DoctorsListPage() {
         </div>
 
         <div className="posts-actions">
-          <ButtonLink to="/doctors/new" variant="secondary">ახალი ექიმის დამატება</ButtonLink>
+          <ButtonLink to="/doctors/new" variant="secondary">
+            ახალი ექიმის დამატება
+          </ButtonLink>
           <Button type="button" variant="secondary" onClick={() => void refreshDoctors()}>
             განახლება
           </Button>
@@ -116,63 +118,75 @@ export function DoctorsListPage() {
       ) : (
         <div className="posts-list">
           <p className="hint">გადაათრიეთ ექიმის ბარათი რიგითობის შესაცვლელად.</p>
-          <div className='doctors-list'>          
+          <div className="doctors-list">
             {doctors.map((doctor, index) => {
-                const isBusy = busyDoctorId === doctor.id;
-                const isDragged = draggedDoctorId === doctor.id;
-                const isDragOver = dragOverDoctorId === doctor.id;
+              const isBusy = busyDoctorId === doctor.id;
+              const isDragged = draggedDoctorId === doctor.id;
+              const isDragOver = dragOverDoctorId === doctor.id;
 
-                return (
+              return (
                 <article
-                    className="post-card"
-                    key={doctor.id}
-                    draggable={!isBusy}
-                    onDragStart={() => setDraggedDoctorId(doctor.id)}
-                    onDragOver={(event) => {
+                  className="post-card"
+                  key={doctor.id}
+                  draggable={!isBusy}
+                  onDragStart={() => setDraggedDoctorId(doctor.id)}
+                  onDragOver={(event) => {
                     event.preventDefault();
                     if (draggedDoctorId !== doctor.id) {
-                        setDragOverDoctorId(doctor.id);
+                      setDragOverDoctorId(doctor.id);
                     }
-                    }}
-                    onDragLeave={() => {
+                  }}
+                  onDragLeave={() => {
                     if (dragOverDoctorId === doctor.id) {
-                        setDragOverDoctorId(null);
+                      setDragOverDoctorId(null);
                     }
-                    }}
-                    onDrop={(event) => {
+                  }}
+                  onDrop={(event) => {
                     event.preventDefault();
                     if (draggedDoctorId != null) {
-                        void reorderByDrop(draggedDoctorId, doctor.id);
+                      void reorderByDrop(draggedDoctorId, doctor.id);
                     }
-                    }}
-                    onDragEnd={() => {
+                  }}
+                  onDragEnd={() => {
                     setDraggedDoctorId(null);
                     setDragOverDoctorId(null);
-                    }}
-                    style={{
+                  }}
+                  style={{
                     opacity: isDragged ? 0.6 : 1,
                     borderColor: isDragOver ? '#2563eb' : undefined,
                     background: isDragOver ? '#eff6ff' : undefined,
-                    cursor: isBusy ? 'default' : 'grab'
-                    }}
+                    cursor: isBusy ? 'default' : 'grab',
+                  }}
                 >
-                    <div className="post-meta">
+                  <div className="post-meta">
                     <span>#{doctor.sort_order ?? index + 1}</span>
                     <span>{getDisplayTime(doctor.updated_at)}</span>
-                    </div>
+                  </div>
 
-                    <h3>{doctor.name}</h3>
-                    <p>{doctor.specialty ?? doctor.department ?? 'სპეციალიზაცია მითითებული არ არის'}</p>
+                  <h3>{doctor.name}</h3>
+                  <p>
+                    {doctor.specialty ?? doctor.department ?? 'სპეციალიზაცია მითითებული არ არის'}
+                  </p>
 
-                    <div className="post-actions">
-                    <ButtonLink to={`/doctors/${doctor.id}/edit`} variant="secondary" aria-disabled={isBusy}>რედაქტირება</ButtonLink>
+                  <div className="post-actions">
+                    <ButtonLink
+                      to={`/doctors/${doctor.id}/edit`}
+                      variant="secondary"
+                      aria-disabled={isBusy}
+                    >
+                      რედაქტირება
+                    </ButtonLink>
 
-                    <Button type="button" disabled={isBusy} onClick={() => setDoctorToDelete(doctor)}>
-                        წაშლა
+                    <Button
+                      type="button"
+                      disabled={isBusy}
+                      onClick={() => setDoctorToDelete(doctor)}
+                    >
+                      წაშლა
                     </Button>
-                    </div>
+                  </div>
                 </article>
-                );
+              );
             })}
           </div>
         </div>

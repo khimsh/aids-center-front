@@ -2,14 +2,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { apiDeleteMock, apiPutMock } = vi.hoisted(() => ({
   apiDeleteMock: vi.fn(),
-  apiPutMock: vi.fn()
+  apiPutMock: vi.fn(),
 }));
 
 vi.mock('../api', () => ({
   api: {
     delete: apiDeleteMock,
-    put: apiPutMock
-  }
+    put: apiPutMock,
+  },
 }));
 
 import {
@@ -17,7 +17,7 @@ import {
   listDeletedArticles,
   moveArticleToDeleted,
   restoreDeletedArticle,
-  type DeletedArticleEntry
+  type DeletedArticleEntry,
 } from '../deleted-articles';
 
 const STORAGE_KEY = 'admin_deleted_articles_v1';
@@ -33,7 +33,7 @@ describe('deleted articles lifecycle', () => {
     moveArticleToDeleted({
       id: 12,
       title_ka: 'test title',
-      author_id: 77
+      author_id: 77,
     });
 
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -57,13 +57,13 @@ describe('deleted articles lifecycle', () => {
       id: 1,
       title_ka: 'expired',
       deleted_at: new Date(now - 10000).toISOString(),
-      delete_after: new Date(now - 1000).toISOString()
+      delete_after: new Date(now - 1000).toISOString(),
     };
     const active: DeletedArticleEntry = {
       id: 2,
       title_ka: 'active',
       deleted_at: new Date(now).toISOString(),
-      delete_after: new Date(now + 86_400_000).toISOString()
+      delete_after: new Date(now + 86_400_000).toISOString(),
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify([expired, active]));
@@ -81,7 +81,7 @@ describe('deleted articles lifecycle', () => {
       title_ka: 'record',
       owner_id: '100',
       deleted_at: new Date().toISOString(),
-      delete_after: new Date(Date.now() + 1000).toISOString()
+      delete_after: new Date(Date.now() + 1000).toISOString(),
     };
 
     expect(canViewDeletedEntry(entry, true, undefined)).toBe(true);

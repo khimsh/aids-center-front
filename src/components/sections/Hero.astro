@@ -1,11 +1,11 @@
 ---
-import { Icon } from "astro-icon/components";
-import { useTranslations } from "../../i18n/utils";
+import { Icon } from 'astro-icon/components';
+import { useTranslations } from '../../i18n/utils';
 
-const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const lang = (Astro.currentLocale ?? 'ka') as 'ka' | 'en';
 const t = useTranslations(lang);
 
-import ClinicPhoto from "../../assets/images/clinic.webp";
+import ClinicPhoto from '../../assets/images/clinic.webp';
 ---
 
 <section class="hero content-grid">
@@ -59,17 +59,17 @@ import ClinicPhoto from "../../assets/images/clinic.webp";
     margin-bottom: 1rem;
     color: #034485;
     text-wrap: balance;
-    font-family: "BPG Nino Mtavruli Bold", sans-serif;
+    font-family: 'BPG Nino Mtavruli Bold', sans-serif;
 
-    html[lang="en"] & {
-      font-family: "Satoshi", sans-serif;
+    html[lang='en'] & {
+      font-family: 'Satoshi', sans-serif;
     }
   }
 
   .hero-desc {
     font-size: 1rem;
     margin-bottom: 2rem;
-    font-family: "Noto Sans Georgian", sans-serif;
+    font-family: 'Noto Sans Georgian', sans-serif;
     text-wrap: balance;
   }
 

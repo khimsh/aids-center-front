@@ -34,8 +34,13 @@ export function UsersCreatePage() {
       await queryClient.invalidateQueries({ queryKey: queryKeys.users });
     },
     onError: (error) => {
-      toast.error(extractApiErrorMessage(error, 'Could not create user. Check API endpoint/validation rules.'));
-    }
+      toast.error(
+        extractApiErrorMessage(
+          error,
+          'Could not create user. Check API endpoint/validation rules.',
+        ),
+      );
+    },
   });
 
   const creating = createUserMutation.isPending;
@@ -57,7 +62,7 @@ export function UsersCreatePage() {
       email: email.trim(),
       full_name: fullName.trim(),
       password,
-      role
+      role,
     });
   };
 
@@ -77,7 +82,9 @@ export function UsersCreatePage() {
           <h1>Register User</h1>
           <p className="hint">Create a new editor or admin account.</p>
         </div>
-        <ButtonLink to="/users/list" variant="secondary">View Users List</ButtonLink>
+        <ButtonLink to="/users/list" variant="secondary">
+          View Users List
+        </ButtonLink>
       </div>
 
       <form className="posts-editor" onSubmit={onCreateUser}>

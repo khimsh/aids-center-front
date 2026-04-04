@@ -12,7 +12,7 @@ import {
   type DoctorMutationInput,
   type DoctorRecord,
   type DoctorTranslationMutationInput,
-  type DoctorTranslationRecord
+  type DoctorTranslationRecord,
 } from '../../lib/doctors';
 
 type DoctorFormProps = {
@@ -72,16 +72,14 @@ function toFormState(doctor?: DoctorRecord, translationEn?: DoctorTranslationRec
     pedagogical_experience_en: translationEn?.pedagogical_experience ?? '',
     memberships_en: translationEn?.memberships ?? '',
     publications_en: translationEn?.publications ?? '',
-    expertise_en: translationEn?.expertise ?? ''
+    expertise_en: translationEn?.expertise ?? '',
   };
 }
 
 function toMutationInput(state: FormState): DoctorMutationInput {
   const sortOrderParsed = Number(state.sort_order);
   const sortOrder =
-    state.sort_order.trim() === '' || Number.isNaN(sortOrderParsed)
-      ? null
-      : sortOrderParsed;
+    state.sort_order.trim() === '' || Number.isNaN(sortOrderParsed) ? null : sortOrderParsed;
 
   return {
     name: state.name,
@@ -96,7 +94,7 @@ function toMutationInput(state: FormState): DoctorMutationInput {
     memberships: state.memberships,
     publications: state.publications,
     expertise: state.expertise,
-    sort_order: sortOrder
+    sort_order: sortOrder,
   };
 }
 
@@ -111,7 +109,7 @@ function hasEnglishTranslationInput(state: FormState): boolean {
     state.pedagogical_experience_en,
     state.memberships_en,
     state.publications_en,
-    state.expertise_en
+    state.expertise_en,
   ].some((value) => value.trim().length > 0);
 }
 
@@ -127,11 +125,16 @@ function toEnglishTranslationInput(state: FormState): DoctorTranslationMutationI
     pedagogical_experience: state.pedagogical_experience_en,
     memberships: state.memberships_en,
     publications: state.publications_en,
-    expertise: state.expertise_en
+    expertise: state.expertise_en,
   };
 }
 
-export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved }: DoctorFormProps) {
+export function DoctorForm({
+  doctorId,
+  initialDoctor,
+  defaultSortOrder,
+  onSaved,
+}: DoctorFormProps) {
   const [state, setState] = useState<FormState>(toFormState(initialDoctor));
   const [loadingDoctor, setLoadingDoctor] = useState(Boolean(doctorId && !initialDoctor));
   const [englishTranslationExists, setEnglishTranslationExists] = useState(false);
@@ -151,7 +154,7 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       try {
         const [doctor, translations] = await Promise.all([
           fetchDoctorById(doctorId),
-          fetchDoctorTranslations(doctorId)
+          fetchDoctorTranslations(doctorId),
         ]);
         const englishTranslation = translations.find((entry) => entry.lang.toLowerCase() === 'en');
 
@@ -185,7 +188,7 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
 
     setState((prev) => ({
       ...prev,
-      sort_order: prev.sort_order.trim() ? prev.sort_order : String(defaultSortOrder)
+      sort_order: prev.sort_order.trim() ? prev.sort_order : String(defaultSortOrder),
     }));
   }, [doctorId, initialDoctor, defaultSortOrder]);
 
@@ -237,7 +240,7 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
             pedagogical_experience: translationInput.pedagogical_experience,
             memberships: translationInput.memberships,
             publications: translationInput.publications,
-            expertise: translationInput.expertise
+            expertise: translationInput.expertise,
           });
         } else {
           await createDoctorTranslation(savedDoctor.id, translationInput);
@@ -252,14 +255,12 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       if (!doctorId) {
         setState({
           ...toFormState(),
-          sort_order: defaultSortOrder == null ? '' : String(defaultSortOrder)
+          sort_order: defaultSortOrder == null ? '' : String(defaultSortOrder),
         });
         setEnglishTranslationExists(false);
       }
     } catch {
-      const message = doctorId
-        ? 'ექიმის განახლება ვერ მოხერხდა.'
-        : 'ექიმის დამატება ვერ მოხერხდა.';
+      const message = doctorId ? 'ექიმის განახლება ვერ მოხერხდა.' : 'ექიმის დამატება ვერ მოხერხდა.';
       setError(message);
       toast.error(message);
     } finally {
@@ -276,36 +277,55 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           სახელი
-          <Input value={state.name} onChange={(event) => updateField('name', event.target.value)} required />
+          <Input
+            value={state.name}
+            onChange={(event) => updateField('name', event.target.value)}
+            required
+          />
         </label>
 
         <label>
           სპეციალიზაცია
-          <Input value={state.specialty} onChange={(event) => updateField('specialty', event.target.value)} />
+          <Input
+            value={state.specialty}
+            onChange={(event) => updateField('specialty', event.target.value)}
+          />
         </label>
       </div>
 
       <div className="field-row">
         <label>
           ხარისხი
-          <Input value={state.degree} onChange={(event) => updateField('degree', event.target.value)} />
+          <Input
+            value={state.degree}
+            onChange={(event) => updateField('degree', event.target.value)}
+          />
         </label>
 
         <label>
           დეპარტამენტი
-          <Input value={state.department} onChange={(event) => updateField('department', event.target.value)} />
+          <Input
+            value={state.department}
+            onChange={(event) => updateField('department', event.target.value)}
+          />
         </label>
       </div>
 
       <div className="field-row">
         <label>
           სურათის URL
-          <Input value={state.picture} onChange={(event) => updateField('picture', event.target.value)} />
+          <Input
+            value={state.picture}
+            onChange={(event) => updateField('picture', event.target.value)}
+          />
         </label>
 
         <label>
           პროფილის URL
-          <Input value={state.profile_url} onChange={(event) => updateField('profile_url', event.target.value)} />
+          <Input
+            value={state.profile_url}
+            onChange={(event) => updateField('profile_url', event.target.value)}
+          />
         </label>
       </div>
 
@@ -376,7 +396,10 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           Name (EN)
-          <Input value={state.name_en} onChange={(event) => updateField('name_en', event.target.value)} />
+          <Input
+            value={state.name_en}
+            onChange={(event) => updateField('name_en', event.target.value)}
+          />
         </label>
 
         <label>
@@ -391,7 +414,10 @@ export function DoctorForm({ doctorId, initialDoctor, defaultSortOrder, onSaved 
       <div className="field-row">
         <label>
           Degree (EN)
-          <Input value={state.degree_en} onChange={(event) => updateField('degree_en', event.target.value)} />
+          <Input
+            value={state.degree_en}
+            onChange={(event) => updateField('degree_en', event.target.value)}
+          />
         </label>
 
         <label>

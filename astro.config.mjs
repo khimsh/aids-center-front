@@ -37,7 +37,7 @@ export default defineConfig({
     defaultLocale: 'ka',
     locales: ['ka', 'en'], // add your locales
     routing: {
-      prefixDefaultLocale: false // keeps /ka as just /
-    }
-  }
+      prefixDefaultLocale: false, // keeps /ka as just /
+    },
+  },
 });

@@ -1,16 +1,12 @@
 ---
-import Article from "../content/Article.astro";
-import { useTranslations } from "../../i18n/utils";
-import {
-  fetchArticleBySlug,
-  getArticlesApiBase,
-  toAbsoluteImageUrl,
-} from "../../lib/articles-api";
-import fallbackNewsImage from "../../assets/images/clinic.webp";
+import Article from '../content/Article.astro';
+import { useTranslations } from '../../i18n/utils';
+import { fetchArticleBySlug, getArticlesApiBase, toAbsoluteImageUrl } from '../../lib/articles-api';
+import fallbackNewsImage from '../../assets/images/clinic.webp';
 
-const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const lang = (Astro.currentLocale ?? 'ka') as 'ka' | 'en';
 const t = useTranslations(lang);
-const archiveHref = lang === "en" ? "/en/news" : "/news";
+const archiveHref = lang === 'en' ? '/en/news' : '/news';
 
 type ArticleApiRecord = {
   id: number;
@@ -43,12 +39,12 @@ const resolveArticleImageUrl = (value?: string | null) =>
 
 const stripHtml = (value: string) =>
   value
-    .replace(/<[^>]*>/g, " ")
-    .replace(/\s+/g, " ")
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
     .trim();
 
 const isPublished = (entry: ArticleApiRecord) => {
-  if (typeof entry.published === "boolean") {
+  if (typeof entry.published === 'boolean') {
     return entry.published;
   }
 
@@ -79,9 +75,7 @@ try {
 
 const recordsWithBody = await Promise.all(
   records.map(async (entry) => {
-    const hasBody = Boolean(
-      (entry.body_ka ?? "").trim() || (entry.body_en ?? "").trim(),
-    );
+    const hasBody = Boolean((entry.body_ka ?? '').trim() || (entry.body_en ?? '').trim());
 
     if (hasBody || !entry.slug?.trim()) {
       return entry;
@@ -103,43 +97,32 @@ const recordsWithBody = await Promise.all(
 const newsItems = recordsWithBody
   .filter((entry) => isPublished(entry))
   .sort((a, b) => {
-    const dateA = new Date(
-      a.published_at ?? a.updated_at ?? a.created_at ?? 0,
-    ).getTime();
-    const dateB = new Date(
-      b.published_at ?? b.updated_at ?? b.created_at ?? 0,
-    ).getTime();
+    const dateA = new Date(a.published_at ?? a.updated_at ?? a.created_at ?? 0).getTime();
+    const dateB = new Date(b.published_at ?? b.updated_at ?? b.created_at ?? 0).getTime();
     return dateB - dateA;
   })
   .slice(0, 3)
   .map((entry) => {
     const localizedTitle =
-      lang === "en"
-        ? (entry.title_en ?? entry.title_ka)
-        : (entry.title_ka ?? entry.title_en);
+      lang === 'en' ? (entry.title_en ?? entry.title_ka) : (entry.title_ka ?? entry.title_en);
     const localizedBody =
-      lang === "en"
-        ? (entry.body_en ?? entry.body_ka)
-        : (entry.body_ka ?? entry.body_en);
-    const plainBody = stripHtml(localizedBody ?? "");
+      lang === 'en' ? (entry.body_en ?? entry.body_ka) : (entry.body_ka ?? entry.body_en);
+    const plainBody = stripHtml(localizedBody ?? '');
 
     return {
       id: entry.id,
       title:
-        localizedTitle?.trim() ||
-        (lang === "en" ? "Untitled Article" : "სტატიის სათაურის გარეშე"),
-      articleTag: entry.category ?? "news",
-      content:
-        plainBody ||
-        (lang === "en" ? "No summary available." : "აღწერა არ არის."),
+        localizedTitle?.trim() || (lang === 'en' ? 'Untitled Article' : 'სტატიის სათაურის გარეშე'),
+      articleTag: entry.category ?? 'news',
+      content: plainBody || (lang === 'en' ? 'No summary available.' : 'აღწერა არ არის.'),
       image: resolveArticleImageUrl(entry.image_url),
       featured: Boolean(entry.featured),
-      date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? "",
+      date: entry.published_at ?? entry.updated_at ?? entry.created_at ?? '',
       link: entry.slug?.trim()
-        ? lang === "en"
+        ? lang === 'en'
           ? `/en/news/${encodeURIComponent(entry.slug.trim())}`
           : `/news/${encodeURIComponent(entry.slug.trim())}`
-        : "#",
+        : '#',
     };
   });
 
@@ -160,9 +143,7 @@ const featuredIndex = newsItems.findIndex((item) => item.featured);
         newsItems.length > 0 ? (
           newsItems.map((item, index) => (
             <Article
-              featured={
-                featuredIndex === -1 ? index === 0 : index === featuredIndex
-              }
+              featured={featuredIndex === -1 ? index === 0 : index === featuredIndex}
               image={item.image}
               title={item.title}
               articleTag={item.articleTag}
@@ -173,9 +154,7 @@ const featuredIndex = newsItems.findIndex((item) => item.featured);
           ))
         ) : (
           <p class="news-empty">
-            {lang === "en"
-              ? "No published articles yet."
-              : "გამოქვეყნებული სტატიები ჯერ არ არის."}
+            {lang === 'en' ? 'No published articles yet.' : 'გამოქვეყნებული სტატიები ჯერ არ არის.'}
           </p>
         )
       }
@@ -184,11 +163,7 @@ const featuredIndex = newsItems.findIndex((item) => item.featured);
     <a href={archiveHref} class="section-view-all">
       {t.news.linkText}
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path
           fill-rule="evenodd"
           d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"

@@ -37,11 +37,12 @@ export type ArticleListResult = {
 export const DEFAULT_ARTICLES_QUERY = {
   page: 1,
   per_page: 200,
-  include_drafts: true
+  include_drafts: true,
 } as const;
 
 export function getArticleOwnerId(article: ArticleRecord): string {
-  const candidate = article.author_id ?? article.user_id ?? article.created_by ?? article.author?.id;
+  const candidate =
+    article.author_id ?? article.user_id ?? article.created_by ?? article.author?.id;
   return candidate == null ? '' : String(candidate);
 }
 
@@ -54,7 +55,11 @@ export function filterArticlesByUser(items: ArticleRecord[], userId?: string | n
   return items.filter((item) => getArticleOwnerId(item) === ownerId);
 }
 
-export function getVisibleArticles(items: ArticleRecord[], adminView: boolean, userId?: string | number) {
+export function getVisibleArticles(
+  items: ArticleRecord[],
+  adminView: boolean,
+  userId?: string | number,
+) {
   if (adminView) {
     return items;
   }
@@ -65,7 +70,7 @@ export function getVisibleArticles(items: ArticleRecord[], adminView: boolean, u
 export async function publishArticleDraft(articleId: number): Promise<boolean> {
   const response = await api.put(`/api/articles/${articleId}`, {
     published: true,
-    published_at: new Date().toISOString()
+    published_at: new Date().toISOString(),
   });
 
   const published = response.data as ArticleRecord;
@@ -91,7 +96,9 @@ export async function fetchArticles(params?: Record<string, unknown>): Promise<A
     response = await api.get('/api/articles', { params });
   } catch (error) {
     const status = getErrorStatus(error);
-    const hasIncludeDrafts = typeof params !== 'undefined' && Object.prototype.hasOwnProperty.call(params, 'include_drafts');
+    const hasIncludeDrafts =
+      typeof params !== 'undefined' &&
+      Object.prototype.hasOwnProperty.call(params, 'include_drafts');
 
     if ((status === 422 || status === 401 || status === 403) && hasIncludeDrafts) {
       const fallbackParams = { ...(params ?? {}) };
@@ -107,13 +114,13 @@ export async function fetchArticles(params?: Record<string, unknown>): Promise<A
   if (Array.isArray(data)) {
     return {
       items: data,
-      total: data.length
+      total: data.length,
     };
   }
 
   const items = data?.items ?? [];
   return {
     items,
-    total: data?.total ?? items.length
+    total: data?.total ?? items.length,
   };
 }

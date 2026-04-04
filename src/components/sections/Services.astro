@@ -1,7 +1,7 @@
 ---
-import { useTranslations } from "../../i18n/utils";
+import { useTranslations } from '../../i18n/utils';
 
-const lang = (Astro.currentLocale ?? "ka") as "ka" | "en";
+const lang = (Astro.currentLocale ?? 'ka') as 'ka' | 'en';
 const t = useTranslations(lang);
 ---
 
@@ -29,11 +29,8 @@ const t = useTranslations(lang);
           clip-rule="evenodd"
           d="M46.4082 37.3333C48.488 37.3333 50.3964 36.5987 51.8888 35.3743L56.7838 40.2761L58.6667 38.3904L53.6686 33.3852C54.5503 32.0275 55.0624 30.4069 55.0624 28.6667C55.0624 23.8801 51.1878 20 46.4082 20C41.6284 20 37.7539 23.8801 37.7539 28.6667C37.7539 33.4532 41.6284 37.3333 46.4082 37.3333ZM46.4082 34.6667C49.7171 34.6667 52.3996 31.9804 52.3996 28.6667C52.3996 25.3529 49.7171 22.6667 46.4082 22.6667C43.0991 22.6667 40.4167 25.3529 40.4167 28.6667C40.4167 31.9804 43.0991 34.6667 46.4082 34.6667Z"
           fill="#00378E"></path>
-        <path d="M10.6589 34.6667H18.6475V32H10.6589V34.6667Z" fill="#00378E"
-        ></path>
-        <path
-          d="M10.6589 39.9999V37.3333H26.6361V39.9999H10.6589Z"
-          fill="#00378E"></path>
+        <path d="M10.6589 34.6667H18.6475V32H10.6589V34.6667Z" fill="#00378E"></path>
+        <path d="M10.6589 39.9999V37.3333H26.6361V39.9999H10.6589Z" fill="#00378E"></path>
       </svg>
 
       <h3 class="services-subtitle">
@@ -153,11 +150,11 @@ const t = useTranslations(lang);
     margin-bottom: 0.75rem;
     color: var(--primary);
     text-align: center;
-    font-family: "BPG Nino Mtavruli Bold", sans-serif;
+    font-family: 'BPG Nino Mtavruli Bold', sans-serif;
     text-wrap: balance;
 
-    html[lang="en"] & {
-      font-family: "Satoshi", sans-serif;
+    html[lang='en'] & {
+      font-family: 'Satoshi', sans-serif;
     }
   }
 
@@ -165,10 +162,10 @@ const t = useTranslations(lang);
     list-style-type: disc;
     padding-left: 1.5rem;
     color: #555;
-    font-family: "Noto Sans Georgian", sans-serif;
+    font-family: 'Noto Sans Georgian', sans-serif;
 
-    html[lang="en"] & {
-      font-family: "Hind", sans-serif;
+    html[lang='en'] & {
+      font-family: 'Hind', sans-serif;
     }
   }
 </style>

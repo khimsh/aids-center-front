@@ -10,7 +10,7 @@ import {
   moveDeletedArticleToDraft,
   permanentlyDeleteArticle,
   restoreDeletedArticle,
-  type DeletedArticleEntry
+  type DeletedArticleEntry,
 } from '../../lib/deleted-articles';
 import { articleIsPublished } from '../../lib/articles';
 import { isAdminRole } from '../../lib/permissions';
@@ -36,7 +36,7 @@ export function DeletedArticlesPage() {
     queryFn: async () => {
       const all = await listDeletedArticles();
       return all.filter((item) => canViewDeletedEntry(item, adminView, user?.id));
-    }
+    },
   });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export function DeletedArticlesPage() {
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const moveToDraftsMutation = useMutation({
@@ -70,7 +70,7 @@ export function DeletedArticlesPage() {
     },
     onSettled: () => {
       setBusyArticleId(null);
-    }
+    },
   });
 
   const permanentlyDelete = (articleId: number) => {
@@ -97,9 +97,7 @@ export function DeletedArticlesPage() {
       <div className="posts-header">
         <div>
           <h1>Deleted Articles</h1>
-          <p className="hint">
-            Deleted items are kept for 30 days and then auto-purged.
-          </p>
+          <p className="hint">Deleted items are kept for 30 days and then auto-purged.</p>
         </div>
       </div>
 
@@ -113,7 +111,9 @@ export function DeletedArticlesPage() {
             <article className="post-card" key={item.id}>
               <div className="post-meta">
                 <div className="post-badges">
-                  <span className={`status-pill ${articleIsPublished(item) ? 'published' : 'draft'}`}>
+                  <span
+                    className={`status-pill ${articleIsPublished(item) ? 'published' : 'draft'}`}
+                  >
                     {articleIsPublished(item) ? 'published' : 'draft'}
                   </span>
                   {item.featured ? <span className="status-pill featured">featured</span> : null}
@@ -123,7 +123,9 @@ export function DeletedArticlesPage() {
               <h3>{item.title_ka}</h3>
               {item.title_en ? <p className="hint">EN: {item.title_en}</p> : null}
               <p className="hint">Category: {item.category ?? 'uncategorized'}</p>
-              <p className="hint">Will be permanently deleted in {getDaysLeft(item.delete_after)} day(s).</p>
+              <p className="hint">
+                Will be permanently deleted in {getDaysLeft(item.delete_after)} day(s).
+              </p>
 
               <div className="post-actions">
                 <Button

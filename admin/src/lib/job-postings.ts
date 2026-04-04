@@ -41,7 +41,7 @@ export const toJobCard = (job: JobOut): JobCard => ({
   description: job.description_ka ?? '',
   deadline: job.deadline ? new Date(job.deadline).toLocaleDateString() : 'არ არის მითითებული',
   status: job.published ? 'published' : 'draft',
-  updatedAt: new Date(job.updated_at).toLocaleString()
+  updatedAt: new Date(job.updated_at).toLocaleString(),
 });
 
 function toJobPayload(input: JobMutationInput) {
@@ -54,7 +54,7 @@ function toJobPayload(input: JobMutationInput) {
     department_en: input.departmentEn.trim() || null,
     deadline: input.deadline ? new Date(input.deadline).toISOString() : null,
     published: input.status === 'published',
-    published_at: input.status === 'published' ? new Date().toISOString() : null
+    published_at: input.status === 'published' ? new Date().toISOString() : null,
   };
 }
 
@@ -77,7 +77,7 @@ export async function updateJobPosting(jobId: number, input: JobMutationInput): 
 export async function publishJobPostingDraft(jobId: number): Promise<JobOut> {
   const response = await api.put(`/api/job-postings/${jobId}`, {
     published: true,
-    published_at: new Date().toISOString()
+    published_at: new Date().toISOString(),
   });
   return response.data as JobOut;
 }
