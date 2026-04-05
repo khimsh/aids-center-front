@@ -17,14 +17,7 @@ import { queryKeys } from '../../lib/query-keys';
 import '../shared/content-page.scss';
 import { useMemo, useState } from 'react';
 
-function getDisplayTime(value?: string) {
-  if (!value) {
-    return '';
-  }
-
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? '' : date.toLocaleString();
-}
+const DOCTOR_ID_DRAG_KEY = 'text/x-doctor-id';
 
 export function DoctorsListPage() {
   const queryClient = useQueryClient();
@@ -134,9 +127,16 @@ export function DoctorsListPage() {
                   className={`post-card doctor-card ${isDragOver ? 'doctor-card--drag-over' : ''}`.trim()}
                   key={doctor.id}
                   draggable={!isBusy}
-                  onDragStart={() => setDraggedDoctorId(doctor.id)}
+                  onDragStart={(event) => {
+                    setDraggedDoctorId(doctor.id);
+                    event.dataTransfer.effectAllowed = 'move';
+                    event.dataTransfer.setData(DOCTOR_ID_DRAG_KEY, String(doctor.id));
+                    // Keep text/plain for broader browser compatibility.
+                    event.dataTransfer.setData('text/plain', String(doctor.id));
+                  }}
                   onDragOver={(event) => {
                     event.preventDefault();
+                    event.dataTransfer.dropEffect = 'move';
                     if (draggedDoctorId !== doctor.id) {
                       setDragOverDoctorId(doctor.id);
                     }
@@ -148,8 +148,14 @@ export function DoctorsListPage() {
                   }}
                   onDrop={(event) => {
                     event.preventDefault();
-                    if (draggedDoctorId != null) {
-                      void reorderByDrop(draggedDoctorId, doctor.id);
+                    const transferIdRaw =
+                      event.dataTransfer.getData(DOCTOR_ID_DRAG_KEY) ||
+                      event.dataTransfer.getData('text/plain');
+                    const transferId = Number.parseInt(transferIdRaw, 10);
+                    const sourceId = Number.isFinite(transferId) ? transferId : draggedDoctorId;
+
+                    if (sourceId != null) {
+                      void reorderByDrop(sourceId, doctor.id);
                     }
                   }}
                   onDragEnd={() => {

@@ -61,15 +61,15 @@ function getApiErrorMessage(error: unknown): string | null {
   }
 
   if (status === 401) {
-    return 'You are not authenticated. Please log in again.';
+    return 'თქვენ არ ხართ ავტორიზებული. გთხოვთ, შეხვიდეთ სისტემაში და სცადოთ თავიდან.';
   }
 
   if (status === 403) {
-    return 'You do not have permission to create or edit articles.';
+    return 'თქვენ არ გაქვთ უფლება შექმნათ ან შეცვალოთ სტატია.';
   }
 
   if (status === 422) {
-    return 'Validation failed. Please check required fields and try again.';
+    return 'ვალიდაცია ვერ შესრულდა. გთხოვთ, შეამოწმოთ აუცილებელი ველები და სცადოთ თავიდან.';
   }
 
   return null;

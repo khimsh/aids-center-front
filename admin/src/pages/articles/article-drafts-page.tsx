@@ -136,7 +136,7 @@ export function ArticleDraftsPage() {
               key={draft.id}
               article={draft}
               busy={busyArticleId === draft.id}
-              editLabel="Edit Draft"
+              editLabel="დრაფტის რედაქტირება"
               showCategoryPrefix={false}
               forceDraftStatus
               onEdit={() =>

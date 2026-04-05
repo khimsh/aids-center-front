@@ -69,11 +69,6 @@ export function JobPostingCreatePage() {
       <div className="jobs-header">
         <h1>ახალი ვაკანსიის დამატება</h1>
         <p className="hint">შეავსეთ ფორმა და შეინახეთ დრაფტად ან გამოაქვეყნეთ.</p>
-        <div className="jobs-actions">
-          <ButtonLink to="/job-postings/list" variant="secondary">
-            ვაკანსიების სია
-          </ButtonLink>
-        </div>
       </div>
 
       <div className="jobs-editor">

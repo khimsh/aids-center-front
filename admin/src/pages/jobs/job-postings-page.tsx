@@ -37,15 +37,6 @@ export function JobPostingsPage() {
     queryFn: fetchJobPostings,
   });
 
-  const loadJobs = async () => {
-    try {
-      await jobsQuery.refetch();
-      setError(null);
-    } catch {
-      setError('ვერ ჩაიტვირთა ვაკანსიები.');
-    }
-  };
-
   const clearForm = () => {
     setTitleKa('');
     setTitleEn('');
@@ -164,12 +155,6 @@ export function JobPostingsPage() {
       <div className="jobs-header">
         <h1>ვაკანსიები</h1>
         <p className="hint">ყველა ვაკანსიის სია. რედაქტირებისთვის გამოიყენეთ Edit ღილაკი.</p>
-        <div className="jobs-actions">
-          <ButtonLink to="/job-postings/new">ახალი ვაკანსიის დამატება</ButtonLink>
-          <Button type="button" variant="secondary" onClick={() => void loadJobs()}>
-            განახლება
-          </Button>
-        </div>
       </div>
 
       {jobsQuery.isLoading ? <p className="hint">იტვირთება...</p> : null}

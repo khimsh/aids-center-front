@@ -134,18 +134,18 @@ export function MyArticlesPage() {
     <div className="posts-page">
       <div className="posts-header">
         <div>
-          <h1>{adminView ? 'All Articles' : 'My Articles'}</h1>
+          <h1>{adminView ? 'ყველა სტატია' : 'ჩემი სტატია'}</h1>
           <p className="hint">
-            {adminView ? 'All articles created by all users.' : 'All articles you have created.'}
+            {adminView ? 'ყველა სტატია, შექმნილი ყველა მომხმარებლის მიერ.' : 'ყველა სტატია, რომელიც თქვენ შექმენით.'}
           </p>
         </div>
       </div>
 
       <div className="posts-list">
-        {loading ? <p className="hint">Loading articles...</p> : null}
+        {loading ? <p className="hint">სტატია იტვირთება...</p> : null}
 
         {!loading && articles.length === 0 ? (
-          <p className="hint">No articles found.</p>
+          <p className="hint">სტატია ვერ მოიძებნა.</p>
         ) : (
           articles.map((article) => {
             const isPublished = articleIsPublished(article);
@@ -155,7 +155,7 @@ export function MyArticlesPage() {
                 key={article.id}
                 article={article}
                 busy={busyArticleId === article.id}
-                editLabel={isPublished ? 'Edit Article' : 'Edit Draft'}
+                editLabel={isPublished ? 'სტატიის რედაქტირება' : 'დრაფტის რედაქტირება'}
                 viewPublishedUrl={getPublicArticleUrl(article)}
                 showEnglishTitle
                 onEdit={() =>

@@ -1,15 +1,11 @@
 .jobs-page {
   display: grid;
-  gap: var(--space-13);
+  gap: 4rem;
 }
 
 .jobs-editor {
   display: grid;
   gap: var(--space-12);
-  background: var(--color-bg-card-soft);
-  border: var(--border-width) solid var(--color-border-soft);
-  border-radius: var(--radius-lg);
-  padding: var(--space-13);
 }
 
 .field-row {

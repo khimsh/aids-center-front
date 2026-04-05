@@ -25,8 +25,8 @@ export function ArticleEditPage() {
   if (articleId == null) {
     return (
       <div className="posts-page">
-        <h1>Edit Article</h1>
-        <p className="error">Invalid article id.</p>
+        <h1>სტატიის რედაქტირება</h1>
+        <p className="error">არასწორი სტატიის ID.</p>
       </div>
     );
   }
@@ -35,8 +35,8 @@ export function ArticleEditPage() {
     <div className="posts-page">
       <div className="posts-header">
         <div>
-          <h1>Edit Article</h1>
-          <p className="hint">Update article content and save changes.</p>
+          <h1>სტატიის რედაქტირება</h1>
+          <p className="hint">განაახლეთ სტატიის შინაარსი და შეინახეთ ცვლილებები.</p>
         </div>
       </div>
 
