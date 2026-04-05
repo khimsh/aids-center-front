@@ -6,10 +6,6 @@
 .posts-editor {
   display: grid;
   gap: var(--space-12);
-  background: var(--color-bg-card-soft);
-  border: var(--border-width) solid var(--color-border-soft);
-  border-radius: var(--radius-lg);
-  padding: var(--space-13);
 }
 
 .field-row {
@@ -43,7 +39,7 @@
 
 .posts-actions {
   display: flex;
-  gap: var(--space-8);
+  gap: var(--space-11);
   flex-wrap: wrap;
 }
 
@@ -74,6 +70,38 @@
   border-radius: var(--radius-lg);
   padding: var(--space-12);
   background: var(--color-bg-card);
+}
+
+.doctor-card {
+  position: relative;
+}
+
+.doctor-card--drag-over {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.drag-indicator {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 2px var(--space-5);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-soft);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  user-select: none;
+}
+
+.doctor-card--drag-over .drag-indicator {
+  border-color: #2563eb;
+  color: #1d4ed8;
 }
 
 .post-card h3 {

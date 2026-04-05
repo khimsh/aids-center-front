@@ -2,7 +2,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
 import styles from './button.module.scss';
 
-type ButtonVariant = 'primary' | 'secondary' | 'danger';
+type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'text' | 'with-icon';
 
 type CommonProps = {
   variant?: ButtonVariant;
@@ -20,6 +20,14 @@ function getVariantClass(variant: ButtonVariant) {
 
   if (variant === 'danger') {
     return styles.danger;
+  }
+
+  if (variant === 'text') {
+    return styles.text;
+  }
+
+  if (variant === 'with-icon') {
+    return styles.withIcon;
   }
 
   return styles.primary;

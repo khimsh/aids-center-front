@@ -2,12 +2,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-4);
   cursor: pointer;
   border: 0;
   border-radius: var(--radius-md);
   padding: var(--space-6) var(--space-13);
   font: inherit;
+  font-size: var(--font-size-sm);
   text-decoration: none;
   transition:
     filter 160ms ease,
@@ -27,6 +27,19 @@
 .danger {
   background: var(--color-danger);
   color: var(--color-text-inverse);
+}
+
+.text {
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 0;
+}
+
+.withIcon {
+  background: var(--color-secondary-button);
+  color: var(--color-text-inverse);
+  padding: var(--space-6);
+  gap: var(--space-4);
 }
 
 .button:disabled,

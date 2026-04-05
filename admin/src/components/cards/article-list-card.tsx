@@ -33,9 +33,9 @@ export function ArticleListCard({
       <div className="post-meta">
         <div className="post-badges">
           <span className={`status-pill ${isPublished ? 'published' : 'draft'}`}>
-            {isPublished ? 'published' : 'draft'}
+            {isPublished ? 'გამოქვეყნებული' : 'დრაფტი'}
           </span>
-          {article.featured ? <span className="status-pill featured">featured</span> : null}
+          {article.featured ? <span className="status-pill featured">გამორჩეული</span> : null}
         </div>
         <span>
           {new Date(article.updated_at ?? article.created_at ?? Date.now()).toLocaleString()}
@@ -46,8 +46,8 @@ export function ArticleListCard({
       {showEnglishTitle && article.title_en ? <p className="hint">EN: {article.title_en}</p> : null}
       <p className="hint">
         {showCategoryPrefix
-          ? `Category: ${article.category ?? 'uncategorized'}`
-          : (article.category ?? 'uncategorized')}
+          ? `კატეგორია: ${article.category ?? 'უცნობი'}`
+          : (article.category ?? 'უცნობი')}
       </p>
 
       <div className="post-actions">
@@ -57,18 +57,18 @@ export function ArticleListCard({
 
         {isPublished && viewPublishedUrl ? (
           <ButtonAnchor variant="secondary" href={viewPublishedUrl}>
-            View Published
+            გამოქვეყნებული სტატია
           </ButtonAnchor>
         ) : null}
 
         {!isPublished && onPublishDraft ? (
           <Button type="button" onClick={onPublishDraft} disabled={busy}>
-            Publish Draft
+            დრაფტის გამოქვეყნება
           </Button>
         ) : null}
 
         <Button type="button" variant="secondary" onClick={onDelete} disabled={busy}>
-          Delete
+          წაშლა
         </Button>
       </div>
     </article>

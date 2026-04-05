@@ -1,4 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  Bars3Icon,
+  PencilSquareIcon,
+  TrashIcon,
+} from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
 import { Button, ButtonLink } from '../../components/ui/button';
@@ -126,7 +131,7 @@ export function DoctorsListPage() {
 
               return (
                 <article
-                  className="post-card"
+                  className={`post-card doctor-card ${isDragOver ? 'doctor-card--drag-over' : ''}`.trim()}
                   key={doctor.id}
                   draggable={!isBusy}
                   onDragStart={() => setDraggedDoctorId(doctor.id)}
@@ -153,14 +158,16 @@ export function DoctorsListPage() {
                   }}
                   style={{
                     opacity: isDragged ? 0.6 : 1,
-                    borderColor: isDragOver ? '#2563eb' : undefined,
-                    background: isDragOver ? '#eff6ff' : undefined,
                     cursor: isBusy ? 'default' : 'grab',
                   }}
                 >
+                  <div className="drag-indicator" aria-hidden="true">
+                    <Bars3Icon style={{ width: 14, height: 14 }} />
+                    <span>drag</span>
+                  </div>
+
                   <div className="post-meta">
                     <span>#{doctor.sort_order ?? index + 1}</span>
-                    <span>{getDisplayTime(doctor.updated_at)}</span>
                   </div>
 
                   <h3>{doctor.name}</h3>
@@ -171,18 +178,21 @@ export function DoctorsListPage() {
                   <div className="post-actions">
                     <ButtonLink
                       to={`/doctors/${doctor.id}/edit`}
-                      variant="secondary"
+                      variant="with-icon"
                       aria-disabled={isBusy}
                     >
-                      რედაქტირება
+                      <PencilSquareIcon aria-hidden="true" style={{ width: 16, height: 16 }} />
+                      <span>რედაქტირება</span>
                     </ButtonLink>
 
                     <Button
                       type="button"
+                      variant="with-icon"
                       disabled={isBusy}
                       onClick={() => setDoctorToDelete(doctor)}
                     >
-                      წაშლა
+                      <TrashIcon aria-hidden="true" style={{ width: 16, height: 16 }} />
+                      <span>წაშლა</span>
                     </Button>
                   </div>
                 </article>

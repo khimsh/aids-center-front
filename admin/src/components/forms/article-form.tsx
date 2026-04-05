@@ -540,23 +540,23 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
       {loadingArticle ? <p className="hint">Loading article...</p> : null}
       <div className="field-row">
         <label>
-          Title (KA)
+          სათაური ქართულად
           <Input
             type="text"
             value={titleKa}
             onChange={(event) => setTitleKa(event.target.value)}
-            placeholder="Enter Georgian title"
+            placeholder="სტატიის სათაური ქართულად"
             required
           />
         </label>
 
         <label>
-          Title (EN)
+          სათაური ინგლისურად
           <Input
             type="text"
             value={titleEn}
             onChange={(event) => setTitleEn(event.target.value)}
-            placeholder="Enter English title"
+            placeholder="სტატიის სათაური ინგლისურად"
             required
           />
         </label>
@@ -564,18 +564,18 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
 
       <div className="field-row">
         <label>
-          Category
+          კატეგორია
           <Select
             value={category}
             onChange={(event) => setCategory(event.target.value as ArticleCategory)}
           >
-            <option value="news">news</option>
-            <option value="announcements">announcements</option>
+            <option value="news">ახალი ამბები</option>
+            <option value="announcements">განცხადებები</option>
           </Select>
         </label>
 
         <label>
-          Upload Image
+          სურათის ატვირთვა
           <Input
             ref={imageInputRef}
             type="file"
@@ -583,9 +583,9 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
             onChange={(event) => setSelectedImage(event.target.files?.[0] ?? null)}
             disabled={saving || uploadingImage}
           />
-          {selectedImage ? <span className="hint">Selected: {selectedImage.name}</span> : null}
+          {selectedImage ? <span className="hint">არჩეული: {selectedImage.name}</span> : null}
           {!selectedImage && imageUrl ? (
-            <span className="hint">Current image: {imageUrl}</span>
+            <span className="hint">მიმდინარე სურათი: {imageUrl}</span>
           ) : null}
         </label>
       </div>
@@ -596,22 +596,22 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
           checked={featured}
           onChange={(event) => setFeatured(event.target.checked)}
         />
-        Mark as featured
+        გამორჩეული სტატუსი
       </label>
       <p className="hint featured-note">
-        If another article is already featured, selecting this will replace it.
+        თუ სხვა სტატია უკვე გამორჩეულია, ამ არჩევის გაკეთება მას შეცვლის.
       </p>
 
       <div className="field-row">
         <div>
-          <p className="editor-label">Body (KA)</p>
+          <p className="editor-label">სტატია ქართულად</p>
           <div className="editor-shell">
             <div ref={editorMountRef} className="quill-host" />
           </div>
         </div>
 
         <div>
-          <p className="editor-label">Body (EN)</p>
+          <p className="editor-label">სტატია ინგლისურად</p>
           <div className="editor-shell">
             <div ref={editorMountEnRef} className="quill-host" />
           </div>
@@ -629,11 +629,11 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
               onClick={() => void saveArticle(existingPublished ? 'published' : 'draft')}
               disabled={saving}
             >
-              Save Changes
+              ცვლილებების შენახვა
             </Button>
             {!existingPublished ? (
               <Button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
-                Publish Draft
+                სტატიის გამოქვეყნება
               </Button>
             ) : null}
           </>
@@ -641,14 +641,14 @@ export function ArticleForm({ articleId, initialArticle, onSaved }: ArticleFormP
           <>
             <Button
               type="button"
-              variant="secondary"
+              variant="text"
               onClick={() => void saveArticle('draft')}
               disabled={saving}
             >
-              Save Draft
+              დრაფტად შენახვა
             </Button>
             <Button type="button" onClick={() => void saveArticle('published')} disabled={saving}>
-              Publish Article
+              სტატიის გამოქვეყნება
             </Button>
           </>
         )}
